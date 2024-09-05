@@ -12,5 +12,5 @@ export const create = (board: string) =>
         id: uid,
         title,
         cards: []
-      }
+      };
     }));

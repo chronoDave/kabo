@@ -17,4 +17,4 @@ esbuild.build({
   ],
   platform: 'node',
   plugins: [log]
-})
+});

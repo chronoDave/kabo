@@ -11,5 +11,9 @@ export const create = (lane: string) =>
       draft.cards[uid] = {
         id: uid,
         title
-      }
+      };
     }));
+
+export const remove = (card: string) => store.set(produce(draft => {
+  delete draft.cards[card];
+}));

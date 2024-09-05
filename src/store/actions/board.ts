@@ -17,4 +17,4 @@ export const update = (board: string) =>
   (title: string) =>
     store.set(produce(draft => {
       draft.boards[board].title = title;
-    }))
+    }));

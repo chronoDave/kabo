@@ -5,7 +5,7 @@ import selector from './card.state';
 
 export type CardProps = {
   id: string;
-}
+};
 
 const Card: Component<CardProps> = initial => {
   const component = new forgo.Component<CardProps>({

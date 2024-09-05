@@ -7,7 +7,7 @@ import selector from './lane.state';
 
 export type LaneProps = {
   id: string;
-}
+};
 
 const Lane: Component<LaneProps> = initial => {
   const component = new forgo.Component<LaneProps>({

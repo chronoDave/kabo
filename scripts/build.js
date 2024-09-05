@@ -16,6 +16,7 @@ const config = {
     '.html': 'copy'
   },
   bundle: true,
+  minify: !watch,
   platform: 'browser',
   outdir: path.resolve(process.cwd(), 'build'),
   plugins: [

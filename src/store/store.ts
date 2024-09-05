@@ -1,18 +1,11 @@
 import Store from '../lib/store/store';
 import createSelector from '../lib/selector/selector';
-import { Card, Board, Lane } from '../types/entity';
+import { state, State } from './state';
+import Storage from '../lib/storage/storage';
 
-export type State = {
-  cards: Record<string, Card>;
-  lanes: Record<string, Lane>;
-  boards: Record<string, Board>;
-}
-
-const store = new Store<State>({
-  cards: {},
-  lanes: {},
-  boards: {}
-})
+const storage = new Storage('kabo', state);
+const store = new Store<State>(storage.read() ?? storage.default)
+  .on(state => storage.write(state.current))
   .on(state => {
     console.group('store');
     console.log('current', state.current);

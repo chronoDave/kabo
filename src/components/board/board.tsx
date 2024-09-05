@@ -7,7 +7,7 @@ import selector from './board.state';
 
 export type BoardProps = {
   id: string;
-}
+};
 
 const Board: Component<BoardProps> = initial => {
   const component = new forgo.Component<BoardProps>({
