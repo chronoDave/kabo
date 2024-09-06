@@ -6,15 +6,11 @@ export const create = (title: string) =>
   store.set(produce(draft => {
     const id = crypto.randomUUID();
 
-    draft.boards[id] = {
-      id,
-      title,
-      lanes: []
-    };
+    draft.boards[id] = { id, title };
   }));
 
-export const update = (board: string) =>
+export const update = (id: string) =>
   (title: string) =>
     store.set(produce(draft => {
-      draft.boards[board].title = title;
+      draft.boards[id].title = title;
     }));

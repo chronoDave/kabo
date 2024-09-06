@@ -12,14 +12,14 @@ export type BoardProps = {
 const Board: Component<BoardProps> = initial => {
   const component = new forgo.Component<BoardProps>({
     render(props) {
-      const board = selector.state(props.id);
+      const { board, lanes } = selector.state(props.id);
 
       return (
         <article data-id={props.id}>
           <h2>{board.title}</h2>
-          {board.lanes.length > 0 ? (
+          {lanes.length > 0 ? (
             <ol>
-              {board.lanes.map(lane => (
+              {lanes.map(lane => (
                 <li key={lane}>
                   <Lane id={lane} />
                 </li>

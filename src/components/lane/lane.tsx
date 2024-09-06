@@ -12,14 +12,14 @@ export type LaneProps = {
 const Lane: Component<LaneProps> = initial => {
   const component = new forgo.Component<LaneProps>({
     render(props) {
-      const lane = selector.state(props.id);
+      const { lane, cards } = selector.state(props.id);
 
       return (
         <article data-id={props.id}>
           <h3>{lane.title}</h3>
-          {lane.cards.length > 0 ? (
+          {cards.length > 0 ? (
             <ol>
-              {lane.cards.map(card => (
+              {cards.map(card => (
                 <li key={card}>
                   <Card id={card} />
                 </li>
