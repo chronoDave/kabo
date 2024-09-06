@@ -3,7 +3,7 @@ import createSelector from '../lib/selector/selector';
 import { state, State } from './state';
 import Storage from '../lib/storage/storage';
 
-const storage = new Storage('kabo', state);
+const storage = new Storage('state', state);
 const store = new Store<State>(storage.read() ?? storage.default)
   .on(state => storage.write(state.current))
   .on(state => {

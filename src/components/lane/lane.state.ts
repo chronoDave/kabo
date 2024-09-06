@@ -1,9 +1,21 @@
+import deepEqual from 'fast-deep-equal';
+
+import { Lane } from '../../store/entities';
 import { selector } from '../../store/store';
 
-export default selector(state => (id: string) => ({
+type State = {
+  lane: Lane | null;
+  cards: string[];
+};
+
+export default selector<string, State>(state => id => ({
   lane: state.lanes[id],
-  cards: state.card_lane.reduce<string[]>((acc, cur) => {
-    if (cur.lane === id) acc.push(cur.card);
+  cards: Object.values(state.cards).reduce<string[]>((acc, cur) => {
+    if (cur.lane === id) acc.push(cur.id);
     return acc;
   }, [])
-}));
+}), ({ current, previous }) => {
+  if (Object.keys(previous.cards).length !== Object.keys(current.cards).length) return true;
+  if (!deepEqual(previous.lanes, current.lanes)) return true;
+  return false;
+});

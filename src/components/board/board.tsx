@@ -1,9 +1,9 @@
 import type { ForgoNewComponentCtor as Component } from 'forgo';
 
 import * as forgo from 'forgo';
-import * as lane from '../../store/actions/lane';
 import Lane from '../lane/lane';
 import selector from './board.state';
+import * as actions from '../../store/actions';
 
 export type BoardProps = {
   id: string;
@@ -14,9 +14,15 @@ const Board: Component<BoardProps> = initial => {
     render(props) {
       const { board, lanes } = selector.state(props.id);
 
+      if (!board) return null;
       return (
         <article data-id={props.id}>
-          <h2>{board.title}</h2>
+          <header>
+            <h2>{board.title}</h2>
+            <button type='button' onclick={() => actions.board.remove(props.id)}>
+              Remove board
+            </button>
+          </header>
           {lanes.length > 0 ? (
             <ol>
               {lanes.map(lane => (
@@ -26,7 +32,7 @@ const Board: Component<BoardProps> = initial => {
               ))}
             </ol>
           ) : null}
-          <button type='button' onclick={() => lane.create(props.id)('New Lane')}>
+          <button type='button' onclick={() => actions.lane.create(props.id)('New Lane')}>
             Add lane
           </button>
         </article>
