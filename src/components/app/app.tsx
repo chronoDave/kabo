@@ -4,7 +4,8 @@ import * as forgo from 'forgo';
 
 import selector from './app.state';
 import Board from '../board/board';
-import * as board from '../../store/actions/board';
+import * as actions from '../../store/actions/board';
+import FormAdd from '../form-add/form-add';
 
 export type AppProps = {};
 
@@ -16,10 +17,15 @@ const App: Component<AppProps> = () => {
       return (
         <main>
           <h1>Kabo</h1>
+          <FormAdd
+            onadd={actions.create}
+            default='New Board'
+            label={{
+              submit: 'Add board',
+              input: 'Board title'
+            }}
+          />
           {boards.map(board => <Board key={board} id={board} />)}
-          <button type='button' onclick={() => board.create('New Board')}>
-            Add board
-          </button>
         </main>
       );
     }

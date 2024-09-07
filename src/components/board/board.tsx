@@ -5,6 +5,7 @@ import Lane from '../lane/lane';
 import selector from './board.state';
 import * as actions from '../../store/actions';
 import Toolbar from '../../lib/toolbar/toolbar';
+import FormAdd from '../form-add/form-add';
 
 export type BoardProps = {
   id: string;
@@ -36,6 +37,14 @@ const Board: Component<BoardProps> = initial => {
               Remove board
             </button>
           </header>
+          <FormAdd
+            onadd={actions.lane.create(props.id)}
+            default='New Lane'
+            label={{
+              submit: 'Add lane',
+              input: 'Lane title'
+            }}
+          />
           {lanes.length > 0 ? (
             <ol>
               {lanes.map(lane => (
@@ -45,9 +54,6 @@ const Board: Component<BoardProps> = initial => {
               ))}
             </ol>
           ) : null}
-          <button type='button' onclick={() => actions.lane.create(props.id)('New Lane')}>
-            Add lane
-          </button>
         </article>
       );
     }
