@@ -1,16 +1,17 @@
 import type { ForgoNewComponentCtor as Component } from 'forgo';
 
 import * as forgo from 'forgo';
-import * as card from '../../store/actions/card';
-import { remove } from '../../store/actions/lane';
+import * as actions from '../../store/actions';
 import Card from '../card/card';
 import selector from './lane.state';
+import Toolbar from '../../lib/toolbar/toolbar';
 
 export type LaneProps = {
   id: string;
 };
 
 const Lane: Component<LaneProps> = initial => {
+  const toolbar = new Toolbar();
   const component = new forgo.Component<LaneProps>({
     render(props) {
       const { lane, cards } = selector.state(props.id);
@@ -19,8 +20,19 @@ const Lane: Component<LaneProps> = initial => {
       return (
         <article data-id={props.id}>
           <header>
-            <h3>{lane.title}</h3>
-            <button type='button' onclick={() => remove(props.id)}>
+            <h3
+              {...toolbar.headingProps}
+              onblur={event => actions.lane.update(props.id)((event.target as HTMLHeadingElement).innerText)}
+            >
+              {lane.title}
+            </h3>
+            <button
+              {...toolbar.editProps}
+              type='button'
+            >
+              Edit title
+            </button>
+            <button type='button' onclick={() => actions.lane.remove(props.id)}>
               Remove lane
             </button>
           </header>
@@ -33,7 +45,7 @@ const Lane: Component<LaneProps> = initial => {
               ))}
             </ol>
           ) : null}
-          <button type='button' onclick={() => card.create(props.id)('New Card')}>
+          <button type='button' onclick={() => actions.card.create(props.id)('New Card')}>
             Add card
           </button>
         </article>
@@ -41,6 +53,7 @@ const Lane: Component<LaneProps> = initial => {
     }
   });
 
+  toolbar.on('edit', () => component.update());
   selector.subscribe(initial.id)(component);
 
   return component;

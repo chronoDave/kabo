@@ -10,6 +10,12 @@ export const create = (board: string) =>
       draft.lanes[id] = { id, title, board };
     }));
 
+export const update = (id: string) =>
+  (title: string) =>
+    store.set(produce(draft => {
+      draft.lanes[id].title = title;
+    }));
+
 export const remove = (id: string) => store.set(produce(draft => {
   delete draft.lanes[id];
 
