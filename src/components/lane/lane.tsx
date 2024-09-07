@@ -7,6 +7,8 @@ import selector from './lane.state';
 import Toolbar from '../../lib/toolbar/toolbar';
 import FormAdd from '../form-add/form-add';
 
+import './lane.scss';
+
 export type LaneProps = {
   id: string;
 };
@@ -19,7 +21,7 @@ const Lane: Component<LaneProps> = initial => {
 
       if (!lane) return null;
       return (
-        <article data-id={props.id}>
+        <article class='lane' data-id={props.id}>
           <header>
             <h3
               {...toolbar.headingProps}
@@ -46,7 +48,7 @@ const Lane: Component<LaneProps> = initial => {
             }}
           />
           {cards.length > 0 ? (
-            <ol>
+            <ol class='clear'>
               {cards.map(card => (
                 <li key={card}>
                   <Card id={card} />

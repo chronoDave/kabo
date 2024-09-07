@@ -7,6 +7,8 @@ import * as actions from '../../store/actions';
 import Toolbar from '../../lib/toolbar/toolbar';
 import FormAdd from '../form-add/form-add';
 
+import './board.scss';
+
 export type BoardProps = {
   id: string;
 };
@@ -19,7 +21,7 @@ const Board: Component<BoardProps> = initial => {
 
       if (!board) return null;
       return (
-        <article data-id={props.id}>
+        <article class='board' data-id={props.id}>
           <header>
             <h2
               {...toolbar.headingProps}
@@ -46,7 +48,7 @@ const Board: Component<BoardProps> = initial => {
             }}
           />
           {lanes.length > 0 ? (
-            <ol>
+            <ol class='clear'>
               {lanes.map(lane => (
                 <li key={lane}>
                   <Lane id={lane} />

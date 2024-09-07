@@ -10,7 +10,8 @@ const watch = args.includes('-w');
 const config = {
   entryPoints: [
     'src/index.html',
-    'src/index.tsx'
+    'src/index.tsx',
+    { in: 'src/index.scss', out: 'base' }
   ],
   loader: {
     '.html': 'copy'
@@ -22,7 +23,8 @@ const config = {
   plugins: [
     log,
     sass({
-      minify: !watch
+      minify: !watch,
+      depedencies: ['src/scss/lib']
     })
   ]
 };

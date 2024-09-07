@@ -1,0 +1,7 @@
+@use 'shadow';
+
+.card {
+  box-shadow: shadow.box(1);
+  padding: 1rem;
+  background-color: var(--card);
+}

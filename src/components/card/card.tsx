@@ -5,6 +5,8 @@ import selector from './card.state';
 import * as actions from '../../store/actions';
 import Toolbar from '../../lib/toolbar/toolbar';
 
+import './card.scss';
+
 export type CardProps = {
   id: string;
 };
@@ -17,7 +19,7 @@ const Card: Component<CardProps> = initial => {
 
       if (!card) return null;
       return (
-        <article data-id={props.id}>
+        <article class='card' data-id={props.id}>
           <header>
             <h4
               {...toolbar.headingProps}

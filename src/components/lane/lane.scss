@@ -1,0 +1,11 @@
+@use 'shadow';
+
+.lane {
+  box-shadow: shadow.box(1);
+  padding: 1rem;
+  background-color: var(--lane);
+
+  > ol > li + li {
+    margin-top: 0.5rem;
+  }
+}
