@@ -24,7 +24,10 @@ const Card: Component<CardProps> = initial => {
           <header>
             <h4
               {...toolbar.headingProps}
-              onblur={event => actions.card.update(props.id)((event.target as HTMLHeadingElement).innerText)}
+              onblur={event => {
+                const title = (event.target as HTMLHeadingElement).innerText;
+                if (card.title !== title) actions.card.update(props.id)(title);
+              }}
             >
               {card.title}
             </h4>

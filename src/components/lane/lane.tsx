@@ -25,7 +25,10 @@ const Lane: Component<LaneProps> = initial => {
           <header>
             <h3
               {...toolbar.headingProps}
-              onblur={event => actions.lane.update(props.id)((event.target as HTMLHeadingElement).innerText)}
+              onblur={event => {
+                const title = (event.target as HTMLHeadingElement).innerText;
+                if (title !== lane.title) actions.lane.update(props.id)(title);
+              }}
             >
               {lane.title}
             </h3>

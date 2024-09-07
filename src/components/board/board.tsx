@@ -25,7 +25,10 @@ const Board: Component<BoardProps> = initial => {
           <header>
             <h2
               {...toolbar.headingProps}
-              onblur={event => actions.board.update(props.id)((event.target as HTMLHeadingElement).innerText)}
+              onblur={event => {
+                const title = (event.target as HTMLHeadingElement).innerText;
+                if (title !== board.title) actions.board.update(props.id)(title);
+              }}
             >
               {board.title}
             </h2>
