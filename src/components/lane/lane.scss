@@ -1,11 +1,36 @@
 @use 'shadow';
 
 .lane {
-  box-shadow: shadow.box(1);
-  padding: 1rem;
-  background-color: var(--lane);
+  > header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
 
-  > ol > li + li {
-    margin-top: 0.5rem;
+    > h3 {
+      flex-shrink: 0;
+      padding: 0.25rem 0.5rem;
+    }
+
+    > .toolbar {
+      display: flex;
+      gap: 0.25rem;
+    }
+  }
+
+  > button {
+    box-shadow: shadow.box(1);
+    padding: 0.5rem;
+    width: 100%;
+    background-color: var(--card);
+  }
+
+  > ol {
+    margin-top: 1rem;
+
+    > li + li {
+      margin-top: 0.5rem;
+    }
   }
 }

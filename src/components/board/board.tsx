@@ -5,7 +5,7 @@ import Lane from '../lane/lane';
 import selector from './board.state';
 import * as actions from '../../store/actions';
 import Toolbar from '../../lib/toolbar/toolbar';
-import FormAdd from '../form-add/form-add';
+import Icon from '../icon/icon';
 
 import './board.scss';
 
@@ -29,33 +29,27 @@ const Board: Component<BoardProps> = initial => {
             >
               {board.title}
             </h2>
-            <button
-              {...toolbar.editProps}
-              type='button'
-            >
-              Toggle edit
-            </button>
             <button type='button' onclick={() => actions.board.remove(props.id)}>
               Remove board
             </button>
           </header>
-          <FormAdd
-            onadd={actions.lane.create(props.id)}
-            default='New Lane'
-            label={{
-              submit: 'Add lane',
-              input: 'Lane title'
-            }}
-          />
-          {lanes.length > 0 ? (
-            <ol class='clear'>
-              {lanes.map(lane => (
-                <li key={lane}>
-                  <Lane id={lane} />
-                </li>
-              ))}
-            </ol>
-          ) : null}
+          <ol class='clear'>
+            {lanes.map(lane => (
+              <li key={lane}>
+                <Lane id={lane} />
+              </li>
+            ))}
+            <li>
+              <button
+                type='button'
+                onclick={() => actions.lane.create(props.id)('New bucket')}
+                class='clear'
+              >
+                <Icon id='plus' />
+                Add bucket
+              </button>
+            </li>
+          </ol>
         </article>
       );
     }

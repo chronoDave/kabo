@@ -1,0 +1,27 @@
+button, .btn {
+  font-size: 1rem;
+
+  &:not(:disabled):hover {
+    cursor: pointer;
+  }
+
+  &:has(.icon) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  &.clear {
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+  &.icon {
+    border: none;
+    padding: 0;
+    width: 2rem;
+    height: 2rem;
+  }
+}

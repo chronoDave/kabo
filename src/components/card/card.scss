@@ -2,6 +2,18 @@
 
 .card {
   box-shadow: shadow.box(1);
-  padding: 1rem;
+  padding: 0.5rem;
   background-color: var(--card);
+
+  > header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    > h4 {
+      flex-shrink: 0;
+      padding: 0.25rem 0.5rem;
+    }
+  }
 }

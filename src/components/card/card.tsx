@@ -4,6 +4,7 @@ import * as forgo from 'forgo';
 import selector from './card.state';
 import * as actions from '../../store/actions';
 import Toolbar from '../../lib/toolbar/toolbar';
+import Icon from '../icon/icon';
 
 import './card.scss';
 
@@ -28,13 +29,12 @@ const Card: Component<CardProps> = initial => {
               {card.title}
             </h4>
             <button
-              {...toolbar.editProps}
               type='button'
+              onclick={() => actions.card.remove(props.id)}
+              class='icon'
             >
-              Edit title
-            </button>
-            <button type='button' onclick={() => actions.card.remove(props.id)}>
-              Remove card
+              <Icon id='xmark' />
+              <span class='sr-only'>Remove card</span>
             </button>
           </header>
         </article>

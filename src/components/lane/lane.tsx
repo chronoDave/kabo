@@ -5,9 +5,9 @@ import * as actions from '../../store/actions';
 import Card from '../card/card';
 import selector from './lane.state';
 import Toolbar from '../../lib/toolbar/toolbar';
-import FormAdd from '../form-add/form-add';
 
 import './lane.scss';
+import Icon from '../icon/icon';
 
 export type LaneProps = {
   id: string;
@@ -29,24 +29,25 @@ const Lane: Component<LaneProps> = initial => {
             >
               {lane.title}
             </h3>
-            <button
-              {...toolbar.editProps}
-              type='button'
-            >
-              Edit title
-            </button>
-            <button type='button' onclick={() => actions.lane.remove(props.id)}>
-              Remove lane
-            </button>
+            <div class='toolbar'>
+              <button
+                type='button'
+                onclick={() => actions.lane.remove(props.id)}
+                class='icon'
+              >
+                <Icon id='xmark' />
+                <span class='sr-only'>Remove lane</span>
+              </button>
+            </div>
           </header>
-          <FormAdd
-            onadd={actions.card.create(props.id)}
-            default='New Card'
-            label={{
-              submit: 'Add card',
-              input: 'Card title'
-            }}
-          />
+          <button
+            class='clear'
+            type='button'
+            onclick={() => actions.card.create(props.id)('New card')}
+          >
+            <Icon id='plus' />
+            Add card
+          </button>
           {cards.length > 0 ? (
             <ol class='clear'>
               {cards.map(card => (

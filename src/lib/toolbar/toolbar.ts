@@ -1,4 +1,3 @@
-import * as forgo from 'forgo';
 import Emitter from '../emitter/emitter';
 
 /** https://w3c.github.io/input-events/#interface-InputEvent-Attributes */
@@ -58,13 +57,6 @@ export type ToolbarEvents = {
 export default class Toolbar extends Emitter<ToolbarEvents> {
   private readonly _id: string;
   private readonly _plainTypes: string[];
-  private _editable: boolean;
-
-  private _handleEdit() {
-    this._editable = !this._editable;
-
-    this.emit('edit', this._editable);
-  }
 
   private _handleBeforeInput(event: InputEvent) {
     if (!this._plainTypes.includes(event.inputType)) return event.preventDefault();
@@ -84,18 +76,10 @@ export default class Toolbar extends Emitter<ToolbarEvents> {
     selection.collapseToEnd();
   }
 
-  get editProps() {
-    return {
-      'aria-pressed': this._editable,
-      'aria-controls': this._id,
-      'onclick': () => this._handleEdit()
-    };
-  }
-
   get headingProps() {
     return {
       id: this._id,
-      contenteditable: this._editable,
+      contenteditable: true,
       onbeforeinput: (event: InputEvent) => this._handleBeforeInput(event),
       onpaste: (event: ClipboardEvent) => this._handlePaste(event)
     };
@@ -105,7 +89,6 @@ export default class Toolbar extends Emitter<ToolbarEvents> {
     super();
 
     this._id = crypto.randomUUID();
-    this._editable = false;
     this._plainTypes = [
       InputType.insertText,
       InputType.deleteContent,
