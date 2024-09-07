@@ -7,6 +7,7 @@ export const create = (title: string) =>
     const id = crypto.randomUUID();
 
     draft.boards[id] = { id, title };
+    draft.active.board = id;
   }));
 
 export const update = (id: string) =>
@@ -17,6 +18,10 @@ export const update = (id: string) =>
 
 export const remove = (id: string) => store.set(produce(draft => {
   delete draft.boards[id];
+  delete draft.active.board;
+
+  const keys = Object.keys(draft.boards);
+  if (keys.length > 0) draft.active.board = keys[keys.length - 1];
 
   Object.values(draft.lanes).forEach(lane => {
     if (lane.board === id) {
