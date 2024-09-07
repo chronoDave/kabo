@@ -1,9 +1,14 @@
 .board {
   > ol {
     display: flex;
+    flex-direction: column;
     gap: 1rem;
     overflow: auto;
     padding: 1rem;
+
+    @media (min-width: 768px) or (min-aspect-ratio: 1/1) {
+      flex-direction: row;
+    }
 
     > li {
       flex-shrink: 0;
