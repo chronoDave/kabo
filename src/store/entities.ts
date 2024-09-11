@@ -3,7 +3,8 @@ import { z } from 'zod';
 export const card = z.object({
   id: z.string().readonly(),
   title: z.string(),
-  lane: z.string()
+  lane: z.string(),
+  order: z.number()
 });
 
 export type Card = z.infer<typeof card>;

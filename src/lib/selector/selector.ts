@@ -1,21 +1,23 @@
 import type { Component } from 'forgo';
-import type { Subscriber } from '../store/store';
+import type { Subscriber, View } from '../store/store';
+import type Store from '../store/store';
+import type { Frozen } from '../object/freeze';
 
 import deepEqual from 'fast-deep-equal';
-import Store from '../store/store';
 
-export type Selector<
-  S extends object,
-  T extends unknown,
-  K extends unknown
-> = (state: S) => (...args: T[]) => K;
+export type Selector<S extends object, T, K> = (state: Frozen<S>) => (...args: T[]) => K;
 
-export default <S extends object>(store: Store<S>) => <T extends unknown, K extends unknown>(
+export type SelectorResult<T, K> = {
+  state: (...args: T[]) => K;
+  subscribe: (...args: T[]) => <S extends object>(component: Component<S>) => void;
+};
+
+export default <S extends object>(store: Store<S>) => <T, K>(
   selector: Selector<S, T, K>,
-  shouldUpdate?: (state: { previous: S, current: S }) => boolean
-) => ({
-  state: (...args: T[]) => selector(store.current)(...args),
-  subscribe: (...args: T[]) => (component: Component<any>) => {
+  shouldUpdate?: (view: View<Frozen<S>>) => boolean
+): SelectorResult<T, K> => ({
+  state: (...args) => selector(store.current)(...args),
+  subscribe: (...args) => component => {
     const subscriber: Subscriber<S> = state => {
       if (shouldUpdate?.(state)) return component.update();
 
@@ -23,7 +25,7 @@ export default <S extends object>(store: Store<S>) => <T extends unknown, K exte
       const previous = selector(state.previous)(...args);
 
       if (!deepEqual(current, previous)) component.update();
-    }
+    };
 
     component.unmount(() => store.off(subscriber));
     component.mount(() => store.on(subscriber));

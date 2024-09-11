@@ -23,7 +23,9 @@ test('[emitter.on] emits and listens to specific events', t => {
       t.deepEqual(payload, { x: 1 }, 'has payload');
       t.end();
     })
-    .on('fail', () => t.fail('listened to wrong event'))
+    .on('fail', () => {
+      t.fail('listened to wrong event');
+    })
     .emit('event', { x: 1 });
 });
 

@@ -34,7 +34,7 @@ const App: Component<AppProps> = () => {
             <Icon id='plus' />
             Add board
           </button>
-          {active ? <Board id={active} /> : null}
+          {typeof active === 'string' ? <Board id={active} /> : null}
         </main>
       );
     }

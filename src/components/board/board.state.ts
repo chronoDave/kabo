@@ -1,5 +1,5 @@
 import deepEqual from 'fast-deep-equal';
-import { Board } from '../../store/entities';
+import type { Board } from '../../store/entities';
 
 import { selector } from '../../store/store';
 
@@ -9,13 +9,13 @@ type State = {
 };
 
 export default selector<string, State>(state => id => ({
-  board: state.boards[id],
-  lanes: Object.values(state.lanes).reduce<string[]>((acc, cur) => {
+  board: state.entities.board[id],
+  lanes: Object.values(state.entities.lane).reduce<string[]>((acc, cur) => {
     if (cur.board === id) acc.push(cur.id);
     return acc;
   }, [])
 }), ({ current, previous }) => {
-  if (Object.keys(previous.lanes).length !== Object.keys(current.lanes).length) return true;
-  if (!deepEqual(previous.boards, current.boards)) return true;
+  if (Object.keys(previous.entities.lane).length !== Object.keys(current.entities.lane).length) return true;
+  if (!deepEqual(previous.entities.board, current.entities.board)) return true;
   return false;
 });

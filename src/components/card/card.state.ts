@@ -3,4 +3,4 @@ import { selector } from '../../store/store';
 
 type State = Card | null;
 
-export default selector<string, State>(state => id => state.cards[id]);
+export default selector<string, State>(state => id => state.entities.card[id]);

@@ -1,7 +1,7 @@
 export default {
   name: 'log',
   setup: build => {
-    const label = '[esbuild]'
+    const label = '[esbuild]';
 
     build.onStart(() => {
       console.time(label);

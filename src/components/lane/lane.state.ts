@@ -9,13 +9,13 @@ type State = {
 };
 
 export default selector<string, State>(state => id => ({
-  lane: state.lanes[id],
-  cards: Object.values(state.cards).reduce<string[]>((acc, cur) => {
-    if (cur.lane === id) acc.push(cur.id);
-    return acc;
-  }, [])
+  lane: state.entities.lane[id],
+  cards: Object.values(state.entities.card)
+    .filter(card => card.lane === id)
+    .sort((a, b) => a.order - b.order)
+    .map(card => card.id)
 }), ({ current, previous }) => {
-  if (Object.keys(previous.cards).length !== Object.keys(current.cards).length) return true;
-  if (!deepEqual(previous.lanes, current.lanes)) return true;
+  if (Object.keys(previous.entities.card).length !== Object.keys(current.entities.card).length) return true;
+  if (!deepEqual(previous.entities.lane, current.entities.lane)) return true;
   return false;
 });

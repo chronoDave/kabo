@@ -1,35 +1,44 @@
+import type Store from '../../lib/store/store';
+import type { State } from '../state';
+
 import { produce } from 'immer';
 
-import store from '../store';
-
-export const create = (title: string) =>
-  store.set(produce(draft => {
-    const id = crypto.randomUUID();
-
-    draft.boards[id] = { id, title };
-    draft.active.board = id;
-  }));
-
-export const update = (id: string) =>
-  (title: string) =>
+export const create = (store: Store<State>) =>
+  (title: string): void => {
     store.set(produce(draft => {
-      draft.boards[id].title = title;
+      const id = crypto.randomUUID();
+
+      draft.entities.board[id] = { id, title };
+      draft.active.board = id;
     }));
+  };
 
-export const remove = (id: string) => store.set(produce(draft => {
-  delete draft.boards[id];
-  delete draft.active.board;
 
-  const keys = Object.keys(draft.boards);
-  if (keys.length > 0) draft.active.board = keys[keys.length - 1];
+export const update = (store: Store<State>) =>
+  (id: string) =>
+    (title: string): void => {
+      store.set(produce(draft => {
+        draft.entities.board[id].title = title;
+      }));
+    };
 
-  Object.values(draft.lanes).forEach(lane => {
-    if (lane.board === id) {
-      delete draft.lanes[lane.id];
+export const remove = (store: Store<State>) =>
+  (id: string): void => {
+    store.set(produce(draft => {
+      delete draft.entities.board[id];
+      delete draft.active.board;
 
-      Object.values(draft.cards).forEach(card => {
-        if (card.lane === lane.id) delete draft.cards[card.id];
+      const keys = Object.keys(draft.entities.board);
+      if (keys.length > 0) draft.active.board = keys[keys.length - 1];
+
+      Object.values(draft.entities.lane).forEach(lane => {
+        if (lane.board === id) {
+          delete draft.entities.lane[lane.id];
+
+          Object.values(draft.entities.card).forEach(card => {
+            if (card.lane === lane.id) delete draft.entities.card[card.id];
+          });
+        }
       });
-    }
-  });
-}));
+    }));
+  };

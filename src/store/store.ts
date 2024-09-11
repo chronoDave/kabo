@@ -1,17 +1,11 @@
 import Store from '../lib/store/store';
 import createSelector from '../lib/selector/selector';
-import { state, State } from './state';
+import { state } from './state';
 import Storage from '../lib/storage/storage';
 
 const storage = new Storage('state', state);
-const store = new Store<State>(storage.read() ?? storage.default)
-  .on(state => storage.write(state.current))
-  .on(state => {
-    console.group('store');
-    console.log('current', state.current);
-    console.log('previous', state.previous);
-    console.groupEnd();
-  });
+const store = new Store(storage.read() ?? storage.default)
+  .on(state => storage.write(state.current));
 
 export default store;
 export const selector = createSelector(store);

@@ -4,7 +4,7 @@ import * as forgo from 'forgo';
 import * as actions from '../../store/actions';
 import Card from '../card/card';
 import selector from './lane.state';
-import Toolbar from '../../lib/toolbar/toolbar';
+import contentEditable from '../../lib/contentEditable/contentEditable';
 
 import './lane.scss';
 import Icon from '../icon/icon';
@@ -14,7 +14,6 @@ export type LaneProps = {
 };
 
 const Lane: Component<LaneProps> = initial => {
-  const toolbar = new Toolbar();
   const component = new forgo.Component<LaneProps>({
     render(props) {
       const { lane, cards } = selector.state(props.id);
@@ -24,7 +23,7 @@ const Lane: Component<LaneProps> = initial => {
         <article class='lane' data-id={props.id}>
           <header>
             <h3
-              {...toolbar.headingProps}
+              {...contentEditable}
               onblur={event => {
                 const title = (event.target as HTMLHeadingElement).innerText;
                 if (title !== lane.title) actions.lane.update(props.id)(title);
@@ -35,7 +34,7 @@ const Lane: Component<LaneProps> = initial => {
             <div class='toolbar'>
               <button
                 type='button'
-                onclick={() => actions.lane.remove(props.id)}
+                onclick={() => actions.lane.delete(props.id)}
                 class='icon'
               >
                 <Icon id='xmark' />
@@ -65,7 +64,6 @@ const Lane: Component<LaneProps> = initial => {
     }
   });
 
-  toolbar.on('edit', () => component.update());
   selector.subscribe(initial.id)(component);
 
   return component;

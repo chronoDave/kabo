@@ -4,7 +4,7 @@ import * as forgo from 'forgo';
 import Lane from '../lane/lane';
 import selector from './board.state';
 import * as actions from '../../store/actions';
-import Toolbar from '../../lib/toolbar/toolbar';
+import contentEditable from '../../lib/contentEditable/contentEditable';
 import Icon from '../icon/icon';
 
 import './board.scss';
@@ -14,7 +14,6 @@ export type BoardProps = {
 };
 
 const Board: Component<BoardProps> = initial => {
-  const toolbar = new Toolbar();
   const component = new forgo.Component<BoardProps>({
     render(props) {
       const { board, lanes } = selector.state(props.id);
@@ -24,7 +23,7 @@ const Board: Component<BoardProps> = initial => {
         <article class='board' data-id={props.id}>
           <header>
             <h2
-              {...toolbar.headingProps}
+              {...contentEditable}
               onblur={event => {
                 const title = (event.target as HTMLHeadingElement).innerText;
                 if (title !== board.title) actions.board.update(props.id)(title);
@@ -32,7 +31,10 @@ const Board: Component<BoardProps> = initial => {
             >
               {board.title}
             </h2>
-            <button type='button' onclick={() => actions.board.remove(props.id)}>
+            <button
+              type='button'
+              onclick={() => actions.board.delete(props.id)}
+            >
               Remove board
             </button>
           </header>
@@ -58,7 +60,6 @@ const Board: Component<BoardProps> = initial => {
     }
   });
 
-  toolbar.on('edit', () => component.update());
   selector.subscribe(initial.id)(component);
 
   return component;

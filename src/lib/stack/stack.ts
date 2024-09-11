@@ -5,7 +5,7 @@ export default class Stack<T> {
   private readonly _size: number;
   private _index: number;
 
-  get size() {
+  get size(): number {
     return Array.from(this._stack.values()).filter(x => x !== null).length;
   }
 
@@ -19,18 +19,18 @@ export default class Stack<T> {
    * @param i Relative index
    */
   peek(i?: number): T | null {
-    if (!i) return this._stack.get(wrap(0, this._size - 1, this._index - 1)) ?? null;
+    if (typeof i !== 'number') return this._stack.get(wrap(0, this._size - 1, this._index - 1)) ?? null;
     return this._stack.get(wrap(0, this._size - 1, this._index - (1 + i))) ?? null;
   }
 
-  push(x: T) {
+  push(x: T): this {
     this._stack.set(this._index, x);
     this._index = wrap(0, this._size - 1, this._index + 1);
 
     return this;
   }
 
-  pop() {
+  pop(): this {
     this._index = wrap(0, this._size - 1, this._index - 1);
     this._stack.set(this._index, null);
 

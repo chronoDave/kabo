@@ -14,6 +14,7 @@ test('[selector] returns selection on component update', t => {
   const store = new Store({ a: { b: 1 } });
   const selector = createSelector(store)(state => () => state.a.b);
 
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   const Body = () => {
     const component = new forgo.Component({
       render() {
@@ -35,10 +36,11 @@ test('[selector] returns selection on component update', t => {
     selector.subscribe()(component);
 
     return component;
-  }
+  };
 
   t.equal(selector.state(), 1, 'returns selection');
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   forgo.mount(<Body />, jsdom.window.document.body);
   store.set(() => ({ a: { b: 2 }}));
-})
+});
