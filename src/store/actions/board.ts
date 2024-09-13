@@ -1,5 +1,6 @@
 import type Store from '../../lib/store/store';
 import type { State } from '../state';
+import type { Board } from '../entities';
 
 import { produce } from 'immer';
 
@@ -8,7 +9,7 @@ export const create = (store: Store<State>) =>
     store.set(produce(draft => {
       const id = crypto.randomUUID();
 
-      draft.entities.board[id] = { id, title };
+      draft.entity.board[id] = { id, title, lanes: [] };
       draft.active.board = id;
     }));
   };
@@ -16,29 +17,24 @@ export const create = (store: Store<State>) =>
 
 export const update = (store: Store<State>) =>
   (id: string) =>
-    (title: string): void => {
+    (board: Partial<Omit<Board, 'id'>>): void => {
       store.set(produce(draft => {
-        draft.entities.board[id].title = title;
+        if (typeof board.title === 'string') {
+          draft.entity.board[id].title = board.title.trim();
+        }
       }));
     };
 
 export const remove = (store: Store<State>) =>
   (id: string): void => {
     store.set(produce(draft => {
-      delete draft.entities.board[id];
-      delete draft.active.board;
+      delete draft.entity.board[id];
 
-      const keys = Object.keys(draft.entities.board);
-      if (keys.length > 0) draft.active.board = keys[keys.length - 1];
-
-      Object.values(draft.entities.lane).forEach(lane => {
-        if (lane.board === id) {
-          delete draft.entities.lane[lane.id];
-
-          Object.values(draft.entities.card).forEach(card => {
-            if (card.lane === lane.id) delete draft.entities.card[card.id];
-          });
-        }
-      });
+      const keys = Object.keys(draft.entity.board);
+      if (keys.length > 0) {
+        draft.active.board = keys[keys.length - 1];
+      } else {
+        delete draft.active.board;
+      }
     }));
   };

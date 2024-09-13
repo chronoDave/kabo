@@ -1,13 +1,14 @@
 import type { ForgoNewComponentCtor as Component } from 'forgo';
 
 import * as forgo from 'forgo';
+
 import * as actions from '../../store/actions';
-import Card from '../card/card';
-import selector from './lane.state';
 import contentEditable from '../../lib/contentEditable/contentEditable';
+import Card from '../card/card';
+import Icon from '../icon/icon';
+import selector from './lane.state';
 
 import './lane.scss';
-import Icon from '../icon/icon';
 
 export type LaneProps = {
   id: string;
@@ -16,7 +17,7 @@ export type LaneProps = {
 const Lane: Component<LaneProps> = initial => {
   const component = new forgo.Component<LaneProps>({
     render(props) {
-      const { lane, cards } = selector.state(props.id);
+      const lane = selector.state(props.id);
 
       if (!lane) return null;
       return (
@@ -26,7 +27,7 @@ const Lane: Component<LaneProps> = initial => {
               {...contentEditable}
               onblur={event => {
                 const title = (event.target as HTMLHeadingElement).innerText;
-                if (title !== lane.title) actions.lane.update(props.id)(title);
+                if (title !== lane.title) actions.lane.update(props.id)({ title });
               }}
             >
               {lane.title}
@@ -50,11 +51,15 @@ const Lane: Component<LaneProps> = initial => {
             <Icon id='plus' />
             Add card
           </button>
-          {cards.length > 0 ? (
+          {lane.cards.length > 0 ? (
             <ol class='clear'>
-              {cards.map(card => (
+              {lane.cards.map((card, i) => (
                 <li key={card}>
-                  <Card id={card} />
+                  <Card
+                    id={card}
+                    onmoveup={id => actions.move.card(id)({ id: lane.id, n: i })({ id: lane.id, n: i - 1 })}
+                    onmovedown={id => actions.move.card(id)({ id: lane.id, n: i })({ id: lane.id, n: i + 1 })}
+                  />
                 </li>
               ))}
             </ol>

@@ -1,6 +1,7 @@
-import { Card } from '../../store/entities';
+import type { Card } from '../../store/entities';
+
 import { selector } from '../../store/store';
 
-type State = Card | null;
-
-export default selector<string, State>(state => id => state.entities.card[id]);
+export default selector<string, Card | null>(
+  state => id => state.entity.card[id] ?? null
+);

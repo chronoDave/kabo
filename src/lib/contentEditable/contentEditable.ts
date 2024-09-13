@@ -20,7 +20,7 @@ export type ContentEditable = {
 const contentEditable: ContentEditable = {
   contenteditable: true,
   onbeforeinput: event => {
-    if ((PLAIN_TYPES as string[]).includes(event.inputType)) {
+    if (!(PLAIN_TYPES as string[]).includes(event.inputType)) {
       event.preventDefault();
       return;
     }

@@ -16,7 +16,7 @@ export type BoardProps = {
 const Board: Component<BoardProps> = initial => {
   const component = new forgo.Component<BoardProps>({
     render(props) {
-      const { board, lanes } = selector.state(props.id);
+      const board = selector.state(props.id);
 
       if (!board) return null;
       return (
@@ -26,7 +26,7 @@ const Board: Component<BoardProps> = initial => {
               {...contentEditable}
               onblur={event => {
                 const title = (event.target as HTMLHeadingElement).innerText;
-                if (title !== board.title) actions.board.update(props.id)(title);
+                if (title !== board.title) actions.board.update(props.id)({ title });
               }}
             >
               {board.title}
@@ -39,7 +39,7 @@ const Board: Component<BoardProps> = initial => {
             </button>
           </header>
           <ol class='clear'>
-            {lanes.map(lane => (
+            {board.lanes.map(lane => (
               <li key={lane}>
                 <Lane id={lane} />
               </li>

@@ -1,11 +1,10 @@
 import type { Component } from 'forgo';
 import type { Subscriber, View } from '../store/store';
 import type Store from '../store/store';
-import type { Frozen } from '../object/freeze';
 
 import deepEqual from 'fast-deep-equal';
 
-export type Selector<S extends object, T, K> = (state: Frozen<S>) => (...args: T[]) => K;
+export type Selector<S extends object, T, K> = (state: S) => (...args: T[]) => K;
 
 export type SelectorResult<T, K> = {
   state: (...args: T[]) => K;
@@ -14,7 +13,7 @@ export type SelectorResult<T, K> = {
 
 export default <S extends object>(store: Store<S>) => <T, K>(
   selector: Selector<S, T, K>,
-  shouldUpdate?: (view: View<Frozen<S>>) => boolean
+  shouldUpdate?: (view: View<S>) => boolean
 ): SelectorResult<T, K> => ({
   state: (...args) => selector(store.current)(...args),
   subscribe: (...args) => component => {

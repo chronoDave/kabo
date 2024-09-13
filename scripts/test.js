@@ -13,7 +13,9 @@ esbuild.build({
   external: [
     'tape',
     'forgo',
-    'jsdom'
+    'jsdom',
+    'immer',
+    'zod'
   ],
   platform: 'node',
   plugins: [log]

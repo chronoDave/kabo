@@ -2,6 +2,7 @@ import * as _board from './actions/board';
 import * as _card from './actions/card';
 import * as _lane from './actions/lane';
 import * as _active from './actions/active';
+import * as _move from './actions/move';
 
 import store from './store';
 
@@ -25,4 +26,8 @@ export const lane = {
 
 export const active = {
   set: _active.set(store)
+};
+
+export const move = {
+  card: _move.card(store)
 };

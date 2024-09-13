@@ -1,30 +1,27 @@
-import type { Frozen } from '../object/freeze';
-
-import freeze from '../object/freeze';
 import Stack from '../stack/stack';
 
 export type View<S extends object> = { current: S; previous: S };
 
-export type Subscriber<S extends object> = (view: View<Frozen<S>>) => void;
+export type Subscriber<S extends object> = (view: View<S>) => void;
 
-export type Reducer<S extends object> = (state: Frozen<S>) => S;
+export type Reducer<S extends object> = (state: S) => S;
 
 export default class Store<S extends object> {
   private readonly _subscribers: Set<Subscriber<S>>;
   private readonly _state: Stack<S>;
 
-  get previous(): Frozen<S> {
+  get previous(): S {
     const prev = this._state.peek(-1);
     if (!prev) throw new Error('Store does not have previous value');
 
-    return freeze(prev);
+    return prev;
   }
 
-  get current(): Frozen<S> {
+  get current(): S {
     const cur = this._state.peek();
     if (!cur) throw new Error('Store does not have default value');
 
-    return freeze(cur);
+    return cur;
   }
 
   constructor(state: S) {

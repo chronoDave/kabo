@@ -18,6 +18,7 @@ const config = {
   },
   bundle: true,
   minify: !watch,
+  sourcemap: watch,
   platform: 'browser',
   outdir: path.resolve(process.cwd(), 'build'),
   plugins: [
@@ -33,5 +34,5 @@ if (watch) {
   const context = await esbuild.context(config);
   context.watch();
 } else {
-  esbuild.build(config);
+  await esbuild.build(config);
 }

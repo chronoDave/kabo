@@ -1,5 +1,6 @@
 import type Store from '../../lib/store/store';
 import type { State } from '../state';
+import type { Lane } from '../entities';
 
 import { produce } from 'immer';
 
@@ -9,25 +10,30 @@ export const create = (store: Store<State>) =>
       store.set(produce(draft => {
         const id = crypto.randomUUID();
 
-        draft.entities.lane[id] = { id, title, board };
+        draft.entity.lane[id] = { id, title, cards: [] };
+        draft.entity.board[board].lanes.push(id);
       }));
     };
 
 export const update = (store: Store<State>) =>
   (id: string) =>
-    (title: string): void => {
+    (lane: Partial<Omit<Lane, 'id'>>): void => {
       store.set(produce(draft => {
-        draft.entities.lane[id].title = title;
+        if (typeof lane.title === 'string') {
+          draft.entity.lane[id].title = lane.title.trim();
+        }
       }));
     };
 
 export const remove = (store: Store<State>) =>
   (id: string): void => {
     store.set(produce(draft => {
-      delete draft.entities.lane[id];
+      delete draft.entity.lane[id];
 
-      Object.values(draft.entities.card).forEach(card => {
-        if (card.lane === id) delete draft.entities.card[card.id];
-      });
+      const board = Object.values(draft.entity.board).find(x => x.lanes.includes(id));
+      if (board) {
+        const i = draft.entity.board[board.id].lanes.indexOf(id);
+        draft.entity.board[board.id].lanes.splice(i, 1);
+      }
     }));
   };

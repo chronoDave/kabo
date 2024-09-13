@@ -10,6 +10,8 @@ import './card.scss';
 
 export type CardProps = {
   id: string;
+  onmoveup: (id: string) => void;
+  onmovedown: (id: string) => void;
 };
 
 const Card: Component<CardProps> = initial => {
@@ -33,7 +35,7 @@ const Card: Component<CardProps> = initial => {
             <button
               type='button'
               class='icon'
-              onclick={() => actions.card.update(props.id)({ order: card.order - 1 })}
+              onclick={() => props.onmoveup(props.id)}
             >
               <Icon id='chevronUp' />
               <span class='sr-only'>Move card up</span>
@@ -41,7 +43,7 @@ const Card: Component<CardProps> = initial => {
             <button
               type='button'
               class='icon'
-              onclick={() => actions.card.update(props.id)({ order: card.order + 1 })}
+              onclick={() => props.onmovedown(props.id)}
             >
               <Icon id='chevronDown' />
               <span class='sr-only'>Move card down</span>
