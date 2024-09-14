@@ -23,15 +23,19 @@ const Lane: Component<LaneProps> = initial => {
       return (
         <article class='lane' data-id={props.id}>
           <header>
-            <h3
-              {...contentEditable}
-              onblur={event => {
-                const title = (event.target as HTMLHeadingElement).innerText;
-                if (title !== lane.title) actions.lane.update(props.id)({ title });
-              }}
-            >
-              {lane.title} ({lane.cards.length})
-            </h3>
+            <hgroup>
+              <h3
+                {...contentEditable}
+                onblur={event => {
+                  const title = (event.target as HTMLHeadingElement).innerText;
+                  if (title !== lane.title) actions.lane.update(props.id)({ title });
+                }}
+              >
+                {lane.title}
+              </h3>
+              <p>({lane.cards.length})</p>
+            </hgroup>
+
             <div class='toolbar'>
               <button
                 type='button'
@@ -43,27 +47,27 @@ const Lane: Component<LaneProps> = initial => {
               </button>
             </div>
           </header>
-          <button
-            class='clear'
-            type='button'
-            onclick={() => actions.card.create(props.id)('New card')}
-          >
-            <Icon id='plus' />
-            Add card
-          </button>
-          {lane.cards.length > 0 ? (
-            <ol class='clear'>
-              {lane.cards.map((card, i) => (
-                <li key={card}>
-                  <Card
-                    id={card}
-                    onmoveup={id => actions.move.card(id)({ id: lane.id, n: i })({ id: lane.id, n: i - 1 })}
-                    onmovedown={id => actions.move.card(id)({ id: lane.id, n: i })({ id: lane.id, n: i + 1 })}
-                  />
-                </li>
-              ))}
-            </ol>
-          ) : null}
+          <ol class='clear'>
+            {lane.cards.map((card, i) => (
+              <li key={card}>
+                <Card
+                  id={card}
+                  onmoveup={id => actions.move.card(id)({ id: lane.id, n: i })({ id: lane.id, n: i - 1 })}
+                  onmovedown={id => actions.move.card(id)({ id: lane.id, n: i })({ id: lane.id, n: i + 1 })}
+                />
+              </li>
+            ))}
+            <li>
+              <button
+                class='clear default'
+                type='button'
+                onclick={() => actions.card.create(props.id)(`New card ${lane.cards.length + 1}`)}
+              >
+                <Icon id='plus' />
+                Add card
+              </button>
+            </li>
+          </ol>
         </article>
       );
     }

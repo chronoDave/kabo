@@ -8,9 +8,16 @@
     gap: 1rem;
     margin-bottom: 0.5rem;
 
-    > h3 {
-      flex-shrink: 0;
-      padding: 0.25rem 0.5rem;
+    > hgroup {
+      h3 {
+        display: inline;
+        flex-shrink: 0;
+        padding: 0.25rem 0.5rem;
+      }
+
+      p {
+        display: inline;
+      }
     }
 
     > .toolbar {
@@ -19,18 +26,19 @@
     }
   }
 
-  > button {
-    box-shadow: shadow.box(1);
-    padding: 0.5rem;
-    width: 100%;
-    background-color: var(--card);
-  }
-
   > ol {
     margin-top: 1rem;
 
-    > li + li {
-      margin-top: 0.5rem;
+    > li {
+      + li {
+        margin-top: 0.5rem;
+      }
+
+      > .default {
+        padding: 0.5rem;
+        width: 100%;
+        border: 2px dashed grey;
+      }
     }
   }
 }

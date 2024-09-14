@@ -32,30 +32,32 @@ const Card: Component<CardProps> = initial => {
             >
               {card.title}
             </h4>
-            <button
-              type='button'
-              class='icon'
-              onclick={() => props.onmoveup(props.id)}
-            >
-              <Icon id='chevronUp' />
-              <span class='sr-only'>Move card up</span>
-            </button>
-            <button
-              type='button'
-              class='icon'
-              onclick={() => props.onmovedown(props.id)}
-            >
-              <Icon id='chevronDown' />
-              <span class='sr-only'>Move card down</span>
-            </button>
-            <button
-              type='button'
-              onclick={() => actions.card.delete(props.id)}
-              class='icon'
-            >
-              <Icon id='xmark' />
-              <span class='sr-only'>Remove card</span>
-            </button>
+            <div class='actions'>
+              <button
+                type='button'
+                class='icon'
+                onclick={() => props.onmoveup(props.id)}
+              >
+                <Icon id='chevronUp' />
+                <span class='sr-only'>Move card up</span>
+              </button>
+              <button
+                type='button'
+                class='icon'
+                onclick={() => props.onmovedown(props.id)}
+              >
+                <Icon id='chevronDown' />
+                <span class='sr-only'>Move card down</span>
+              </button>
+              <button
+                type='button'
+                onclick={() => actions.card.delete(props.id)}
+                class='icon'
+              >
+                <Icon id='xmark' />
+                <span class='sr-only'>Remove card</span>
+              </button>
+            </div>
           </header>
         </article>
       );

@@ -15,5 +15,10 @@
       flex-shrink: 0;
       padding: 0.25rem 0.5rem;
     }
+
+    > .actions {
+      display: flex;
+      gap: 0.5rem;
+    }
   }
 }

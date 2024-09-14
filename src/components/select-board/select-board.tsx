@@ -15,14 +15,16 @@ const SelectBoards: Component<SelectBoardsProps> = () => {
       const { active, boards } = selector.state();
 
       return (
-        <div class='input-group'>
-          <label for={props.id}>
-            Select board
-          </label>,
+        <div class='select-board'>
+          <label for={props.id} class='sr-only'>
+            Select active board
+          </label>
           <select
             id={props.id}
+            disabled={boards.length === 0}
             onchange={event => set.board((event.target as HTMLSelectElement).value)}
           >
+            {boards.length === 0 ? <option default>No boards available</option> : null}
             {boards.map(board => (
               <option
                 key={board.id}

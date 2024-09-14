@@ -31,12 +31,6 @@ const Board: Component<BoardProps> = initial => {
             >
               {board.title}
             </h2>
-            <button
-              type='button'
-              onclick={() => actions.board.delete(props.id)}
-            >
-              Remove board
-            </button>
           </header>
           <ol class='clear'>
             {board.lanes.map(lane => (
@@ -44,10 +38,10 @@ const Board: Component<BoardProps> = initial => {
                 <Lane id={lane} />
               </li>
             ))}
-            <li>
+            <li class='default'>
               <button
                 type='button'
-                onclick={() => actions.lane.create(props.id)('New bucket')}
+                onclick={() => actions.lane.create(props.id)(`New bucket ${board.lanes.length + 1}`)}
                 class='clear'
               >
                 <Icon id='plus' />
