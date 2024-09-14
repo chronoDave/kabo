@@ -30,7 +30,7 @@ const Lane: Component<LaneProps> = initial => {
                 if (title !== lane.title) actions.lane.update(props.id)({ title });
               }}
             >
-              {lane.title}
+              {lane.title} ({lane.cards.length})
             </h3>
             <div class='toolbar'>
               <button

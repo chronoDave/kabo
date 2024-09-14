@@ -1,0 +1,7 @@
+@use 'math';
+
+$xs: math.pxToRem(578);
+$sm: math.pxToRem(768);
+$md: math.pxToRem(992);
+$lg: math.pxToRem(1200);
+$xl: math.pxToRem(1400);
