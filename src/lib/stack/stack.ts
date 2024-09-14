@@ -19,8 +19,10 @@ export default class Stack<T> {
    * @param i Relative index
    */
   peek(i?: number): T | null {
-    if (typeof i !== 'number') return this._stack.get(wrap(0, this._size - 1, this._index - 1)) ?? null;
-    return this._stack.get(wrap(0, this._size - 1, this._index - (1 + i))) ?? null;
+    const max = this._size - 1;
+    const n = wrap(0, max, wrap(0, max, this._index - 1) + (i ?? 0));
+
+    return this._stack.get(n) ?? null;
   }
 
   push(x: T): this {

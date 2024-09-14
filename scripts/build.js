@@ -3,6 +3,7 @@ import path from 'path';
 import sass from '@chronocide/esbuild-plugin-sass';
 
 import log from './plugins/log.js';
+import clean from './plugins/clean.js';
 
 const args = process.argv.slice(2);
 const watch = args.includes('-w');
@@ -22,6 +23,7 @@ const config = {
   platform: 'browser',
   outdir: path.resolve(process.cwd(), 'build'),
   plugins: [
+    clean,
     log,
     sass({
       minify: !watch,

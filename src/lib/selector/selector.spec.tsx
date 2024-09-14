@@ -12,7 +12,7 @@ test('[selector] returns selection on component update', t => {
   forgo.setCustomEnv({ window: jsdom.window, document: jsdom.window.document });
 
   const store = new Store({ a: { b: 1 } });
-  const selector = createSelector(store)(state => () => state.a.b);
+  const selector = createSelector(store)(state => () => state?.a.b);
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const Body = () => {
@@ -40,7 +40,6 @@ test('[selector] returns selection on component update', t => {
 
   t.equal(selector.state(), 1, 'returns selection');
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   forgo.mount(<Body />, jsdom.window.document.body);
   store.set(() => ({ a: { b: 2 }}));
 });

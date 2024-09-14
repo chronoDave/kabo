@@ -4,7 +4,7 @@ import type Store from '../store/store';
 
 import deepEqual from 'fast-deep-equal';
 
-export type Selector<S extends object, T, K> = (state: S) => (...args: T[]) => K;
+export type Selector<S extends object, T, K> = (state: S | null) => (...args: T[]) => K;
 
 export type SelectorResult<T, K> = {
   state: (...args: T[]) => K;

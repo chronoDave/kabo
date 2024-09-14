@@ -1,6 +1,6 @@
 import Stack from '../stack/stack';
 
-export type View<S extends object> = { current: S; previous: S };
+export type View<S extends object> = { current: S; previous: S | null };
 
 export type Subscriber<S extends object> = (view: View<S>) => void;
 
@@ -10,9 +10,19 @@ export default class Store<S extends object> {
   private readonly _subscribers: Set<Subscriber<S>>;
   private readonly _state: Stack<S>;
 
-  get previous(): S {
+  private _update() {
+    this._subscribers.forEach(subscriber => {
+      subscriber({
+        current: this.current,
+        previous: this.previous
+      });
+    });
+
+    return this;
+  }
+
+  get previous(): S | null {
     const prev = this._state.peek(-1);
-    if (!prev) throw new Error('Store does not have previous value');
 
     return prev;
   }
@@ -25,22 +35,24 @@ export default class Store<S extends object> {
   }
 
   constructor(state: S) {
-    this._state = new Stack(2);
+    this._state = new Stack(50);
     this._subscribers = new Set();
 
     this._state.push(state);
   }
 
+  undo(): this {
+    if (!this.previous) return this;
+
+    this._state.pop();
+
+    return this._update();
+  }
+
   set(reducer: Reducer<S>): this {
     this._state.push(reducer(this.current));
-    this._subscribers.forEach(subscriber => {
-      subscriber({
-        current: this.current,
-        previous: this.previous
-      });
-    });
 
-    return this;
+    return this._update();
   }
 
   on(subscriber: Subscriber<S>): this {

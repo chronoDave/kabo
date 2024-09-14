@@ -7,5 +7,9 @@ const storage = new Storage('state', state);
 const store = new Store(storage.read() ?? storage.default)
   .on(state => storage.write(state.current));
 
+document.addEventListener('keydown', event => {
+  if (event.ctrlKey && event.key === 'z') store.undo();
+});
+
 export default store;
 export const selector = createSelector(store);

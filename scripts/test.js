@@ -1,6 +1,10 @@
 import esbuild from 'esbuild';
 import path from 'path';
+
 import log from './plugins/log.js';
+import clean from './plugins/clean.js';
+
+const outdir = path.resolve(process.cwd(), 'build/test');
 
 esbuild.build({
   entryPoints: [
@@ -9,7 +13,7 @@ esbuild.build({
   ],
   bundle: true,
   format: 'esm',
-  outdir: path.resolve(process.cwd(), 'build/test'),
+  outdir,
   external: [
     'tape',
     'forgo',
@@ -18,5 +22,5 @@ esbuild.build({
     'zod'
   ],
   platform: 'node',
-  plugins: [log]
+  plugins: [log, clean]
 });
