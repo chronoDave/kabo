@@ -9,6 +9,8 @@ import Icon from '../icon/icon';
 import selector from './lane.state';
 
 import './lane.scss';
+import drag from '../../lib/drag/drag';
+import drop from '../../lib/drop/drop';
 
 export type LaneProps = {
   id: string;
@@ -54,6 +56,18 @@ const Lane: Component<LaneProps> = initial => {
                   id={card}
                   onmoveup={id => actions.move.card(id)({ id: lane.id, n: i })({ id: lane.id, n: i - 1 })}
                   onmovedown={id => actions.move.card(id)({ id: lane.id, n: i })({ id: lane.id, n: i + 1 })}
+                  {...drag(JSON.stringify({ card: card, lane: props.id, i }))}
+                  {...drop(raw => {
+                    const data = JSON.parse(raw) as { card: string; lane: string; i: number };
+
+                    actions.move.card(data.card)({
+                      id: data.lane,
+                      n: data.i
+                    })({
+                      id: props.id,
+                      n: i
+                    });
+                  })}
                 />
               </li>
             ))}
@@ -62,6 +76,17 @@ const Lane: Component<LaneProps> = initial => {
                 class='clear default'
                 type='button'
                 onclick={() => actions.card.create(props.id)(`New card ${lane.cards.length + 1}`)}
+                {...drop(raw => {
+                  const data = JSON.parse(raw) as { card: string; lane: string; i: number };
+
+                  actions.move.card(data.card)({
+                    id: data.lane,
+                    n: data.i
+                  })({
+                    id: props.id,
+                    n: lane.cards.length
+                  });
+                })}
               >
                 <Icon id='plus' />
                 Add card

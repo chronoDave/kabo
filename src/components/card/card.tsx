@@ -21,7 +21,11 @@ const Card: Component<CardProps> = initial => {
 
       if (!card) return null;
       return (
-        <article class='card' data-id={props.id}>
+        <article
+          {...props}
+          class='card'
+          data-id={props.id}
+        >
           <header>
             <h4
               {...contentEditable}
