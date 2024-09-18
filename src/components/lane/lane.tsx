@@ -9,8 +9,6 @@ import Icon from '../icon/icon';
 import selector from './lane.state';
 
 import './lane.scss';
-import drag from '../../lib/drag/drag';
-import drop from '../../lib/drop/drop';
 
 export type LaneProps = {
   id: string;
@@ -23,7 +21,7 @@ const Lane: Component<LaneProps> = initial => {
 
       if (!lane) return null;
       return (
-        <article class='lane' data-id={props.id}>
+        <article id={lane.id} class='lane' data-size={lane.cards.length}>
           <header>
             <hgroup>
               <h3
@@ -50,43 +48,21 @@ const Lane: Component<LaneProps> = initial => {
             </div>
           </header>
           <ol class='clear'>
-            {lane.cards.map((card, i) => (
-              <li key={card}>
-                <Card
-                  id={card}
-                  onmoveup={id => actions.move.card(id)({ id: lane.id, n: i })({ id: lane.id, n: i - 1 })}
-                  onmovedown={id => actions.move.card(id)({ id: lane.id, n: i })({ id: lane.id, n: i + 1 })}
-                  {...drag(JSON.stringify({ card: card, lane: props.id, i }))}
-                  {...drop(raw => {
-                    const data = JSON.parse(raw) as { card: string; lane: string; i: number };
-
-                    actions.move.card(data.card)({
-                      id: data.lane,
-                      n: data.i
-                    })({
-                      id: props.id,
-                      n: i
-                    });
-                  })}
-                />
+            {lane.cards.map(card => (
+              <li
+                key={card}
+                draggable
+                data-grabbed={false}
+                data-dropzone
+              >
+                <Card id={card} />
               </li>
             ))}
-            <li>
+            <li data-dropzone="true">
               <button
                 class='clear default'
                 type='button'
-                onclick={() => actions.card.create(props.id)(`New card ${lane.cards.length + 1}`)}
-                {...drop(raw => {
-                  const data = JSON.parse(raw) as { card: string; lane: string; i: number };
-
-                  actions.move.card(data.card)({
-                    id: data.lane,
-                    n: data.i
-                  })({
-                    id: props.id,
-                    n: lane.cards.length
-                  });
-                })}
+                data-action='create'
               >
                 <Icon id='plus' />
                 Add card

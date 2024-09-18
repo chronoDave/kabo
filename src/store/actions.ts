@@ -25,7 +25,8 @@ export const lane = {
 };
 
 export const active = {
-  board: _active.set(store)('board')
+  board: _active.set(store)('board'),
+  menu: _active.set(store)('menu')
 };
 
 export const move = {

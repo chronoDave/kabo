@@ -7,11 +7,10 @@ import contentEditable from '../../lib/contentEditable/contentEditable';
 import Icon from '../icon/icon';
 
 import './card.scss';
+import Menu from '../menu/menu';
 
 export type CardProps = {
   id: string;
-  onmoveup: (id: string) => void;
-  onmovedown: (id: string) => void;
 };
 
 const Card: Component<CardProps> = initial => {
@@ -21,11 +20,7 @@ const Card: Component<CardProps> = initial => {
 
       if (!card) return null;
       return (
-        <article
-          {...props}
-          class='card'
-          data-id={props.id}
-        >
+        <article id={card.id} class='card'>
           <header>
             <h4
               {...contentEditable}
@@ -37,25 +32,42 @@ const Card: Component<CardProps> = initial => {
               {card.title}
             </h4>
             <div class='actions'>
-              <button
-                type='button'
-                class='icon'
-                onclick={() => props.onmoveup(props.id)}
+              <Menu
+                id={`menu-${props.id}`}
+                icon='arrowsUpDownLeftRight'
+                label={{
+                  button: `Move ${card.title}`,
+                  menu: 'Directions'
+                }}
               >
-                <Icon id='chevronUp' />
-                <span class='sr-only'>Move card up</span>
-              </button>
+                <li>
+                  <button type='button' data-action="move-up">
+                    <Icon id='arrowUp' />
+                    <span>Move up</span>
+                  </button>
+                </li>
+                <li>
+                  <button type='button' data-action="move-down">
+                    <Icon id='arrowDown' />
+                    <span>Move down</span>
+                  </button>
+                </li>
+                <li>
+                  <button type='button' data-action="move-left">
+                    <Icon id='arrowLeft' />
+                    <span>Move left</span>
+                  </button>
+                </li>
+                <li>
+                  <button type='button' data-action="move-right">
+                    <Icon id='arrowRight' />
+                    <span>Move right</span>
+                  </button>
+                </li>
+              </Menu>
               <button
                 type='button'
-                class='icon'
-                onclick={() => props.onmovedown(props.id)}
-              >
-                <Icon id='chevronDown' />
-                <span class='sr-only'>Move card down</span>
-              </button>
-              <button
-                type='button'
-                onclick={() => actions.card.delete(props.id)}
+                data-action='delete'
                 class='icon'
               >
                 <Icon id='xmark' />

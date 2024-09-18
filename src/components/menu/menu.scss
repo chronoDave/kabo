@@ -1,0 +1,26 @@
+.menu {
+  position: relative;
+
+  > [role="menu"] {
+    position: absolute;
+    z-index: 1;
+
+    &.top {
+      top: 0;
+      transform: translateY(-100%);
+    }
+
+    &.bottom {
+      bottom: 0;
+      transform: translateY(100%);
+    }
+
+    &.left {
+      left: 0;
+    }
+
+    &.right {
+      right: 0;
+    }
+  }
+}

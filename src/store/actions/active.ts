@@ -5,8 +5,12 @@ import { produce } from 'immer';
 
 export const set = (store: Store<State>) =>
   (active: keyof State['active']) =>
-    (id: string): void => {
+    (id: string | null): void => {
       store.set(produce(draft => {
-        draft.active[active] = id;
+        if (typeof id === 'string') {
+          draft.active[active] = id;
+        } else {
+          delete draft.active[active];
+        }
       }));
     };

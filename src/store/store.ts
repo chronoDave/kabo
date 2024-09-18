@@ -5,7 +5,8 @@ import Storage from '../lib/storage/storage';
 
 const storage = new Storage('state', state);
 const store = new Store(storage.read() ?? storage.default)
-  .on(state => storage.write(state.current));
+  .on(state => storage.write(state.current))
+  .on(console.log);
 
 document.addEventListener('keydown', event => {
   if (event.ctrlKey && event.key === 'z') store.undo();

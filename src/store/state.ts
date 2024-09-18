@@ -32,7 +32,8 @@ export const state = z.object({
       }
     }),
   active: z.object({
-    board: z.string().optional()
+    board: z.string().optional(),
+    menu: z.string().optional()
   })
     .default({
       board: id.board

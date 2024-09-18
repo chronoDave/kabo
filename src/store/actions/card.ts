@@ -26,11 +26,14 @@ export const update = (store: Store<State>) =>
     };
 
 export const remove = (store: Store<State>) =>
-  (id: string): void => {
+  (id: string, x?: string): void => {
     store.set(produce(draft => {
       delete draft.entity.card[id];
 
-      const lane = Object.values(draft.entity.lane).find(x => x.cards.includes(id));
+      const lane = typeof x === 'string' ?
+        draft.entity.lane[x] :
+        Object.values(draft.entity.lane).find(x => x.cards.includes(id));
+
       if (lane) {
         const i = draft.entity.lane[lane.id].cards.indexOf(id);
         draft.entity.lane[lane.id].cards.splice(i, 1);
