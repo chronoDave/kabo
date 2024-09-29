@@ -1,8 +1,9 @@
 [contenteditable="true"] {
+  display: inline-block;
   cursor: text;
 
   &:empty::after {
-    content: 'Untitled';
+    content: attr(data-label-empty);
     color: rgba(0, 0, 0, 0.5);
   }
 

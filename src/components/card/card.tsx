@@ -5,9 +5,9 @@ import selector from './card.state';
 import * as actions from '../../store/actions';
 import contentEditable from '../../lib/contentEditable/contentEditable';
 import Icon from '../icon/icon';
+import Menu from '../menu/menu';
 
 import './card.scss';
-import Menu from '../menu/menu';
 
 export type CardProps = {
   id: string;
@@ -27,9 +27,9 @@ const Card: Component<CardProps> = initial => {
               <span class='sr-only'>Mark as complete</span>
             </button>
             <h4
-              {...contentEditable}
+              {...contentEditable()}
               onblur={event => {
-                const title = (event.target as HTMLHeadingElement).innerText;
+                const title = (event.target as HTMLHeadingElement).innerText; 
                 if (card.title !== title) actions.card.update(props.id)({ title });
               }}
             >
@@ -79,6 +79,15 @@ const Card: Component<CardProps> = initial => {
               </button>
             </div>
           </header>
+          <p
+            {...contentEditable({ empty: 'Description' })}
+            onblur={event => {
+              const description = (event.target as HTMLHeadingElement).innerText; 
+              if (card.description !== description) actions.card.update(props.id)({ description });
+            }}
+          >
+            {card.description}
+          </p>
         </article>
       );
     }

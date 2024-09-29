@@ -2,7 +2,8 @@ import { z } from 'zod';
 
 export const card = z.object({
   id: z.string().readonly(),
-  title: z.string()
+  title: z.string(),
+  description: z.string().optional()
 });
 
 export type Card = z.infer<typeof card>;

@@ -22,6 +22,10 @@ export const update = (store: Store<State>) =>
         if (typeof card.title === 'string') {
           draft.entity.card[id].title = card.title.trim();
         }
+
+        if (typeof card.description === 'string') {
+          draft.entity.card[id].description = card.description.trim();
+        }
       }));
     };
 
