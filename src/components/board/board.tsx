@@ -48,6 +48,9 @@ const Board: Component<BoardProps> = initial => {
 
                 if (card && lane) {
                   if (button.dataset.action === 'delete') actions.card.delete(card.id, lane.id);
+                  if (button.dataset.action === 'complete') {
+                    actions.move.card({ card: card.id, lane: lane.id })({ lane: board.lanes[board.lanes.length - 1] });
+                  }
                   if (button.dataset.action === 'move-up') actions.move.card({ card: card.id, lane: lane.id })({ n: -1 });
                   if (button.dataset.action === 'move-down') actions.move.card({ card: card.id, lane: lane.id })({ n: +1 });
                   if (button.dataset.action === 'move-left') {

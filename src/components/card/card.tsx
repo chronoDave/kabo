@@ -22,6 +22,10 @@ const Card: Component<CardProps> = initial => {
       return (
         <article id={card.id} class='card'>
           <header>
+            <button type='button' class="icon" data-action='complete'>
+              <Icon id='circle' />
+              <span class='sr-only'>Mark as complete</span>
+            </button>
             <h4
               {...contentEditable}
               onblur={event => {
