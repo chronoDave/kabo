@@ -14,6 +14,7 @@ export type ContentEditable = {
   contenteditable: true;
   onbeforeinput: (event: InputEvent) => void;
   onkeydown: (event: KeyboardEvent) => void;
+  onkeyup: (event: KeyboardEvent) => void;
   onpaste: (event: ClipboardEvent) => void;
 };
 
@@ -30,6 +31,11 @@ const contentEditable: ContentEditable = {
       event.preventDefault();
       (event.currentTarget as HTMLElement | null)?.blur();
     }
+  },
+  onkeyup: event => {
+    const target = event.currentTarget as HTMLElement | null;
+
+    if (target?.innerText.length === 0) target.innerHTML = '';
   },
   onpaste: event => {
     event.preventDefault();
