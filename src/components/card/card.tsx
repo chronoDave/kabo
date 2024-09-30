@@ -23,7 +23,12 @@ const Card: Component<CardProps> = initial => {
       return (
         <article id={card.id} class='card'>
           <header>
-            <button type='button' class="icon" data-action='complete'>
+            <button
+              type='button'
+              class="icon"
+              data-action='move'
+              data-direction='end'
+            >
               <Icon id='circle' />
               <span class='sr-only'>Mark card as complete</span>
             </button>
@@ -46,25 +51,25 @@ const Card: Component<CardProps> = initial => {
                 }}
               >
                 <li>
-                  <button type='button' data-action="move-up">
+                  <button type='button' data-action="move" data-direction="up">
                     <Icon id='arrowUp' />
                     <span>Move up</span>
                   </button>
                 </li>
                 <li>
-                  <button type='button' data-action="move-down">
+                  <button type='button' data-action="move" data-direction="down">
                     <Icon id='arrowDown' />
                     <span>Move down</span>
                   </button>
                 </li>
                 <li>
-                  <button type='button' data-action="move-left">
+                  <button type='button' data-action="move" data-direction="left">
                     <Icon id='arrowLeft' />
                     <span>Move left</span>
                   </button>
                 </li>
                 <li>
-                  <button type='button' data-action="move-right">
+                  <button type='button' data-action="move" data-direction="right">
                     <Icon id='arrowRight' />
                     <span>Move right</span>
                   </button>

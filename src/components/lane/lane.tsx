@@ -39,7 +39,7 @@ const Lane: Component<LaneProps> = initial => {
             <div class='toolbar'>
               <button
                 type='button'
-                onclick={() => actions.lane.delete(props.id)}
+                data-action='delete'
                 class='icon'
               >
                 <Icon id='xmark' />
@@ -47,7 +47,21 @@ const Lane: Component<LaneProps> = initial => {
               </button>
             </div>
           </header>
-          <ol class='clear'>
+          <ul
+            class='clear'
+            onclick={event => {
+              const button = (event.target as HTMLElement | null)?.closest('button');
+              const card = button?.closest<HTMLElement>('.card');
+
+              if (button?.dataset.action === 'create') {
+                actions.card.create(lane.id)('New card');
+              }
+
+              if (button?.dataset.action === 'delete' && card) {
+                actions.card.delete({ card: card.id, lane: lane.id });
+              }
+            }}
+          >
             {lane.cards.map(card => (
               <li
                 key={card}
@@ -68,7 +82,7 @@ const Lane: Component<LaneProps> = initial => {
                 Add card
               </button>
             </li>
-          </ol>
+          </ul>
         </article>
       );
     }

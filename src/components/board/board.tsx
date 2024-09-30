@@ -39,30 +39,35 @@ const Board: Component<BoardProps> = initial => {
               const card = button?.closest<HTMLElement>('.card');
               const lane = button?.closest<HTMLElement>('.lane');
 
-              if (button && typeof button.dataset.action === 'string') {
-                if (
-                  lane &&
-                  button.dataset.action === 'create' &&
-                  typeof lane.dataset.size === 'string'
-                ) actions.card.create(lane.id)(`New card ${+lane.dataset.size + 1}`);
+              if (button?.dataset.action === 'create') {
+                actions.lane.create(board.id)('New lane');
+              }
 
-                if (card && lane) {
-                  if (button.dataset.action === 'delete') actions.card.delete({ card: card.id, lane: lane.id });
-                  if (button.dataset.action === 'complete') {
-                    actions.move.card({ card: card.id, lane: lane.id })({ lane: board.lanes[board.lanes.length - 1] });
-                  }
-                  if (button.dataset.action === 'move-up') actions.move.card({ card: card.id, lane: lane.id })({ n: -1 });
-                  if (button.dataset.action === 'move-down') actions.move.card({ card: card.id, lane: lane.id })({ n: +1 });
-                  if (button.dataset.action === 'move-left') {
-                    const i = board.lanes.indexOf(lane.id);
+              if (button?.dataset.action === 'delete' && lane) {
+                actions.lane.delete(lane.id);
+              }
 
-                    if (i > 0) actions.move.card({ card: card.id, lane: lane.id })({ lane: board.lanes[i - 1] });
-                  }
-                  if (button.dataset.action === 'move-right') {
-                    const i = board.lanes.indexOf(lane.id);
+              if (button?.dataset.action === 'move' && lane && card) {
+                if (button.dataset.direction === 'up') {
+                  actions.move.card({ card: card.id, lane: lane.id })({ n: -1 });
+                }
 
-                    if (i < board.lanes.length) actions.move.card({ card: card.id, lane: lane.id })({ lane: board.lanes[i + 1] });
-                  }
+                if (button.dataset.direction === 'down') {
+                  actions.move.card({ card: card.id, lane: lane.id })({ n: +1 });
+                }
+
+                if (button.dataset.direction === 'left') {
+                  const i = board.lanes.indexOf(lane.id);
+                  if (i > 0) actions.move.card({ card: card.id, lane: lane.id })({ lane: board.lanes[i - 1] });
+                }
+
+                if (button.dataset.direction === 'right') {
+                  const i = board.lanes.indexOf(lane.id);
+                  if (i < board.lanes.length) actions.move.card({ card: card.id, lane: lane.id })({ lane: board.lanes[i + 1] });
+                }
+
+                if (button.dataset.direction === 'end') {
+                  actions.move.card({ card: card.id, lane: lane.id })({ lane: board.lanes[board.lanes.length - 1] });
                 }
               }
             }}
@@ -112,11 +117,11 @@ const Board: Component<BoardProps> = initial => {
             <li class='default'>
               <button
                 type='button'
-                onclick={() => actions.lane.create(props.id)(`New bucket ${board.lanes.length + 1}`)}
+                data-action='create'
                 class='clear'
               >
                 <Icon id='plus' />
-                Add bucket
+                Add lane
               </button>
             </li>
           </ol>
