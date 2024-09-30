@@ -1,23 +1,35 @@
 import { z } from 'zod';
 
-import { card, lane, board } from './entities';
+import {
+  card,
+  lane,
+  board,
+  task
+} from './entities';
 
 const id = {
   board: crypto.randomUUID(),
   lane: crypto.randomUUID(),
-  card: crypto.randomUUID()
+  card: crypto.randomUUID(),
+  task: crypto.randomUUID()
 };
 
 export const state = z.object({
   entity: z.object({
-    card: z.record(z.string(), card),
+    board: z.record(z.string(), board),
     lane: z.record(z.string(), lane),
-    board: z.record(z.string(), board)
+    card: z.record(z.string(), card),
+    task: z.record(z.string(), task)
   })
     .default({
+      task: {
+        [id.task]: {
+          id: id.task, title: 'New task'
+        }
+      },
       card: {
         [id.card]: {
-          id: id.card, title: 'New card'
+          id: id.card, title: 'New card', tasks: [id.task]
         }
       },
       lane: {

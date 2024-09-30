@@ -47,7 +47,7 @@ const Board: Component<BoardProps> = initial => {
                 ) actions.card.create(lane.id)(`New card ${+lane.dataset.size + 1}`);
 
                 if (card && lane) {
-                  if (button.dataset.action === 'delete') actions.card.delete(card.id, lane.id);
+                  if (button.dataset.action === 'delete') actions.card.delete({ card: card.id, lane: lane.id });
                   if (button.dataset.action === 'complete') {
                     actions.move.card({ card: card.id, lane: lane.id })({ lane: board.lanes[board.lanes.length - 1] });
                   }
@@ -81,7 +81,7 @@ const Board: Component<BoardProps> = initial => {
             ondragover={event => {
               event.preventDefault();
               const dropzone = (event.target as HTMLElement).closest('[data-dropzone="true"]');
-              
+
               if (event.dataTransfer) event.dataTransfer.dropEffect = dropzone ? 'move' : 'none';
             }}
             ondrop={event => {

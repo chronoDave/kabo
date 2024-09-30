@@ -10,7 +10,7 @@ export const create = (store: Store<State>) =>
       store.set(produce(draft => {
         const id = crypto.randomUUID();
 
-        draft.entity.card[id] = { id, title };
+        draft.entity.card[id] = { id, title, tasks: [] };
         draft.entity.lane[lane].cards.push(id);
       }));
     };
@@ -30,16 +30,16 @@ export const update = (store: Store<State>) =>
     };
 
 export const remove = (store: Store<State>) =>
-  (id: string, x?: string): void => {
+  (id: { card: string; lane?: string }): void => {
     store.set(produce(draft => {
-      delete draft.entity.card[id];
+      delete draft.entity.card[id.card];
 
-      const lane = typeof x === 'string' ?
-        draft.entity.lane[x] :
-        Object.values(draft.entity.lane).find(x => x.cards.includes(id));
+      const lane = typeof id.lane === 'string' ?
+        draft.entity.lane[id.lane] :
+        Object.values(draft.entity.lane).find(x => x.cards.includes(id.card));
 
       if (lane) {
-        const i = draft.entity.lane[lane.id].cards.indexOf(id);
+        const i = draft.entity.lane[lane.id].cards.indexOf(id.card);
         draft.entity.lane[lane.id].cards.splice(i, 1);
       }
     }));

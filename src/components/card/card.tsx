@@ -6,6 +6,7 @@ import * as actions from '../../store/actions';
 import contentEditable from '../../lib/contentEditable/contentEditable';
 import Icon from '../icon/icon';
 import Menu from '../menu/menu';
+import Task from '../task/task';
 
 import './card.scss';
 
@@ -24,12 +25,12 @@ const Card: Component<CardProps> = initial => {
           <header>
             <button type='button' class="icon" data-action='complete'>
               <Icon id='circle' />
-              <span class='sr-only'>Mark as complete</span>
+              <span class='sr-only'>Mark card as complete</span>
             </button>
             <h4
               {...contentEditable()}
               onblur={event => {
-                const title = (event.target as HTMLHeadingElement).innerText; 
+                const title = (event.target as HTMLHeadingElement).innerText;
                 if (card.title !== title) actions.card.update(props.id)({ title });
               }}
             >
@@ -82,12 +83,39 @@ const Card: Component<CardProps> = initial => {
           <p
             {...contentEditable({ empty: 'Description' })}
             onblur={event => {
-              const description = (event.target as HTMLHeadingElement).innerText; 
+              const description = (event.target as HTMLHeadingElement).innerText;
               if (card.description !== description) actions.card.update(props.id)({ description });
             }}
           >
             {card.description}
           </p>
+          <ul
+            class='clear'
+            onclick={event => {
+              const button = (event.target as HTMLElement | null)?.closest('button');
+              const task = button?.closest<HTMLElement>('.task');
+
+              if (button?.dataset.action === 'create') {
+                actions.task.create(card.id)('New task');
+              }
+
+              if (button?.dataset.action === 'delete' && task) {
+                actions.task.delete({ task: task.id, card: card.id });
+              }
+            }}
+          >
+            {card.tasks.map(task => (
+              <li key={task}>
+                <Task id={task} />
+              </li>
+            ))}
+            <li>
+              <button type='button' data-action='create'>
+                <Icon id='plus' />
+                <span>Add task</span>
+              </button>
+            </li>
+          </ul>
         </article>
       );
     }

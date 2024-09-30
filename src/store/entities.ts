@@ -1,9 +1,17 @@
 import { z } from 'zod';
 
+export const task = z.object({
+  id: z.string().readonly(),
+  title: z.string()
+});
+
+export type Task = z.infer<typeof task>;
+
 export const card = z.object({
   id: z.string().readonly(),
   title: z.string(),
-  description: z.string().optional()
+  description: z.string().optional(),
+  tasks: z.array(z.string())
 });
 
 export type Card = z.infer<typeof card>;
