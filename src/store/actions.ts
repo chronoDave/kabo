@@ -4,6 +4,7 @@ import * as _lane from './actions/lane';
 import * as _active from './actions/active';
 import * as _move from './actions/move';
 import * as _task from './actions/task';
+import * as _category from './actions/category';
 
 import store from './store';
 
@@ -29,6 +30,13 @@ export const task = {
   create: _task.create(store),
   update: _task.update(store),
   delete: _task.remove(store)
+};
+
+export const category = {
+  create: _category.create(store),
+  update: _category.update(store),
+  delete: _category.remove(store),
+  toggle: _category.toggle(store)
 };
 
 export const active = {

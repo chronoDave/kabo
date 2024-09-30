@@ -14,19 +14,29 @@ export type SelectorResult<T, K> = {
 export default <S extends object>(store: Store<S>) => <T, K>(
   selector: Selector<S, T, K>,
   shouldUpdate?: (view: View<S>) => boolean
-): SelectorResult<T, K> => ({
-  state: (...args) => selector(store.current)(...args),
-  subscribe: (...args) => component => {
-    const subscriber: Subscriber<S> = state => {
-      if (shouldUpdate?.(state)) return component.update();
+): SelectorResult<T, K> => {
+  let hasSubscribed = false;
 
-      const current = selector(state.current)(...args);
-      const previous = selector(state.previous)(...args);
+  return {
+    state: (...args) => {
+      if (!hasSubscribed) throw new Error('Component did not call "subscribe()"');
 
-      if (!deepEqual(current, previous)) component.update();
-    };
+      return selector(store.current)(...args);
+    },
+    subscribe: (...args) => component => {
+      hasSubscribed = true;
 
-    component.unmount(() => store.off(subscriber));
-    component.mount(() => store.on(subscriber));
-  }
-});
+      const subscriber: Subscriber<S> = state => {
+        if (shouldUpdate?.(state)) return component.update();
+
+        const current = selector(state.current)(...args);
+        const previous = selector(state.previous)(...args);
+
+        if (!deepEqual(current, previous)) component.update();
+      };
+
+      component.unmount(() => store.off(subscriber));
+      component.mount(() => store.on(subscriber));
+    }
+  };
+};

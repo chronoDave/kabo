@@ -7,8 +7,10 @@ import contentEditable from '../../lib/contentEditable/contentEditable';
 import Icon from '../icon/icon';
 import Menu from '../menu/menu';
 import Task from '../task/task';
+import Category from '../category/category';
 
 import './card.scss';
+import MenuCategory from '../menu-category/menu-category';
 
 export type CardProps = {
   id: string;
@@ -85,6 +87,27 @@ const Card: Component<CardProps> = initial => {
               </button>
             </div>
           </header>
+          <div class='categories'>
+            <ul
+              class='clear'
+              onclick={event => {
+                const button = (event.target as HTMLElement | null)?.closest('button');
+                const category = button?.closest<HTMLElement>('.category');
+    
+                if (button?.dataset.action === 'delete' && category) {
+                  event.stopPropagation();
+                  actions.category.delete(category.id);
+                }
+              }}
+            >
+              {card.categories.map(category => (
+                <li key={category}>
+                  <Category id={category} />
+                </li>
+              ))}
+            </ul>
+            <MenuCategory card={card.id} />
+          </div>
           <p
             {...contentEditable({ empty: 'Description' })}
             onblur={event => {
@@ -101,11 +124,13 @@ const Card: Component<CardProps> = initial => {
               const task = button?.closest<HTMLElement>('.task');
 
               if (button?.dataset.action === 'create') {
+                event.stopPropagation();
                 actions.task.create(card.id)('New task');
               }
 
               if (button?.dataset.action === 'delete' && task) {
-                actions.task.delete({ task: task.id, card: card.id });
+                event.stopPropagation();
+                actions.task.delete(task.id);
               }
             }}
           >

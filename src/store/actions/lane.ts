@@ -30,10 +30,11 @@ export const remove = (store: Store<State>) =>
     store.set(produce(draft => {
       delete draft.entity.lane[id];
 
-      const board = Object.values(draft.entity.board).find(x => x.lanes.includes(id));
-      if (board) {
-        const i = draft.entity.board[board.id].lanes.indexOf(id);
-        draft.entity.board[board.id].lanes.splice(i, 1);
-      }
+      Object.values(draft.entity.board)
+        .filter(board => board.lanes.includes(id))
+        .forEach(board => {
+          const i = draft.entity.board[board.id].lanes.indexOf(id);
+          draft.entity.board[board.id].lanes.splice(i, 1);
+        });
     }));
   };

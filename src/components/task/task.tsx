@@ -10,7 +10,7 @@ export type TaskProps = {
   id: string;
 };
 
-const Task: Component<TaskProps> = () => {
+const Task: Component<TaskProps> = initial => {
   const component = new forgo.Component<TaskProps>({
     render(props) {
       const task = selector.state(props.id);
@@ -35,6 +35,8 @@ const Task: Component<TaskProps> = () => {
       );
     }
   });
+
+  selector.subscribe(initial.id)(component);
 
   return component;
 };

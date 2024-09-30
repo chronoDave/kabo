@@ -4,14 +4,16 @@ import {
   card,
   lane,
   board,
-  task
+  task,
+  category
 } from './entities';
 
 const id = {
   board: crypto.randomUUID(),
   lane: crypto.randomUUID(),
   card: crypto.randomUUID(),
-  task: crypto.randomUUID()
+  task: crypto.randomUUID(),
+  category: crypto.randomUUID()
 };
 
 export const state = z.object({
@@ -19,9 +21,17 @@ export const state = z.object({
     board: z.record(z.string(), board),
     lane: z.record(z.string(), lane),
     card: z.record(z.string(), card),
-    task: z.record(z.string(), task)
+    task: z.record(z.string(), task),
+    category: z.record(z.string(), category)
   })
     .default({
+      category: {
+        [id.category]: {
+          id: id.category,
+          title: 'New category',
+          colour: '#fff'
+        }
+      },
       task: {
         [id.task]: {
           id: id.task, title: 'New task'
@@ -29,17 +39,24 @@ export const state = z.object({
       },
       card: {
         [id.card]: {
-          id: id.card, title: 'New card', tasks: [id.task]
+          id: id.card,
+          title: 'New card',
+          tasks: [id.task],
+          categories: [id.category]
         }
       },
       lane: {
         [id.lane]: {
-          id: id.lane, title: 'New lane', cards: [id.card]
+          id: id.lane,
+          title: 'New lane',
+          cards: [id.card]
         }
       },
       board: {
         [id.board]: {
-          id: id.board, title: 'New board', lanes: [id.lane]
+          id: id.board,
+          title: 'New board',
+          lanes: [id.lane]
         }
       }
     }),

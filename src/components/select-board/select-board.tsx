@@ -13,14 +13,15 @@ const SelectBoards: Component<SelectBoardsProps> = () => {
   const component = new forgo.Component<SelectBoardsProps>({
     render(props) {
       const { active, boards } = selector.state();
+      const id = `board-${props.id}`;
 
       return (
         <div class='select-board'>
-          <label for={props.id} class='sr-only'>
-            Select active board
+          <label for={id} class='sr-only'>
+            Select board
           </label>
           <select
-            id={props.id}
+            id={id}
             disabled={boards.length === 0}
             onchange={event => set.board((event.target as HTMLSelectElement).value)}
           >

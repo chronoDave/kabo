@@ -14,6 +14,8 @@ import './menu.scss';
 export type MenuProps = {
   id: string;
   icon: IconProps['id'];
+  class?: string;
+  onclick?: (event: forgo.JSX.TargetedMouseEvent<HTMLUListElement>) => void;
   position?: {
     x: 'left' | 'right';
     y: 'top' | 'bottom';
@@ -30,7 +32,7 @@ const Menu: Component<MenuProps> = initial => {
       const expanded = selector.state(props.id);
 
       return (
-        <div class='menu'>
+        <div class={cx('menu', props.class)}>
           <button
             type='button'
             class='icon'
@@ -54,13 +56,10 @@ const Menu: Component<MenuProps> = initial => {
               !expanded && 'hidden'
             )}
             onclick={event => {
+              props.onclick?.(event);
+
               const button = (event.target as HTMLElement | null)?.closest('button');
-              
-              if (
-                button &&
-                event.currentTarget.contains(button) &&
-                button.dataset.autoclose === 'true'
-              ) active.menu(null);
+              if (button?.dataset.autoclose === 'true') active.menu(null);              
             }}
           >
             {props.children}

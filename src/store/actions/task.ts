@@ -26,17 +26,15 @@ export const update = (store: Store<State>) =>
     };
 
 export const remove = (store: Store<State>) =>
-  (id: { task: string; card?: string }): void => {
+  (id: string): void => {
     store.set(produce(draft => {
-      delete draft.entity.task[id.task];
+      delete draft.entity.task[id];
 
-      const card = typeof id.card === 'string' ?
-        draft.entity.card[id.card] :
-        Object.values(draft.entity.card).find(card => card.tasks.includes(id.task));
-
-      if (card) {
-        const i = draft.entity.card[card.id].tasks.indexOf(id.task);
-        draft.entity.card[card.id].tasks.splice(i, 1);
-      }
+      Object.values(draft.entity.card)
+        .filter(card => card.tasks.includes(id))
+        .forEach(card => {
+          const i = draft.entity.card[card.id].tasks.indexOf(id);
+          draft.entity.card[card.id].tasks.splice(i, 1);
+        });
     }));
   };

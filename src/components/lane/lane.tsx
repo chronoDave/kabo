@@ -58,7 +58,7 @@ const Lane: Component<LaneProps> = initial => {
               }
 
               if (button?.dataset.action === 'delete' && card) {
-                actions.card.delete({ card: card.id, lane: lane.id });
+                actions.card.delete(card.id);
               }
             }}
           >

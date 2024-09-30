@@ -1,9 +1,14 @@
+@use 'shadow';
+
 .menu {
   position: relative;
 
   > [role="menu"] {
+    background-color: white;
+    padding: 0.5rem;
     position: absolute;
     z-index: 1;
+    box-shadow: shadow.box(2);
 
     &.top {
       top: 0;
