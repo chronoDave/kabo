@@ -5,7 +5,7 @@ import * as forgo from 'forgo';
 import * as actions from '../../store/actions';
 import contentEditable from '../../lib/contentEditable/contentEditable';
 import Card from '../card/card';
-import Icon from '../icon/icon';
+import Icon from '../../components/icon/icon';
 import selector from './lane.state';
 
 import './lane.scss';

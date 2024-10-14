@@ -6,7 +6,7 @@ import colourPicker from '../../../lib/colourPicker/colourPicker';
 import Icon from '../../../components/icon/icon';
 import Category from './category/category';
 import selector from './collapse-category.state';
-import Collapse from '../../collapse/collapse';
+import Collapse from '../../../components/collapse/collapse';
 
 import './collapse-category.scss';
 

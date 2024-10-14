@@ -5,7 +5,7 @@ import selector from './card.state';
 import * as actions from '../../store/actions';
 import contentEditable from '../../lib/contentEditable/contentEditable';
 import Icon from '../../components/icon/icon';
-import Task from '../task/task';
+import Task from './task/task';
 import Categories from './categories/categories';
 import Menu from '../../components/menu/menu';
 

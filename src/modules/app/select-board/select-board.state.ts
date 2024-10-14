@@ -1,6 +1,6 @@
 import deepEqual from 'fast-deep-equal';
 
-import { selector } from '../../store/store';
+import { selector } from '../../../store/store';
 
 export default selector(state => () => ({
   active: state?.active.board,

@@ -2,7 +2,7 @@ import type { ForgoNewComponentCtor as Component } from 'forgo';
 
 import * as forgo from 'forgo';
 
-import { active as set } from '../../store/actions';
+import { active as set } from '../../../store/actions';
 import selector from './select-board.state';
 
 export type SelectBoardsProps = {

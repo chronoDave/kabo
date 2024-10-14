@@ -5,7 +5,7 @@ import Lane from '../lane/lane';
 import selector from './board.state';
 import * as actions from '../../store/actions';
 import contentEditable from '../../lib/contentEditable/contentEditable';
-import Icon from '../icon/icon';
+import Icon from '../../components/icon/icon';
 
 import './board.scss';
 
