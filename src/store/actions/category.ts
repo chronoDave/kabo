@@ -21,6 +21,10 @@ export const update = (store: Store<State>) =>
         if (typeof category.title === 'string') {
           draft.entity.category[id].title = category.title;
         }
+
+        if (typeof category.colour === 'string') {
+          draft.entity.category[id].colour = category.colour;
+        }
       }));
     };
 
@@ -35,17 +39,5 @@ export const remove = (store: Store<State>) =>
           const i = draft.entity.card[card.id].categories.indexOf(id);
           draft.entity.card[card.id].categories.splice(i, 1);
         });
-    }));
-  };
-
-export const toggle = (store: Store<State>) =>
-  (id: { category: string; card: string }): void => {
-    store.set(produce(draft => {
-      if (!draft.entity.card[id.card].categories.includes(id.category)) {
-        draft.entity.card[id.card].categories.push(id.category);
-      } else {
-        const i = draft.entity.card[id.card].categories.indexOf(id.category);
-        draft.entity.card[id.card].categories.splice(i, 1);
-      }
     }));
   };

@@ -42,3 +42,29 @@ export const remove = (store: Store<State>) =>
         });
     }));
   };
+
+export const addCategory = (store: Store<State>) =>
+  (card: string) =>
+    (category: string) => store.set(produce(draft => {
+      if (!draft.entity.card[card].categories.includes(category)) {
+        draft.entity.card[card].categories.push(category);
+      }
+    }));
+
+export const removeCategory = (store: Store<State>) =>
+  (card: string) =>
+    (category: string) => store.set(produce(draft => {
+      const i = draft.entity.card[card].categories.indexOf(category);
+      draft.entity.card[card].categories.splice(i, 1);
+    }));
+
+export const toggleCategory = (store: Store<State>) =>
+  (card: string) =>
+    (category: string) => store.set(produce(draft => {
+      if (!draft.entity.card[card].categories.includes(category)) {
+        draft.entity.card[card].categories.push(category);
+      } else {
+        const i = draft.entity.card[card].categories.indexOf(category);
+        draft.entity.card[card].categories.splice(i, 1);
+      }
+    }));

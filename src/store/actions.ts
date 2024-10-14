@@ -23,7 +23,10 @@ export const lane = {
 export const card = {
   create: _card.create(store),
   update: _card.update(store),
-  delete: _card.remove(store)
+  delete: _card.remove(store),
+  addCategory: _card.addCategory(store),
+  removeCategory: _card.removeCategory(store),
+  toggleCategory: _card.toggleCategory(store)
 };
 
 export const task = {
@@ -35,8 +38,7 @@ export const task = {
 export const category = {
   create: _category.create(store),
   update: _category.update(store),
-  delete: _category.remove(store),
-  toggle: _category.toggle(store)
+  delete: _category.remove(store)
 };
 
 export const active = {
