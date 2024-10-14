@@ -3,7 +3,7 @@ import type { ForgoNewComponentCtor as Component } from 'forgo';
 import * as forgo from 'forgo';
 import * as actions from '../../store/actions';
 import selector from './task.state';
-import Icon from '../icon/icon';
+import Icon from '../../components/icon/icon';
 import contentEditable from '../../lib/contentEditable/contentEditable';
 
 export type TaskProps = {

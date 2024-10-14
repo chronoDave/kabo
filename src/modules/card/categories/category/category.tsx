@@ -4,7 +4,7 @@ import * as forgo from 'forgo';
 import * as actions from '../../../../store/actions';
 import selector from './category.state';
 import contentEditable from '../../../../lib/contentEditable/contentEditable';
-import Icon from '../../../icon/icon';
+import Icon from '../../../../components/icon/icon';
 
 export type CategoryProps = {
   id: string;

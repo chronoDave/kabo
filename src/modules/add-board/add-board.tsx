@@ -2,7 +2,7 @@ import type { ForgoNewComponentCtor as Component } from 'forgo';
 
 import * as forgo from 'forgo';
 import { board } from '../../store/actions';
-import Icon from '../icon/icon';
+import Icon from '../../components/icon/icon';
 import selector from './add-board.state';
 
 export type AddBoardProps = {};
