@@ -8,9 +8,9 @@ import Icon from '../icon/icon';
 import Menu from '../menu/menu';
 import Task from '../task/task';
 import Category from '../category/category';
+import MenuCategory from '../menu-category/menu-category';
 
 import './card.scss';
-import MenuCategory from '../menu-category/menu-category';
 
 export type CardProps = {
   id: string;
@@ -92,17 +92,21 @@ const Card: Component<CardProps> = initial => {
               class='clear'
               onclick={event => {
                 const button = (event.target as HTMLElement | null)?.closest('button');
-                const category = button?.closest<HTMLElement>('.category');
+                const category = button?.closest<HTMLElement>('li');
     
                 if (button?.dataset.action === 'delete' && category) {
+                  actions.card.removeCategory(props.id)(category.id);
                   event.stopPropagation();
-                  actions.category.delete(category.id);
                 }
               }}
             >
               {card.categories.map(category => (
-                <li key={category}>
+                <li id={category} key={category}>
                   <Category id={category} />
+                  <button type='button' data-action='delete'>
+                    <Icon id='xmark' />
+                    <span class='sr-only'>Delete category</span>
+                  </button>
                 </li>
               ))}
             </ul>
