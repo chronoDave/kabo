@@ -26,27 +26,4 @@
     margin-top: 0.5rem;
     padding: 0.25rem 0.5rem;
   }
-
-  .categories {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.25rem;
-    padding: 0.25rem 0.5rem;
-    margin-top: 0.5rem;
-
-    > ul {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .menu > ul > li {
-      display: flex;
-
-      p {
-        flex-grow: 1;
-        flex-shrink: 0;
-      }
-    }
-  }
 }

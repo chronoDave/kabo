@@ -1,0 +1,29 @@
+.card .categories {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+
+  > button {
+    align-self: flex-start;
+  }
+
+  > ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25em;
+
+    .category {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+
+      button {
+        color: inherit;
+
+        span {
+          color: inherit;
+        }
+      }
+    }
+  }
+}

@@ -5,10 +5,9 @@ import selector from './card.state';
 import * as actions from '../../store/actions';
 import contentEditable from '../../lib/contentEditable/contentEditable';
 import Icon from '../icon/icon';
-import Menu from '../menu/menu';
 import Task from '../task/task';
-import Category from '../category/category';
-import MenuCategory from '../menu-category/menu-category';
+import Categories from './categories/categories';
+import Menu from '../menu/menu';
 
 import './card.scss';
 
@@ -87,31 +86,7 @@ const Card: Component<CardProps> = initial => {
               </button>
             </div>
           </header>
-          <div class='categories'>
-            <ul
-              class='clear'
-              onclick={event => {
-                const button = (event.target as HTMLElement | null)?.closest('button');
-                const category = button?.closest<HTMLElement>('li');
-    
-                if (button?.dataset.action === 'delete' && category) {
-                  actions.card.removeCategory(props.id)(category.id);
-                  event.stopPropagation();
-                }
-              }}
-            >
-              {card.categories.map(category => (
-                <li id={category} key={category}>
-                  <Category id={category} />
-                  <button type='button' data-action='delete'>
-                    <Icon id='xmark' />
-                    <span class='sr-only'>Delete category</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-            <MenuCategory card={card.id} />
-          </div>
+          <Categories card={props.id} categories={card.categories} />
           <p
             {...contentEditable({ empty: 'Description' })}
             onblur={event => {
