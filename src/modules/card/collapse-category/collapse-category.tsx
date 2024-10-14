@@ -2,7 +2,7 @@ import type { ForgoNewComponentCtor as Component } from 'forgo';
 
 import * as forgo from 'forgo';
 import * as actions from '../../../store/actions';
-import colourPicker from '../../../lib/colourPicker/colourPicker';
+import * as input from '../../../lib/input/input';
 import Icon from '../../../components/icon/icon';
 import Category from './category/category';
 import selector from './collapse-category.state';
@@ -37,7 +37,7 @@ const CollapseCategory: Component<CollapseCategoryProps> = initial => {
 
               if (button?.dataset.action === 'update' && category) {
                 if (button.dataset.attribute === 'colour') {
-                  colourPicker(colour => actions.category.update(category.id)({ colour }));
+                  input.colour(colour => actions.category.update(category.id)({ colour }));
                   event.stopPropagation();
                 }
               }

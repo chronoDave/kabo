@@ -26,6 +26,10 @@ export const update = (store: Store<State>) =>
         if (typeof card.description === 'string') {
           draft.entity.card[id].description = card.description.trim();
         }
+
+        if (typeof card.date === 'string') {
+          draft.entity.card[id].date = card.date;
+        }
       }));
     };
 
