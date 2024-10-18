@@ -35,8 +35,11 @@ const Lane: Component<LaneProps> = initial => {
               </h3>
               <p>({lane.cards.length})</p>
             </hgroup>
-
             <div class='toolbar'>
+              <button type='button' class='icon' onclick={() => actions.card.create(lane.id)('New card')}>
+                <Icon id='plus' />
+                <span class='sr-only'>Add card</span>
+              </button>
               <button
                 type='button'
                 data-action='delete'
