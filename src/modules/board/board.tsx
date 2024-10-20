@@ -23,7 +23,7 @@ const Board: Component<BoardProps> = initial => {
         <article class='board'>
           <header>
             <h2
-              {...contentEditable()}
+              {...contentEditable}
               onblur={event => {
                 const title = (event.target as HTMLHeadingElement).innerText;
                 if (title !== board.title) actions.board.update(props.id)({ title });

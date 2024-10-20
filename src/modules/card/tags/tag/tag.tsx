@@ -27,7 +27,7 @@ const Tag: Component<TagProps> = initial => {
           ].join(';')}
         >
           <p
-            {...contentEditable()}
+            {...contentEditable}
             onblur={event => {
               const title = (event.target as HTMLHeadingElement).innerText;
               if (title !== state.category.title) actions.category.update(props.id)({ title });

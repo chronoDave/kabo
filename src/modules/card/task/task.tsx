@@ -6,6 +6,8 @@ import selector from './task.state';
 import Icon from '../../../components/icon/icon';
 import contentEditable from '../../../lib/contentEditable/contentEditable';
 
+import './task.scss';
+
 export type TaskProps = {
   id: string;
 };
@@ -23,7 +25,7 @@ const Task: Component<TaskProps> = initial => {
             <span class='sr-only'>Mark task as complete</span>
           </button>
           <p
-            {...contentEditable()}
+            {...contentEditable}
             onblur={event => {
               const title = (event.target as HTMLHeadingElement).innerText;
               if (title !== task.title) actions.task.update(props.id)({ title });

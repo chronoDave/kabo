@@ -35,7 +35,7 @@ const Card: Component<CardProps> = initial => {
               <span class='sr-only'>Mark card as complete</span>
             </button>
             <h4
-              {...contentEditable()}
+              {...contentEditable}
               onblur={event => {
                 const title = (event.target as HTMLHeadingElement).innerText;
                 if (card.title !== title) actions.card.update(props.id)({ title });
@@ -90,7 +90,7 @@ const Card: Component<CardProps> = initial => {
           <Date card={props.id} />
           <Tags card={props.id} categories={card.categories} />
           <p
-            {...contentEditable({ empty: 'Description' })}
+            {...contentEditable}
             onblur={event => {
               const description = (event.target as HTMLHeadingElement).innerText;
               if (card.description !== description) actions.card.update(props.id)({ description });
@@ -98,34 +98,34 @@ const Card: Component<CardProps> = initial => {
           >
             {card.description}
           </p>
-          <ul
-            onclick={event => {
-              const button = (event.target as HTMLElement | null)?.closest('button');
-              const task = button?.closest<HTMLElement>('.task');
+          <div class='tasks'>
+            <ol
+              onclick={event => {
+                const button = (event.target as HTMLElement | null)?.closest('button');
+                const task = button?.closest<HTMLElement>('.task');
 
-              if (button?.dataset.action === 'create') {
-                event.stopPropagation();
-                actions.task.create(card.id)('New task');
-              }
+                if (button?.dataset.action === 'create') {
+                  event.stopPropagation();
+                  actions.task.create(card.id)('New task');
+                }
 
-              if (button?.dataset.action === 'delete' && task) {
-                event.stopPropagation();
-                actions.task.delete(task.id);
-              }
-            }}
-          >
-            {card.tasks.map(task => (
-              <li key={task}>
-                <Task id={task} />
-              </li>
-            ))}
-            <li>
-              <button type='button' data-action='create'>
-                <Icon id='plus' />
-                <span>Add task</span>
-              </button>
-            </li>
-          </ul>
+                if (button?.dataset.action === 'delete' && task) {
+                  event.stopPropagation();
+                  actions.task.delete(task.id);
+                }
+              }}
+            >
+              {card.tasks.map(task => (
+                <li key={task}>
+                  <Task id={task} />
+                </li>
+              ))}
+            </ol>
+            <button type='button' data-action='create'>
+              <Icon id='plus' />
+              <span>Add task</span>
+            </button>
+          </div>
         </article>
       );
     }

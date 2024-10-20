@@ -25,7 +25,7 @@ const Lane: Component<LaneProps> = initial => {
           <header>
             <hgroup>
               <h3
-                {...contentEditable()}
+                {...contentEditable}
                 onblur={event => {
                   const title = (event.target as HTMLHeadingElement).innerText;
                   if (title !== lane.title) actions.lane.update(props.id)({ title });
