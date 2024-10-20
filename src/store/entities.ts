@@ -19,7 +19,6 @@ export const card = z.object({
   id: z.string().readonly(),
   title: z.string(),
   description: z.string().optional(),
-  date: z.string().optional(),
   tasks: z.array(z.string()), // Foreign keys
   categories: z.array(z.string()) // Foreign keys
 });

@@ -10,7 +10,6 @@ import Tags from './tags/tags';
 import Menu from '../../components/menu/menu';
 
 import './card.scss';
-import Date from './date/date';
 
 export type CardProps = {
   id: string;
@@ -87,7 +86,6 @@ const Card: Component<CardProps> = initial => {
               </button>
             </div>
           </header>
-          <Date card={props.id} />
           <Tags card={props.id} categories={card.categories} />
           <p
             {...contentEditable}
