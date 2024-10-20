@@ -4,11 +4,7 @@ import * as forgo from 'forgo';
 
 import selector from './app.state';
 import Board from '../board/board';
-import AddBoard from './add-board/add-board';
-import DeleteBoard from './delete-board/delete-board';
-import SelectBoard from './select-board/select-board';
-
-import './app.scss';
+import Header from '../header/header';
 
 export type AppProps = {};
 
@@ -18,13 +14,9 @@ const App: Component<AppProps> = () => {
       const board = selector.state();
 
       return [
-        <header>
-          <SelectBoard id='select-board' />
-          <AddBoard />
-          <DeleteBoard />
-        </header>,
+        <Header />,
         typeof board === 'string' ? (
-          <main>
+          <main class='app'>
             <Board id={board} />
           </main>
         ) : null
