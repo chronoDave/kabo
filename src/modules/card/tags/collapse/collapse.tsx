@@ -1,28 +1,31 @@
 import type { ForgoNewComponentCtor as Component } from 'forgo';
 
 import * as forgo from 'forgo';
-import * as actions from '../../../store/actions';
-import * as input from '../../../lib/input/input';
-import Icon from '../../../components/icon/icon';
-import Category from './category/category';
-import selector from './collapse-category.state';
-import Collapse from '../../../components/collapse/collapse';
+import * as actions from '../../../../store/actions';
+import * as input from '../../../../lib/input/input';
+import Icon from '../../../../components/icon/icon';
+import Tag from '../tag/tag';
+import cx from '../../../../lib/cx/cx';
+import selector from './collapse.state';
 
-import './collapse-category.scss';
+import './collapse.scss';
 
-export type CollapseCategoryProps = {
+export type Collapse = {
   id: string;
   expanded: boolean;
   card: string;
 };
 
-const CollapseCategory: Component<CollapseCategoryProps> = initial => {
-  const component = new forgo.Component<CollapseCategoryProps>({
+const Collapse: Component<Collapse> = initial => {
+  const component = new forgo.Component<Collapse>({
     render(props) {
       const categories = selector.state(props.card);
 
       return (
-        <Collapse id={props.id} expanded={props.expanded}>
+        <div
+          id={props.id}
+          class={cx('collapse', !props.expanded && 'hidden')}
+        >
           <ul
             onclick={event => {
               const button = (event.target as HTMLElement | null)?.closest('button');
@@ -58,7 +61,7 @@ const CollapseCategory: Component<CollapseCategoryProps> = initial => {
                   <span class='sr-only'>Toggle category</span>
                   <input type='checkbox' checked={checked} />
                 </label>
-                <Category id={category} />
+                <Tag id={category} />
                 <div class='actions'>
                   <button type='button' data-action='update' data-attribute='colour'>
                     <Icon id='eyeDropper' />
@@ -76,7 +79,7 @@ const CollapseCategory: Component<CollapseCategoryProps> = initial => {
             <Icon id='plus' />
             <span>Create category</span>
           </button>
-        </Collapse>
+        </div>
       );
     }
   });
@@ -86,4 +89,4 @@ const CollapseCategory: Component<CollapseCategoryProps> = initial => {
   return component;
 };
 
-export default CollapseCategory;
+export default Collapse;

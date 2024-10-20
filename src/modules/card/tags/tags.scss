@@ -1,0 +1,10 @@
+.tags {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+
+  > ul {
+    display: flex;
+    gap: 0.5rem;
+  }
+}

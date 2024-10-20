@@ -1,4 +1,4 @@
-import { selector } from '../../../store/store';
+import { selector } from '../../../../store/store';
 
 export default selector(state =>
   (id: string) =>

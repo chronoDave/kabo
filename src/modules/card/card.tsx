@@ -6,7 +6,7 @@ import * as actions from '../../store/actions';
 import contentEditable from '../../lib/contentEditable/contentEditable';
 import Icon from '../../components/icon/icon';
 import Task from './task/task';
-import Categories from './categories/categories';
+import Tags from './tags/tags';
 import Menu from '../../components/menu/menu';
 
 import './card.scss';
@@ -88,7 +88,7 @@ const Card: Component<CardProps> = initial => {
             </div>
           </header>
           <Date card={props.id} />
-          <Categories card={props.id} categories={card.categories} />
+          <Tags card={props.id} categories={card.categories} />
           <p
             {...contentEditable({ empty: 'Description' })}
             onblur={event => {

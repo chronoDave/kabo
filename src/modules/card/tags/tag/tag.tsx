@@ -2,16 +2,17 @@ import type { ForgoNewComponentCtor as Component } from 'forgo';
 
 import * as forgo from 'forgo';
 import * as actions from '../../../../store/actions';
-import selector from './category.state';
 import contentEditable from '../../../../lib/contentEditable/contentEditable';
-import Icon from '../../../../components/icon/icon';
+import selector from './tag.state';
 
-export type CategoryProps = {
+import './tag.scss';
+
+export type TagProps = {
   id: string;
 };
 
-const Category: Component<CategoryProps> = initial => {
-  const component = new forgo.Component<CategoryProps>({
+const Tag: Component<TagProps> = initial => {
+  const component = new forgo.Component<TagProps>({
     render(props) {
       const state = selector.state(props.id);
 
@@ -19,10 +20,10 @@ const Category: Component<CategoryProps> = initial => {
       return (
         <div
           id={props.id}
-          class='category'
+          class='tag'
           style={[
-            `--category-bg: ${state.colour.background}`,
-            `--category-text: ${state.colour.text}`
+            `--tag-bg: ${state.colour.background}`,
+            `--tag-text: ${state.colour.text}`
           ].join(';')}
         >
           <p
@@ -34,10 +35,7 @@ const Category: Component<CategoryProps> = initial => {
           >
             {state.category.title}
           </p>
-          <button type='button' data-action='delete'>
-            <Icon id='xmark' />
-            <span class='sr-only'>Remove {state.category.title}</span>
-          </button>
+          {props.children}
         </div>
       );
     }
@@ -48,4 +46,4 @@ const Category: Component<CategoryProps> = initial => {
   return component;
 };
 
-export default Category;
+export default Tag;
