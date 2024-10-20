@@ -23,7 +23,6 @@ const Categories: Component<CategoriesProps> = () => {
       return [
         <div class='categories'>
           <ul
-            class='clear'
             onclick={event => {
               const button = (event.target as HTMLElement | null)?.closest('button');
               const category = button?.closest<HTMLElement>('.category');

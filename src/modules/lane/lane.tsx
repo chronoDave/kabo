@@ -50,8 +50,7 @@ const Lane: Component<LaneProps> = initial => {
               </button>
             </div>
           </header>
-          <ul
-            class='clear'
+          <ol
             onclick={event => {
               const button = (event.target as HTMLElement | null)?.closest('button');
               const card = button?.closest<HTMLElement>('.card');
@@ -77,7 +76,7 @@ const Lane: Component<LaneProps> = initial => {
             ))}
             <li data-dropzone="true">
               <button
-                class='clear default'
+                class='default'
                 type='button'
                 data-action='create'
               >
@@ -85,7 +84,7 @@ const Lane: Component<LaneProps> = initial => {
                 Add card
               </button>
             </li>
-          </ul>
+          </ol>
         </article>
       );
     }

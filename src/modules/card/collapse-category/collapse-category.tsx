@@ -24,7 +24,6 @@ const CollapseCategory: Component<CollapseCategoryProps> = initial => {
       return (
         <Collapse id={props.id} expanded={props.expanded}>
           <ul
-            class='clear'
             onclick={event => {
               const button = (event.target as HTMLElement | null)?.closest('button');
               const label = (event.target as HTMLElement | null)?.closest('label');

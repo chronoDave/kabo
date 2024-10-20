@@ -6,6 +6,8 @@ import selector from './app.state';
 import Board from '../board/board';
 import Header from '../header/header';
 
+import './app.scss';
+
 export type AppProps = {};
 
 const App: Component<AppProps> = () => {

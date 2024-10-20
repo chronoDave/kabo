@@ -34,7 +34,7 @@ const Category: Component<CategoryProps> = initial => {
           >
             {state.category.title}
           </p>
-          <button class='clear' type='button' data-action='delete'>
+          <button type='button' data-action='delete'>
             <Icon id='xmark' />
             <span class='sr-only'>Remove {state.category.title}</span>
           </button>

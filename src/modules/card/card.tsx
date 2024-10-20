@@ -99,7 +99,6 @@ const Card: Component<CardProps> = initial => {
             {card.description}
           </p>
           <ul
-            class='clear'
             onclick={event => {
               const button = (event.target as HTMLElement | null)?.closest('button');
               const task = button?.closest<HTMLElement>('.task');

@@ -50,7 +50,6 @@ const Menu: Component<MenuProps> = initial => {
             aria-label={props.label.menu}
             tabindex={-1}
             class={cx(
-              'clear',
               props.position?.y ?? 'bottom',
               props.position?.x ?? 'left',
               !expanded && 'hidden'

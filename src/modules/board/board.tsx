@@ -33,7 +33,6 @@ const Board: Component<BoardProps> = initial => {
             </h2>
           </header>
           <ol
-            class='clear'
             onclick={event => {
               const button = (event.target as HTMLElement | null)?.closest('button');
               const card = button?.closest<HTMLElement>('.card');
@@ -118,7 +117,6 @@ const Board: Component<BoardProps> = initial => {
               <button
                 type='button'
                 data-action='create'
-                class='clear'
               >
                 <Icon id='plus' />
                 Add lane
