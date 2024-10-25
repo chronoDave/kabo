@@ -1,5 +1,6 @@
 {
-  "name": "kabo",
+  "name": "pebble",
+  "description": "Simple offline Kanban board",
   "version": "0.0.1",
   "private": true,
   "type": "module",
