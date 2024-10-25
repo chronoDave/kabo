@@ -13,22 +13,20 @@ export default class Storage<T extends z.ZodType<object>> {
     this._schema = schema;
   }
 
-  read(): z.infer<T> | null {
-    const raw = localStorage.getItem(this._id);
+  parse(raw: unknown): z.infer<T> | null {
     if (typeof raw !== 'string') return null;
 
     try {
-      const state = JSON.parse(raw) as unknown;
-      
-      return this._schema.parse(state);
+      return this._schema.parse(JSON.parse(raw));
     } catch (err) {
       console.error(err);
 
-      localStorage.setItem(`${this._id}-error`, JSON.stringify({ raw, err }));
-      localStorage.removeItem(this._id);
-
       return null;
     }
+  }
+
+  read(): z.infer<T> | null {
+    return this.parse(localStorage.getItem(this._id));
   }
 
   write(state: z.infer<T>): this {

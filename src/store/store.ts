@@ -4,7 +4,11 @@ import { state } from './state';
 import Storage from '../lib/storage/storage';
 
 const storage = new Storage('state', state);
-const store = new Store(storage.read() ?? storage.default)
+const store = new Store(
+  storage.parse(new URLSearchParams(window.location.search).get('s')) ??
+  storage.read() ??
+  storage.default
+)
   .on(state => storage.write(state.current))
   .on(console.log);
 
