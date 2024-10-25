@@ -22,6 +22,10 @@ export const update = (store: Store<State>) =>
         if (typeof task.title === 'string') {
           draft.entity.task[id].title = task.title;
         }
+
+        if (typeof task.done === 'boolean') {
+          draft.entity.task[id].done = task.done;
+        }
       }));
     };
 

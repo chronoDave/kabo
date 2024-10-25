@@ -19,20 +19,31 @@ const Task: Component<TaskProps> = initial => {
 
       if (!task) return null;
       return (
-        <div id={task.id} class='task'>
-          <button type='button' class='icon' data-action='delete'>
-            <Icon id='circle' />
-            <span class='sr-only'>Mark task as complete</span>
+        <div
+          id={task.id}
+          class='task'
+          data-done={!!task.done}
+          aria-live='polite'
+        >
+          <button type='button' class='icon' data-action='update'>
+            {task.done ? <Icon id='circleDot' /> : <Icon id='circle' />}
+            <span class='sr-only'>{task.done ? 'Mark task as incomplete' : 'Mark task as complete'}</span>
           </button>
-          <p
-            {...contentEditable}
-            onblur={event => {
-              const title = (event.target as HTMLHeadingElement).innerText;
-              if (title !== task.title) actions.task.update(props.id)({ title });
-            }}
-          >
-            {task.title}
-          </p>
+          {task.done ? <s>{task.title}</s> : (
+            <p
+              {...contentEditable}
+              onblur={event => {
+                const title = (event.target as HTMLHeadingElement).innerText;
+                if (title !== task.title) actions.task.update(props.id)({ title });
+              }}
+            >
+              {task.title}
+            </p>
+          )}
+          <button type='button' class='icon' data-action='delete'>
+            <Icon id='xmark' />
+            <span class='sr-only'>Delete task</span>
+          </button>
         </div>
       );
     }

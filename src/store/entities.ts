@@ -10,6 +10,7 @@ export type Category = z.infer<typeof category>;
 
 export const task = z.object({
   id: z.string().readonly(),
+  done: z.boolean().optional(),
   title: z.string()
 });
 

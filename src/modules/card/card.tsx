@@ -134,6 +134,12 @@ const Card: Component<CardProps> = initial => {
                 actions.task.create(card.id)('New task');
               }
 
+              if (button?.dataset.action === 'update' && task) {
+                event.stopPropagation();
+                
+                actions.task.update(task.id)({ done: task.dataset.done !== 'true' });
+              }
+
               if (button?.dataset.action === 'delete' && task) {
                 event.stopPropagation();
                 actions.task.delete(task.id);
