@@ -88,6 +88,7 @@ const Card: Component<CardProps> = initial => {
           </header>
           <Tags card={props.id} categories={card.categories} />
           <p
+            class='body'
             {...contentEditable}
             onblur={event => {
               const description = (event.target as HTMLHeadingElement).innerText;
