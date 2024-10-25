@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import uid from '../lib/uid/uid';
 
 import {
   card,
@@ -9,11 +10,11 @@ import {
 } from './entities';
 
 const id = {
-  board: crypto.randomUUID(),
-  lane: crypto.randomUUID(),
-  card: crypto.randomUUID(),
-  task: crypto.randomUUID(),
-  category: crypto.randomUUID()
+  board: uid(),
+  lane: uid(),
+  card: uid(),
+  task: uid(),
+  category: uid()
 };
 
 export const state = z.object({

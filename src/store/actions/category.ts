@@ -3,11 +3,12 @@ import type { Category } from '../entities';
 import type { State } from '../state';
 
 import { produce } from 'immer';
+import uid from '../../lib/uid/uid';
 
 export const create = (store: Store<State>) =>
   (category: { title: string; card?: string; colour?: string }): void => {
     store.set(produce(draft => {
-      const id = crypto.randomUUID();
+      const id = uid();
 
       draft.entity.category[id] = { id, title: category.title, colour: category.colour ?? '#fff' };
       if (typeof category.card === 'string') draft.entity.card[category.card].categories.push(id);

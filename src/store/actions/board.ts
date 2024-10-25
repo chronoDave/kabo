@@ -3,11 +3,12 @@ import type { State } from '../state';
 import type { Board } from '../entities';
 
 import { produce } from 'immer';
+import uid from '../../lib/uid/uid';
 
 export const create = (store: Store<State>) =>
   (title: string): void => {
     store.set(produce(draft => {
-      const id = crypto.randomUUID();
+      const id = uid();
 
       draft.entity.board[id] = { id, title, lanes: [] };
       draft.active.board = id;
