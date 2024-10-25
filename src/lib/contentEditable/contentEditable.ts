@@ -16,10 +16,25 @@ export type ContentEditable = {
   onkeydown: (event: KeyboardEvent) => void;
   onkeyup: (event: KeyboardEvent) => void;
   onpaste: (event: ClipboardEvent) => void;
+  onfocus: (event: FocusEvent) => void;
 };
 
 const contentEditable: ContentEditable = {
   contenteditable: true,
+  onfocus: event => {
+    const root = event.currentTarget as HTMLElement;
+
+    const range = document.createRange();
+    const selection = window.getSelection();
+
+    range.setStart(root.childNodes[0], root.textContent?.length ?? 0);
+    range.collapse(true);
+
+    selection?.removeAllRanges();
+    selection?.addRange(range);
+
+    root.focus();
+  },
   onbeforeinput: event => {
     if (!(PLAIN_TYPES as string[]).includes(event.inputType)) {
       event.preventDefault();
