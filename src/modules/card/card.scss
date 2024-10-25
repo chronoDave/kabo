@@ -11,6 +11,11 @@
 
     .actions {
       display: flex;
+      align-items: center;
+
+      > [data-icon*="grip"] {
+        opacity: 0.5;
+      }
     }
   }
 

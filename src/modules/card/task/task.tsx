@@ -25,7 +25,7 @@ const Task: Component<TaskProps> = initial => {
           data-done={!!task.done}
           aria-live='polite'
         >
-          <button type='button' class='icon' data-action='update'>
+          <button type='button' data-action='update'>
             {task.done ? <Icon id='circleDot' /> : <Icon id='circle' />}
             <span class='sr-only'>{task.done ? 'Mark task as incomplete' : 'Mark task as complete'}</span>
           </button>
@@ -40,7 +40,7 @@ const Task: Component<TaskProps> = initial => {
               {task.title}
             </p>
           )}
-          <button type='button' class='icon' data-action='delete'>
+          <button type='button' data-action='delete'>
             <Icon id='xmark' />
             <span class='sr-only'>Delete task</span>
           </button>

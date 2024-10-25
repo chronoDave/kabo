@@ -35,7 +35,6 @@ const Menu: Component<MenuProps> = initial => {
         <div class={cx('menu', props.class)}>
           <button
             type='button'
-            class='icon'
             aria-controls={props.id}
             aria-haspopup
             aria-expanded={expanded}

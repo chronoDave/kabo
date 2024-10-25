@@ -15,7 +15,7 @@ const AddBoard: Component<AddBoardProps> = () => {
       return (
         <button
           type='button'
-          class='icon add-board'
+          class='add-board'
           onclick={() => board.create(`New board ${n + 1}`)}
         >
           <Icon id='plus' />

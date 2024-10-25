@@ -12,6 +12,8 @@ import Tag from './tag/tag';
 import Menu from '../../components/menu/menu';
 
 import './card.scss';
+import CollapseButton from '../../components/collapse-button/collapse-button';
+import CollapseActions from './collapse-actions/collapse-actions';
 
 export type CardProps = {
   id: string;
@@ -21,6 +23,7 @@ const Card: Component<CardProps> = initial => {
   const component = new forgo.Component<CardProps>({
     render(props) {
       const card = selector.state(props.id);
+      const id = { tags: `${props.id}-tags`, actions: `${props.id}-actions` };
 
       if (!card) return null;
       return (
@@ -28,7 +31,6 @@ const Card: Component<CardProps> = initial => {
           <header>
             <button
               type='button'
-              class="icon"
               data-action='move'
               data-direction='end'
             >
@@ -45,48 +47,15 @@ const Card: Component<CardProps> = initial => {
               {card.title}
             </h4>
             <div class='actions'>
-              <ButtonTags id={`${props.id}-collapse`} />
-              <Menu
-                id={`menu-${props.id}`}
-                icon='arrowsUpDownLeftRight'
-                label={{
-                  button: `Move ${card.title}`,
-                  menu: 'Directions'
-                }}
-              >
-                <li>
-                  <button type='button' data-action="move" data-direction="up">
-                    <Icon id='arrowUp' />
-                    <span>Move up</span>
-                  </button>
-                </li>
-                <li>
-                  <button type='button' data-action="move" data-direction="down">
-                    <Icon id='arrowDown' />
-                    <span>Move down</span>
-                  </button>
-                </li>
-                <li>
-                  <button type='button' data-action="move" data-direction="left">
-                    <Icon id='arrowLeft' />
-                    <span>Move left</span>
-                  </button>
-                </li>
-                <li>
-                  <button type='button' data-action="move" data-direction="right">
-                    <Icon id='arrowRight' />
-                    <span>Move right</span>
-                  </button>
-                </li>
-              </Menu>
-              <button
-                type='button'
-                data-action='delete'
-                class='icon'
-              >
-                <Icon id='xmark' />
-                <span class='sr-only'>Remove card</span>
-              </button>
+              <CollapseButton id={id.tags}>
+                <Icon id='tag' />
+                <span class='sr-only'>Open tags collapse</span>
+              </CollapseButton>
+              <CollapseButton id={id.actions}>
+                <Icon id='ellipsisVertical' />
+                <span class='sr-only'>Open actions collapse</span>
+              </CollapseButton>
+              <Icon id='gripVertical' />
             </div>
           </header>
           <ul
@@ -112,7 +81,8 @@ const Card: Component<CardProps> = initial => {
               </li>
             ))}
           </ul>
-          <CollapseTags id={`${props.id}-collapse`} card={card.id} />
+          <CollapseTags id={id.tags} card={card.id} />
+          <CollapseActions id={id.actions} />
           <p
             class='body'
             {...contentEditable}
@@ -136,7 +106,7 @@ const Card: Component<CardProps> = initial => {
 
               if (button?.dataset.action === 'update' && task) {
                 event.stopPropagation();
-                
+
                 actions.task.update(task.id)({ done: task.dataset.done !== 'true' });
               }
 

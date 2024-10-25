@@ -15,7 +15,6 @@ const DeleteBoard: Component<DeleteBoardProps> = () => {
       return (
         <button
           type='button'
-          class='icon'
           disabled={typeof id !== 'string'}
           onclick={() => {
             if (typeof id === 'string') board.delete(id);

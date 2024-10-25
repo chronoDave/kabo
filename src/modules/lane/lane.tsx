@@ -36,14 +36,13 @@ const Lane: Component<LaneProps> = initial => {
               <span class='badge'>{lane.cards.length}</span>
             </hgroup>
             <div class='toolbar'>
-              <button type='button' class='icon' onclick={() => actions.card.create(lane.id)('New card')}>
+              <button type='button' onclick={() => actions.card.create(lane.id)('New card')}>
                 <Icon id='plus' />
                 <span class='sr-only'>Add card</span>
               </button>
               <button
                 type='button'
                 data-action='delete'
-                class='icon'
               >
                 <Icon id='xmark' />
                 <span class='sr-only'>Remove lane</span>

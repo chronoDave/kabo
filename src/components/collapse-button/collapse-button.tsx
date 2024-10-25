@@ -1,20 +1,19 @@
 import type { ForgoNewComponentCtor as Component } from 'forgo';
 
 import * as forgo from 'forgo';
-import Icon from '../../../components/icon/icon';
-import * as actions from '../../../store/actions';
+import * as actions from '../../store/actions';
 
-import selector from './button-tags.state';
+import selector from './collapse-button.state';
 
-export type ButtonTagsProps = {
+export type CollapseButtonProps = {
   id: string;
 };
 
-const ButtonTags: Component<ButtonTagsProps> = initial => {
-  const component = new forgo.Component<ButtonTagsProps>({
+const CollapseButton: Component<CollapseButtonProps> = initial => {
+  const component = new forgo.Component<CollapseButtonProps>({
     render(props) {
       const expanded = selector.state(props.id);
-  
+
       return (
         <button
           type='button'
@@ -22,8 +21,7 @@ const ButtonTags: Component<ButtonTagsProps> = initial => {
           aria-expanded={expanded}
           onclick={() => actions.active.collapse(expanded ? null : props.id)}
         >
-          <Icon id='tag' />
-          <span class='sr-only'>Tags</span>
+          {props.children}
         </button>
       );
     }
@@ -34,4 +32,4 @@ const ButtonTags: Component<ButtonTagsProps> = initial => {
   return component;
 };
 
-export default ButtonTags;
+export default CollapseButton;
