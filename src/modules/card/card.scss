@@ -16,6 +16,13 @@
 
   .body {
     margin-top: 0.75rem;
+    width: 100%;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
   }
 
   .tasks {

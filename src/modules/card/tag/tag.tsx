@@ -1,8 +1,8 @@
 import type { ForgoNewComponentCtor as Component } from 'forgo';
 
 import * as forgo from 'forgo';
-import * as actions from '../../../../store/actions';
-import contentEditable from '../../../../lib/contentEditable/contentEditable';
+import * as actions from '../../../store/actions';
+import contentEditable from '../../../lib/contentEditable/contentEditable';
 import selector from './tag.state';
 
 import './tag.scss';

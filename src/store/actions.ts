@@ -43,7 +43,8 @@ export const category = {
 
 export const active = {
   board: _active.set(store)('board'),
-  menu: _active.set(store)('menu')
+  menu: _active.set(store)('menu'),
+  collapse: _active.set(store)('collapse')
 };
 
 export const move = {

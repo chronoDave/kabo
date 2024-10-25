@@ -1,31 +1,27 @@
 import type { ForgoNewComponentCtor as Component } from 'forgo';
 
 import * as forgo from 'forgo';
-import * as actions from '../../../../store/actions';
-import * as input from '../../../../lib/input/input';
-import Icon from '../../../../components/icon/icon';
+import * as actions from '../../../store/actions';
+import * as input from '../../../lib/input/input';
+import Icon from '../../../components/icon/icon';
 import Tag from '../tag/tag';
-import cx from '../../../../lib/cx/cx';
-import selector from './collapse.state';
+import selector from './collapse-tags.state';
+import Collapse from '../../../components/collapse/collapse';
 
-import './collapse.scss';
+import './collapse-tags.scss';
 
-export type Collapse = {
+export type CollapseTags = {
   id: string;
-  expanded: boolean;
   card: string;
 };
 
-const Collapse: Component<Collapse> = initial => {
-  const component = new forgo.Component<Collapse>({
+const CollapseTags: Component<CollapseTags> = initial => {
+  const component = new forgo.Component<CollapseTags>({
     render(props) {
       const categories = selector.state(props.card);
 
       return (
-        <div
-          id={props.id}
-          class={cx('collapse', !props.expanded && 'hidden')}
-        >
+        <Collapse id={props.id}>
           <ul
             onclick={event => {
               const button = (event.target as HTMLElement | null)?.closest('button');
@@ -79,7 +75,7 @@ const Collapse: Component<Collapse> = initial => {
             <Icon id='plus' />
             <span>Create category</span>
           </button>
-        </div>
+        </Collapse>
       );
     }
   });
@@ -89,4 +85,4 @@ const Collapse: Component<Collapse> = initial => {
   return component;
 };
 
-export default Collapse;
+export default CollapseTags;

@@ -6,7 +6,9 @@ import * as actions from '../../store/actions';
 import contentEditable from '../../lib/contentEditable/contentEditable';
 import Icon from '../../components/icon/icon';
 import Task from './task/task';
-import Tags from './tags/tags';
+import CollapseTags from './collapse-tags/collapse-tags';
+import ButtonTags from './button-tags/button-tags';
+import Tag from './tag/tag';
 import Menu from '../../components/menu/menu';
 
 import './card.scss';
@@ -43,6 +45,7 @@ const Card: Component<CardProps> = initial => {
               {card.title}
             </h4>
             <div class='actions'>
+              <ButtonTags id={`${props.id}-collapse`} />
               <Menu
                 id={`menu-${props.id}`}
                 icon='arrowsUpDownLeftRight'
@@ -86,7 +89,30 @@ const Card: Component<CardProps> = initial => {
               </button>
             </div>
           </header>
-          <Tags card={props.id} categories={card.categories} />
+          <ul
+            class='tags'
+            onclick={event => {
+              const button = (event.target as HTMLElement | null)?.closest('button');
+              const tag = button?.closest<HTMLElement>('.tag');
+
+              if (button?.dataset.action === 'delete' && tag) {
+                actions.card.removeCategory(card.id)(tag.id);
+                event.stopPropagation();
+              }
+            }}
+          >
+            {card.categories.map(category => (
+              <li key={category}>
+                <Tag id={category}>
+                  <button type='button' data-action='delete'>
+                    <Icon id='xmark' />
+                    <span class='sr-only'>Remove tag</span>
+                  </button>
+                </Tag>
+              </li>
+            ))}
+          </ul>
+          <CollapseTags id={`${props.id}-collapse`} card={card.id} />
           <p
             class='body'
             {...contentEditable}
@@ -97,23 +123,24 @@ const Card: Component<CardProps> = initial => {
           >
             {card.description}
           </p>
-          <div class='tasks'>
-            <ol
-              onclick={event => {
-                const button = (event.target as HTMLElement | null)?.closest('button');
-                const task = button?.closest<HTMLElement>('.task');
+          <div
+            class='tasks'
+            onclick={event => {
+              const button = (event.target as HTMLElement | null)?.closest('button');
+              const task = button?.closest<HTMLElement>('.task');
 
-                if (button?.dataset.action === 'create') {
-                  event.stopPropagation();
-                  actions.task.create(card.id)('New task');
-                }
+              if (button?.dataset.action === 'create') {
+                event.stopPropagation();
+                actions.task.create(card.id)('New task');
+              }
 
-                if (button?.dataset.action === 'delete' && task) {
-                  event.stopPropagation();
-                  actions.task.delete(task.id);
-                }
-              }}
-            >
+              if (button?.dataset.action === 'delete' && task) {
+                event.stopPropagation();
+                actions.task.delete(task.id);
+              }
+            }}
+          >
+            <ol>
               {card.tasks.map(task => (
                 <li key={task}>
                   <Task id={task} />

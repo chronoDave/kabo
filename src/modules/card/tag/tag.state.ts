@@ -1,9 +1,9 @@
-import type { Category } from '../../../../store/entities';
+import type { Category } from '../../../store/entities';
 
 import deepEqual from 'fast-deep-equal';
 
-import Colour from '../../../../lib/colour/colour';
-import { selector } from '../../../../store/store';
+import Colour from '../../../lib/colour/colour';
+import { selector } from '../../../store/store';
 
 export type State = {
   category: Category;
