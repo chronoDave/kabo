@@ -7,13 +7,11 @@ import contentEditable from '../../lib/contentEditable/contentEditable';
 import Icon from '../../components/icon/icon';
 import Task from './task/task';
 import CollapseTags from './collapse-tags/collapse-tags';
-import ButtonTags from './button-tags/button-tags';
-import Tag from './tag/tag';
-import Menu from '../../components/menu/menu';
-
-import './card.scss';
 import CollapseButton from '../../components/collapse-button/collapse-button';
 import CollapseActions from './collapse-actions/collapse-actions';
+import Tag from './tag/tag';
+
+import './card.scss';
 
 export type CardProps = {
   id: string;
