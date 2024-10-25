@@ -21,7 +21,10 @@ export default class Storage<T extends z.ZodType<object>> {
       const state = JSON.parse(raw) as unknown;
       
       return this._schema.parse(state);
-    } catch {
+    } catch (err) {
+      console.error(err);
+
+      localStorage.setItem(`${this._id}-error`, JSON.stringify({ raw, err }));
       localStorage.removeItem(this._id);
 
       return null;
