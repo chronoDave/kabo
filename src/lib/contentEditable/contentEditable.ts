@@ -23,6 +23,7 @@ const contentEditable: ContentEditable = {
   contenteditable: true,
   onfocus: event => {
     const root = event.currentTarget as HTMLElement;
+    if (root.childNodes.length === 0) return;
 
     const range = document.createRange();
     const selection = window.getSelection();
