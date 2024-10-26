@@ -55,10 +55,14 @@ const Lane: Component<LaneProps> = initial => {
               const card = button?.closest<HTMLElement>('.card');
 
               if (button?.dataset.action === 'create') {
+                event.stopPropagation();
+
                 actions.card.create(lane.id)('New card');
               }
 
               if (button?.dataset.action === 'delete' && card) {
+                event.stopPropagation();
+
                 actions.card.delete(card.id);
               }
             }}

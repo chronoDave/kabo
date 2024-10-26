@@ -38,8 +38,9 @@ test('[selector] returns selection on component update', t => {
     return component;
   };
 
+  forgo.mount(<Body />, jsdom.window.document.body);
+
   t.equal(selector.state(), 1, 'returns selection');
 
-  forgo.mount(<Body />, jsdom.window.document.body);
   store.set(() => ({ a: { b: 2 }}));
 });

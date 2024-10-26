@@ -1,17 +1,17 @@
 import { decompressFromEncodedURIComponent } from 'lz-string';
 import Store from '../lib/store/store';
 import createSelector from '../lib/selector/selector';
-import { state } from './state';
+import { schema, state } from './state';
 import Storage from '../lib/storage/storage';
 
 let param = new URLSearchParams(window.location.search).get('s');
 if (param !== null) param = decompressFromEncodedURIComponent(param);
 
-const storage = new Storage('state', state);
+const storage = new Storage('state', schema);
 const store = new Store(
   storage.parse(param) ??
   storage.read() ??
-  storage.default
+  state
 )
   .on(state => storage.write(state.current))
   .on(console.log);

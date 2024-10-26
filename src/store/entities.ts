@@ -1,43 +1,43 @@
-import * as z from 'zod';
+import * as r from 'runtypes';
 
-export const category = z.object({
-  id: z.string().readonly(),
-  title: z.string(),
-  colour: z.string()
+export const category = r.Record({
+  id: r.String,
+  title: r.String,
+  colour: r.String
 });
 
-export type Category = z.infer<typeof category>;
+export type Category = r.Static<typeof category>;
 
-export const task = z.object({
-  id: z.string().readonly(),
-  done: z.boolean().optional(),
-  title: z.string()
+export const task = r.Record({
+  id: r.String,
+  done: r.Boolean.optional(),
+  title: r.String
 });
 
-export type Task = z.infer<typeof task>;
+export type Task = r.Static<typeof task>;
 
-export const card = z.object({
-  id: z.string().readonly(),
-  title: z.string(),
-  description: z.string().optional(),
-  tasks: z.array(z.string()), // Foreign keys
-  categories: z.array(z.string()) // Foreign keys
+export const card = r.Record({
+  id: r.String,
+  title: r.String,
+  description: r.String.optional(),
+  tasks: r.Array(r.String), // Foreign keys
+  categories: r.Array(r.String) // Foreign keys
 });
 
-export type Card = z.infer<typeof card>;
+export type Card = r.Static<typeof card>;
 
-export const lane = z.object({
-  id: z.string().readonly(),
-  title: z.string(),
-  cards: z.array(z.string()) // Foreign keys
+export const lane = r.Record({
+  id: r.String,
+  title: r.String,
+  cards: r.Array(r.String) // Foreign keys
 });
 
-export type Lane = z.infer<typeof lane>;
+export type Lane = r.Static<typeof lane>;
 
-export const board = z.object({
-  id: z.string().readonly(),
-  title: z.string(),
-  lanes: z.array(z.string()) // Foreign keys
+export const board = r.Record({
+  id: r.String,
+  title: r.String,
+  lanes: r.Array(r.String) // Foreign keys
 });
 
-export type Board = z.infer<typeof board>;
+export type Board = r.Static<typeof board>;

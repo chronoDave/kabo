@@ -19,7 +19,7 @@ esbuild.build({
     'forgo',
     'jsdom',
     'immer',
-    'zod'
+    'runtypes'
   ],
   platform: 'node',
   plugins: [log, clean]

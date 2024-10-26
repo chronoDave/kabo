@@ -1,25 +1,21 @@
-import type * as z from 'valibot';
+import type * as r from 'runtypes';
 
 import { compressToUTF16, decompressFromUTF16 } from 'lz-string';
 
-export default class Storage<T extends z.ZodType<object>> {
+export default class Storage<T extends r.Runtype> {
   private readonly _id: string;
   private readonly _schema: T;
-
-  get default(): z.infer<T> {
-    return this._schema.parse({});
-  }
 
   constructor(id: string, schema: T) {
     this._id = id;
     this._schema = schema;
   }
 
-  parse(raw: unknown): z.infer<T> | null {
+  parse(raw: unknown): r.Static<T> | null {
     if (typeof raw !== 'string') return null;
 
     try {
-      return this._schema.parse(JSON.parse(raw));
+      return this._schema.check(JSON.parse(raw));
     } catch (err) {
       console.error(err);
 
@@ -27,14 +23,14 @@ export default class Storage<T extends z.ZodType<object>> {
     }
   }
 
-  read(): z.infer<T> | null {
+  read(): r.Static<T> | null {
     let raw = localStorage.getItem(this._id);
     if (raw !== null) raw = decompressFromUTF16(raw);
 
     return this.parse(raw);
   }
 
-  write(state: z.infer<T>): this {
+  write(state: r.Static<T>): this {
     localStorage.setItem(this._id, compressToUTF16(JSON.stringify(state)));
 
     return this;
