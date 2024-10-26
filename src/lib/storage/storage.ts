@@ -1,4 +1,6 @@
-import type { z } from 'zod';
+import type * as z from 'valibot';
+
+import { compressToUTF16, decompressFromUTF16 } from 'lz-string';
 
 export default class Storage<T extends z.ZodType<object>> {
   private readonly _id: string;
@@ -26,11 +28,14 @@ export default class Storage<T extends z.ZodType<object>> {
   }
 
   read(): z.infer<T> | null {
-    return this.parse(localStorage.getItem(this._id));
+    let raw = localStorage.getItem(this._id);
+    if (raw !== null) raw = decompressFromUTF16(raw);
+
+    return this.parse(raw);
   }
 
   write(state: z.infer<T>): this {
-    localStorage.setItem(this._id, JSON.stringify(state));
+    localStorage.setItem(this._id, compressToUTF16(JSON.stringify(state)));
 
     return this;
   }
