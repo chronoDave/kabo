@@ -20,9 +20,19 @@
 
     > li {
       display: flex;
+      justify-content: center;
       overflow: auto;
       flex-grow: 1;
       min-width: math.pxToRem(320);
+
+      &:last-child {
+        border: 1px dashed var(--black-alt);
+        border-radius: 0.25rem;
+
+        button {
+          width: 100%;
+        }
+      }
     }
   }
 }

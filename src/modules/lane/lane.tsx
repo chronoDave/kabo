@@ -77,7 +77,7 @@ const Lane: Component<LaneProps> = initial => {
                 <Card id={card} />
               </li>
             ))}
-            <li data-dropzone="true">
+            <li data-dropzone>
               <button
                 class='default'
                 type='button'
