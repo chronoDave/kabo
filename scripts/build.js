@@ -8,7 +8,7 @@ import clean from './plugins/clean.js';
 
 const args = process.argv.slice(2);
 const watch = args.includes('-w');
-const outdir = path.resolve(process.cwd(), 'build');
+const outdir = path.resolve(process.cwd(), watch ? 'build' : 'docs');
 
 const assets = async root => {
   const files = await fsp.readdir(root, { recursive: true });
