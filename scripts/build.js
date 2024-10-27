@@ -33,7 +33,7 @@ const config = {
     '.png': 'copy',
     '.ico': 'copy',
     '.svg': 'copy',
-    '.webmanifest': 'copy'
+    '.json': 'copy'
   },
   bundle: true,
   minify: !watch,

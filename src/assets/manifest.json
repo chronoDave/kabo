@@ -1,9 +1,11 @@
 {
-  "short_name": "Pebble",
   "name": "Pebble",
+  "description": "Simple offline Kanban board",
   "theme_color": "#FFFFFF",
   "background_color": "#9B59B6",
   "display": "standalone",
+  "display_override": ["minimal-ui", "fullscreen", "browser"],
+  "start_url": "/",
   "icons": [{
     "src": "/icons/logo_192x192.png",
     "sizes": "192x192",
