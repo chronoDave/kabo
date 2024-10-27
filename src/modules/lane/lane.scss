@@ -16,6 +16,13 @@
       align-items: center;
       gap: 0.5em;
     }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
   }
 
   > ol {

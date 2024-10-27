@@ -37,25 +37,25 @@ const Board: Component<BoardProps> = initial => {
 
             if (button?.dataset.action === 'move' && lane && card) {
               if (button.dataset.direction === 'up') {
-                actions.move.card({ card: card.id, lane: lane.id })({ n: -1 });
+                actions.card.move({ card: card.id, lane: lane.id })({ n: -1 });
               }
 
               if (button.dataset.direction === 'down') {
-                actions.move.card({ card: card.id, lane: lane.id })({ n: +1 });
+                actions.card.move({ card: card.id, lane: lane.id })({ n: +1 });
               }
 
               if (button.dataset.direction === 'left') {
                 const i = board.lanes.indexOf(lane.id);
-                if (i > 0) actions.move.card({ card: card.id, lane: lane.id })({ lane: board.lanes[i - 1] });
+                if (i > 0) actions.card.move({ card: card.id, lane: lane.id })({ lane: board.lanes[i - 1] });
               }
 
               if (button.dataset.direction === 'right') {
                 const i = board.lanes.indexOf(lane.id);
-                if (i < board.lanes.length) actions.move.card({ card: card.id, lane: lane.id })({ lane: board.lanes[i + 1] });
+                if (i < board.lanes.length) actions.card.move({ card: card.id, lane: lane.id })({ lane: board.lanes[i + 1] });
               }
 
               if (button.dataset.direction === 'end') {
-                actions.move.card({ card: card.id, lane: lane.id })({ lane: board.lanes[board.lanes.length - 1] });
+                actions.card.move({ card: card.id, lane: lane.id })({ lane: board.lanes[board.lanes.length - 1] });
               }
             }
           }}
@@ -93,7 +93,7 @@ const Board: Component<BoardProps> = initial => {
                 lane: (event.target as HTMLElement).closest('.lane')?.id
               };
 
-              if (typeof from.card === 'string') actions.move.card({ card: from.card, lane: from.lane })(to);
+              if (typeof from.card === 'string') actions.card.move({ card: from.card, lane: from.lane })(to);
             }
           }}
         >

@@ -4,6 +4,7 @@ import type { Lane } from '../entities';
 
 import { produce } from 'immer';
 import uid from '../../lib/uid/uid';
+import clamp from '../../lib/math/clamp';
 
 export const create = (store: Store<State>) =>
   (board: string) =>
@@ -39,3 +40,27 @@ export const remove = (store: Store<State>) =>
         });
     }));
   };
+
+export const move = (store: Store<State>) =>
+  (id: { lane: string; board?: string }) =>
+    (to: number) => {
+      store.set(produce(draft => {
+        const from = typeof id.board === 'string' ?
+          draft.entity.board[id.board] :
+          Object.values(draft.entity.board).find(x => x.lanes.includes(id.lane));
+
+        if (!from) {
+          // If a lane does not have a board, it is orphaned and should be deleted
+          delete draft.entity.lane[id.lane];
+        } else {
+          const i = from.lanes.indexOf(id.lane);
+
+          draft.entity.board[from.id].lanes.splice(i, 1);
+          draft.entity.board[from.id].lanes.splice(
+            clamp(0, draft.entity.board[from.id].lanes.length, i + to),
+            0,
+            id.lane
+          );
+        }
+      }));
+    };

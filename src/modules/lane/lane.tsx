@@ -35,16 +35,21 @@ const Lane: Component<LaneProps> = initial => {
               </h3>
               <span class='badge'>{lane.cards.length}</span>
             </hgroup>
-            <div class='toolbar'>
+            <div class='actions'>
               <button type='button' onclick={() => actions.card.create(lane.id)('New card')}>
                 <Icon id='plus' />
                 <span class='sr-only'>Add card</span>
               </button>
-              <button
-                type='button'
-                data-action='delete'
-              >
-                <Icon id='xmark' />
+              <button type='button' onclick={() => actions.lane.move({ lane: lane.id })(-1)}>
+                <Icon id='arrowLeft' />
+                <span class='sr-only'>Move left</span>
+              </button>
+              <button type='button' onclick={() => actions.lane.move({ lane: lane.id })(1)}>
+                <Icon id='arrowRight' />
+                <span class='sr-only'>Move right</span>
+              </button>
+              <button type='button' data-action='delete'>
+                <Icon id='trash' />
                 <span class='sr-only'>Remove lane</span>
               </button>
             </div>

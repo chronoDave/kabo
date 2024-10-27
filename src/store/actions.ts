@@ -2,7 +2,6 @@ import * as _board from './actions/board';
 import * as _card from './actions/card';
 import * as _lane from './actions/lane';
 import * as _active from './actions/active';
-import * as _move from './actions/move';
 import * as _task from './actions/task';
 import * as _category from './actions/category';
 
@@ -17,13 +16,15 @@ export const board = {
 export const lane = {
   create: _lane.create(store),
   update: _lane.update(store),
-  delete: _lane.remove(store)
+  delete: _lane.remove(store),
+  move: _lane.move(store)
 };
 
 export const card = {
   create: _card.create(store),
   update: _card.update(store),
   delete: _card.remove(store),
+  move: _card.move(store),
   addCategory: _card.addCategory(store),
   removeCategory: _card.removeCategory(store),
   toggleCategory: _card.toggleCategory(store)
@@ -45,8 +46,4 @@ export const active = {
   board: _active.set(store)('board'),
   menu: _active.set(store)('menu'),
   collapse: _active.set(store)('collapse')
-};
-
-export const move = {
-  card: _move.card(store)
 };
