@@ -5,7 +5,7 @@
   "background_color": "#9B59B6",
   "display": "standalone",
   "display_override": ["minimal-ui", "fullscreen", "browser"],
-  "start_url": "/",
+  "start_url": "https://chronodave.github.io/pebble/",
   "icons": [{
     "src": "/icons/logo_192x192.png",
     "sizes": "192x192",
