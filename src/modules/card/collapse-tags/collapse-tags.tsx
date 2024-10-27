@@ -21,7 +21,7 @@ const CollapseTags: Component<CollapseTags> = initial => {
       const categories = selector.state(props.card);
 
       return (
-        <Collapse id={props.id}>
+        <Collapse id={props.id} class='collapse-tags'>
           <ul
             onclick={event => {
               const button = (event.target as HTMLElement | null)?.closest('button');

@@ -53,36 +53,34 @@ const Card: Component<CardProps> = initial => {
                 <Icon id='ellipsisVertical' />
                 <span class='sr-only'>Open actions collapse</span>
               </CollapseButton>
-              <Icon id='gripVertical' />
             </div>
-          </header>
-          <ul
-            class='tags'
-            onclick={event => {
-              const button = (event.target as HTMLElement | null)?.closest('button');
-              const tag = button?.closest<HTMLElement>('.tag');
+            <ul
+              class='tags'
+              onclick={event => {
+                const button = (event.target as HTMLElement | null)?.closest('button');
+                const tag = button?.closest<HTMLElement>('.tag');
 
-              if (button?.dataset.action === 'delete' && tag) {
-                actions.card.removeCategory(card.id)(tag.id);
-                event.stopPropagation();
-              }
-            }}
-          >
-            {card.categories.map(category => (
-              <li key={category}>
-                <Tag id={category}>
-                  <button type='button' data-action='delete'>
-                    <Icon id='xmark' />
-                    <span class='sr-only'>Remove tag</span>
-                  </button>
-                </Tag>
-              </li>
-            ))}
-          </ul>
-          <CollapseTags id={id.tags} card={card.id} />
-          <CollapseActions id={id.actions} />
+                if (button?.dataset.action === 'delete' && tag) {
+                  actions.card.removeCategory(card.id)(tag.id);
+                  event.stopPropagation();
+                }
+              }}
+            >
+              {card.categories.map(category => (
+                <li key={category}>
+                  <Tag id={category}>
+                    <button type='button' data-action='delete'>
+                      <Icon id='xmark' />
+                      <span class='sr-only'>Remove tag</span>
+                    </button>
+                  </Tag>
+                </li>
+              ))}
+            </ul>
+            <CollapseTags id={id.tags} card={card.id} />
+            <CollapseActions id={id.actions} />
+          </header>
           <p
-            class='body'
             {...contentEditable}
             onblur={event => {
               const description = (event.target as HTMLHeadingElement).innerText;

@@ -1,3 +1,5 @@
+@use 'shadow';
+
 body > header {
   display: flex;
   flex-wrap: wrap;
@@ -7,6 +9,8 @@ body > header {
   background-color: var(--primary);
   color: var(--primary-text);
   padding: 0.5rem;
+  box-shadow: shadow.box(2);
+  z-index: 10;
 
   .logo {
     width: 1.5rem;

@@ -7,6 +7,7 @@ import selector from './collapse.state';
 
 export type CollapseProps = {
   id: string;
+  class?: string;
 };
 
 const Collapse: Component<CollapseProps> = initial => {
@@ -17,7 +18,7 @@ const Collapse: Component<CollapseProps> = initial => {
       return (
         <div
           id={props.id}
-          class={cx('collapse', !expanded && 'hidden')}
+          class={cx('collapse', props.class, !expanded && 'hidden')}
         >
           {props.children}
         </div>
