@@ -11,7 +11,19 @@ const storage = new Storage('state', schema);
 const store = new Store(
   storage.parse(param) ??
   storage.read() ??
-  state
+  state, {
+    subscribers: [
+      ({ previous, current }) => {
+        if (
+          typeof current.active.board === 'string' &&
+          (
+            previous?.active.board !== current.active.board ||
+            current.entity.board[current.active.board].title !== previous.entity.board[previous.active.board].title
+          )
+        ) document.title = `${current.entity.board[current.active.board].title} | Pebble`;
+      }
+    ]
+  }
 )
   .on(state => storage.write(state.current))
   .on(console.log);

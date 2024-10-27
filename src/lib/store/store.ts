@@ -6,6 +6,10 @@ export type Subscriber<S extends object> = (view: View<S>) => void;
 
 export type Reducer<S extends object> = (state: S) => S;
 
+export type StoreOptions<S extends object> = {
+  subscribers?: Array<Subscriber<S>>;
+};
+
 export default class Store<S extends object> {
   private readonly _subscribers: Set<Subscriber<S>>;
   private readonly _state: Stack<S>;
@@ -34,11 +38,18 @@ export default class Store<S extends object> {
     return cur;
   }
 
-  constructor(state: S) {
+  constructor(state: S, options?: StoreOptions<S>) {
     this._state = new Stack(50);
     this._subscribers = new Set();
 
     this._state.push(state);
+    if (options?.subscribers) {
+      options.subscribers.forEach(subscriber => {
+        subscriber({ current: this.current, previous: this.previous });
+
+        this._subscribers.add(subscriber);
+      });
+    }
   }
 
   undo(): this {
