@@ -10,14 +10,30 @@ const args = process.argv.slice(2);
 const watch = args.includes('-w');
 const outdir = path.resolve(process.cwd(), 'build');
 
+const assets = async root => {
+  const files = await fsp.readdir(root, { recursive: true });
+
+  return files
+    .filter(file => /\..*$/ui.test(file))
+    .map(file => {
+      const x = path.normalize(file);
+
+      return { in: path.join(root, x), out: x.replace(/\..*/ui, '') };
+    });
+};
+
 const config = {
   entryPoints: [
     'src/index.html',
     'src/index.tsx',
-    { in: 'src/index.scss', out: 'base' }
+    ...await assets('src/assets')
   ],
   loader: {
-    '.html': 'copy'
+    '.html': 'copy',
+    '.png': 'copy',
+    '.ico': 'copy',
+    '.svg': 'copy',
+    '.webmanifest': 'copy'
   },
   bundle: true,
   minify: !watch,
