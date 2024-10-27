@@ -21,7 +21,7 @@ const DeleteBoard: Component<DeleteBoardProps> = () => {
           }}
         >
           <span class='sr-only'>Remove active board</span>
-          <Icon id='xmark' />
+          <Icon id='trash' />
         </button>
       );
     }

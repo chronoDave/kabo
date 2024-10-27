@@ -1,0 +1,25 @@
+body > header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  background-color: var(--primary);
+  color: var(--primary-text);
+  padding: 0.5rem;
+
+  .logo {
+    width: 1.5rem;
+    height: 1.5rem;
+
+    .fg {
+      fill: currentColor;
+    }
+  }
+
+  > div {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+}
