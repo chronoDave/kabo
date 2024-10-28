@@ -83,11 +83,7 @@ const Lane: Component<LaneProps> = initial => {
               </li>
             ))}
             <li data-dropzone>
-              <button
-                class='default'
-                type='button'
-                data-action='create'
-              >
+              <button type='button' data-action='create'>
                 <Icon id='plus' />
                 Add card
               </button>

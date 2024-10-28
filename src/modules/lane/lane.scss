@@ -13,7 +13,7 @@
     flex-wrap: wrap;
     gap: 0.5rem;
     align-items: center;
-    padding: 0 0.5rem;
+    padding: 0.25rem 0.5rem;
 
     hgroup {
       display: flex;
@@ -39,7 +39,11 @@
     > li:last-child {
       border: 1px dashed var(--black-alt);
       border-radius: 0.25rem;
-      padding: 1rem;
+
+      button {
+        width: 100%;
+        padding: 1rem;
+      }
     }
   }
 }
