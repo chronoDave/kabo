@@ -42,6 +42,7 @@ const Header: Component<HeaderProps> = () => {
               }
             }}>
               <Icon id='share' />
+              <span class='sr-only'>Share</span>
             </button>
           </div>
         </header>
