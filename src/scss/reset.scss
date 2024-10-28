@@ -4,12 +4,13 @@
 
 body {
   position: fixed;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
   width: 100%;
   margin: 0;
   height: 100dvh;
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
+  background-color: var(--white-alt);
 }
 
 ul, ol {

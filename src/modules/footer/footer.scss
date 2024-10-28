@@ -1,0 +1,13 @@
+body > footer {
+  font-family: monospace;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  
+  a {
+    color: var(--black);
+  }
+}
