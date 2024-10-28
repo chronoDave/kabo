@@ -1,4 +1,5 @@
 <div align="center">
+  <img src="/src/assets/icons/logo_180x180.png" width="180" height="180" alt="White Pebble logo against purple background">
   <h1><a href="https://chronodave.github.io/pebble/">Pebble</a></h1>
   <p>Simple offline Kanban board.</p>
 </div>
