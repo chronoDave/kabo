@@ -1,16 +1,14 @@
 import type { State } from '../state';
-import type Store from '../../lib/store/store';
+import type { Draft } from 'immer';
 
-import { produce } from 'immer';
-
-export const set = (store: Store<State>) =>
-  (active: keyof State['active']) =>
-    (id: string | null): void => {
-      store.set(produce(draft => {
-        if (typeof id === 'string') {
-          draft.active[active] = id;
-        } else {
-          delete draft.active[active];
-        }
-      }));
+const set = (key: keyof State['active']) =>
+  (id: string | null) =>
+    (draft: Draft<State>) => {
+      if (typeof id === 'string') {
+        draft.active[key] = id;
+      } else {
+        delete draft.active[key];
+      }
     };
+
+export const board = set('board');
