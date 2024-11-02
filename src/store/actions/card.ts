@@ -1,106 +1,63 @@
-import type Store from '../../lib/store/store';
 import type { Card } from '../entities';
 import type { State } from '../state';
+import type { Draft } from 'immer';
 
-import { produce } from 'immer';
-import uid from '../../lib/uid/uid';
 import clamp from '../../lib/math/clamp';
 
-export const create = (store: Store<State>) =>
-  (lane: string) =>
-    (title: string): void => {
-      store.set(produce(draft => {
-        const id = uid();
-
-        draft.entity.card[id] = { id, title, tasks: [], categories: [] };
-        draft.entity.lane[lane].cards.push(id);
-      }));
-    };
-
-export const update = (store: Store<State>) =>
-  (id: string) =>
-    (card: Partial<Omit<Card, 'id'>>): void => {
-      store.set(produce(draft => {
-        if (typeof card.title === 'string') {
-          draft.entity.card[id].title = card.title.trim();
-        }
-
-        if (typeof card.description === 'string') {
-          draft.entity.card[id].description = card.description.trim();
-        }
-      }));
-    };
-
-export const remove = (store: Store<State>) =>
-  (id: string): void => {
-    store.set(produce(draft => {
-      delete draft.entity.card[id];
-
-      Object.values(draft.entity.lane)
-        .filter(lane => lane.cards.includes(id))
-        .forEach(lane => {
-          const i = draft.entity.lane[lane.id].cards.indexOf(id);
-          draft.entity.lane[lane.id].cards.splice(i, 1);
-        });
-    }));
+export const create = (card: Card) =>
+  (draft: Draft<State>) => {
+    draft.entity.card[card.id] = card;
   };
 
-export const addCategory = (store: Store<State>) =>
-  (card: string) =>
-    (category: string) => store.set(produce(draft => {
-      if (!draft.entity.card[card].categories.includes(category)) {
-        draft.entity.card[card].categories.push(category);
-      }
-    }));
-
-export const removeCategory = (store: Store<State>) =>
-  (card: string) =>
-    (category: string) => store.set(produce(draft => {
-      const i = draft.entity.card[card].categories.indexOf(category);
-      draft.entity.card[card].categories.splice(i, 1);
-    }));
-
-export const toggleCategory = (store: Store<State>) =>
-  (card: string) =>
-    (category: string) => store.set(produce(draft => {
-      if (!draft.entity.card[card].categories.includes(category)) {
-        draft.entity.card[card].categories.push(category);
-      } else {
-        const i = draft.entity.card[card].categories.indexOf(category);
-        draft.entity.card[card].categories.splice(i, 1);
-      }
-    }));
-
-export type Position = {
-  lane?: string;
-  card?: string;
-  /** Relative position or card id */
-  n?: number;
-};
-
-export const move = (store: Store<State>) =>
-  (id: { card: string; lane?: string }) =>
-    (to: Position): void => {
-      store.set(produce(draft => {
-        const from = typeof id.lane === 'string' ?
-          draft.entity.lane[id.lane] :
-          Object.values(draft.entity.lane).find(x => x.cards.includes(id.card));
-
-        if (!from) {
-          // If a card does not have a lane, it is orphaned and should be deleted
-          delete draft.entity.card[id.card];
-        } else {
-          const i = from.cards.indexOf(id.card);
-          const j = typeof to.card === 'string' ?
-            draft.entity.lane[to.lane ?? from.id].cards.indexOf(to.card) :
-            i + (to.n ?? 0);
-
-          draft.entity.lane[from.id].cards.splice(i, 1);
-          draft.entity.lane[to.lane ?? from.id].cards.splice(
-            clamp(0, draft.entity.lane[to.lane ?? from.id].cards.length, j),
-            0,
-            id.card
-          );
-        }
-      }));
+export const setTitle = (id: string) =>
+  (title: string | null) =>
+    (draft: Draft<State>) => {
+      draft.entity.card[id].title = title;
     };
+
+export const setDescription = (id: string) =>
+  (description: string | null) =>
+    (draft: Draft<State>) => {
+      draft.entity.card[id].description = description;
+    };
+
+export const addCategory = (id: string) =>
+  (category: string) =>
+    (draft: Draft<State>) => {
+      if (!draft.entity.card[id].categories.includes(category)) {
+        draft.entity.card[id].categories.push(category);
+      }
+    };
+
+export const removeCategory = (id: string) =>
+  (category: string) =>
+    (draft: Draft<State>) => {
+      const i = draft.entity.card[id].categories.indexOf(category);
+      draft.entity.card[id].categories.splice(i, 1);
+    };
+
+export const move = (id: string) =>
+  (to: { card?: string; lane?: string; n?: number }) =>
+    (draft: Draft<State>) => {
+      const from = Object.values(draft.entity.lane)
+        .find(x => x.cards.includes(id));
+
+      if (!from) {
+        // If a card does not have a lane, it is orphaned and should be deleted
+        console.warn(`Found detached card: ${id}`);
+        delete draft.entity.card[id];
+      } else {
+        const i = typeof to.card === 'string' ?
+          draft.entity.lane[to.lane ?? id].cards.indexOf(to.card) :
+          from.cards.indexOf(id) + (to.n ?? 0);
+        const j = clamp(0, draft.entity.lane[to.lane ?? from.id].cards.length, i);
+
+        draft.entity.lane[from.id].cards.splice(i, 1);
+        draft.entity.lane[to.lane ?? from.id].cards.splice(j, 0, id);
+      }
+    };
+
+export const remove = (id: string) =>
+  (draft: Draft<State>) => {
+    delete draft.entity.card[id];
+  };
