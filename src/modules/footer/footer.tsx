@@ -1,6 +1,7 @@
 import type { ForgoNewComponentCtor as Component } from 'forgo';
 
 import * as forgo from 'forgo';
+import Icon from '../../components/icon/icon';
 
 import './footer.scss';
 
@@ -12,7 +13,7 @@ const Footer: Component<FooterProps> = () => {
       return (
         <footer>
           <p>&copy; {new Date().getFullYear()} <a href="https://github.com/chronoDave">Chronocide</a></p>
-          <p><a href="https://github.com/chronoDave/pebble">Source code</a></p>
+          <p><a href="https://github.com/chronoDave/pebble">Source code</a><Icon id='arrowUpRightFromSquare' /></p>
         </footer>
       );
     }

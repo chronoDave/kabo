@@ -24,13 +24,13 @@ export default selector<string, State | null>(
     const black = Colour.fromHex('#000');
     const white = Colour.fromHex('#fff');
     const text = colour.contrast(black) > colour.contrast(white) ?
-      black.hex() :
-      white.hex();
+      black.hex :
+      white.hex;
 
     return {
       category,
       colour: {
-        background: colour.hex(),
+        background: colour.hex,
         text
       }
     };

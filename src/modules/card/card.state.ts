@@ -23,7 +23,7 @@ export const createTask = (card: string) => {
   const task: Task = { id: uid() };
 
   store.set(produce(draft => {
-    actions.card.addCategory(card)(task.id)(draft);
+    actions.card.addTask(card)(task.id)(draft);
     actions.task.create(task)(draft);
   }));
 };

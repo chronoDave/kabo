@@ -1,12 +1,13 @@
 import type { ForgoNewComponentCtor as Component } from 'forgo';
 
 import * as forgo from 'forgo';
-import * as actions from '../../store/actions';
+
 import { compressToEncodedURIComponent } from 'lz-string';
 import Icon from '../../components/icon/icon';
 import DeleteBoard from './delete-board/delete-board';
 import SelectBoard from './select-board/select-board';
 import store from '../../store/store';
+import { create } from './header.state';
 
 import './header.scss';
 
@@ -23,7 +24,7 @@ const Header: Component<HeaderProps> = () => {
               <path class="fg" d="M11 21H5c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2h6v18zm2 0h6c1.1 0 2-.9 2-2v-7h-8v9zm8-11V5c0-1.1-.9-2-2-2h-6v7h8z" />
             </svg>
             <SelectBoard id='select-board' />
-            <button type='button' onclick={() => actions.board.create('New board')}>
+            <button type='button' onclick={create}>
               <Icon id='plus' />
               <span class='sr-only'>Create board</span>
             </button>

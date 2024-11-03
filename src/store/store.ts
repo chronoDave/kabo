@@ -14,13 +14,14 @@ const store = new Store(
   state, {
     subscribers: [
       ({ previous, current }) => {
-        if (
-          typeof current.active.board === 'string' &&
-          (
+        if (typeof current.active.board === 'string') {
+          if (
             previous?.active.board !== current.active.board ||
             current.entity.board[current.active.board].title !== previous.entity.board[previous.active.board].title
-          )
-        ) document.title = `${current.entity.board[current.active.board].title} | Pebble`;
+          ) document.title = `${current.entity.board[current.active.board].title} | Pebble`;
+        } else {
+          document.title = 'Pebble';
+        }
       }
     ]
   }

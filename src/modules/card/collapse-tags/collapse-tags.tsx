@@ -44,11 +44,6 @@ const CollapseTags: Component<CollapseTags> = initial => {
                 }
               }
 
-              if (button?.dataset.action === 'create' && category) {
-                createCategory();
-                event.stopPropagation();
-              }
-
               if (button?.dataset.action === 'remove' && category) {
                 deleteCategory(category.id);
                 event.stopPropagation();
@@ -75,7 +70,14 @@ const CollapseTags: Component<CollapseTags> = initial => {
               </li>
             ))}
           </ul>
-          <button type='button' data-action='create'>
+          <button
+            type='button'
+            data-action='create'
+            onclick={event => {
+              createCategory();
+              event.stopPropagation();
+            }}
+          >
             <Icon id='plus' />
             <span>Create category</span>
           </button>

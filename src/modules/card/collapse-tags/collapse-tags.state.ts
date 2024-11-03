@@ -8,20 +8,11 @@ import uid from '../../../lib/uid/uid';
 export default selector(state =>
   (id: string) =>
     Object.fromEntries(Object.keys(state?.entity.category ?? {})
-      .map(category => [category, state?.entity.card[id]?.categories.includes(category)]))
+      .map(category => [
+        category,
+        state?.entity.card[id]?.categories.includes(category)
+      ]))
 );
-
-export const deleteCategory = (category: string) => () => {
-  store.set(produce(draft => {
-    actions.category.remove(category)(draft);
-
-    Object.keys(draft.entity.card).forEach(card => {
-      if (draft.entity.card[card].categories.includes(category)) {
-        actions.card.removeCategory(card)(category)(draft);
-      }
-    });
-  }));
-};
 
 export const createCategory = () => {
   const category: Category = { id: uid() };
@@ -44,3 +35,15 @@ export const toggleCategory = (category: string) =>
       }
     }));
   };
+
+export const deleteCategory = (category: string) => {
+  store.set(produce(draft => {
+    actions.category.remove(category)(draft);
+
+    Object.keys(draft.entity.card).forEach(card => {
+      if (draft.entity.card[card].categories.includes(category)) {
+        actions.card.removeCategory(card)(category)(draft);
+      }
+    });
+  }));
+};
