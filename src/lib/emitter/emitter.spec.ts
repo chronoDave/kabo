@@ -40,10 +40,10 @@ test('[emitter.off] removes listeners', t => {
   emitter
     .on('event', listener)
     .off('event', listener)
-    .emit('event')
+    .emit('event', undefined)
     .on('event', () => {
       t.equal(n, 0, 'does not fire event');
       t.end();
     })
-    .emit('event');
+    .emit('event', undefined);
 });
