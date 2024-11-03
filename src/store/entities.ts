@@ -3,7 +3,10 @@ import * as r from 'runtypes';
 export const category = r.Record({
   id: r.String,
   title: r.String.Or(r.Null).optional(),
-  colour: r.String.Or(r.Null).optional()
+  colour: r.Record({
+    background: r.String.Or(r.Null).optional(),
+    text: r.String.Or(r.Null).optional()
+  }).optional()
 });
 
 export type Category = r.Static<typeof category>;

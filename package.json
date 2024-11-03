@@ -5,6 +5,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "lint": "eslint src",
     "start": "node scripts/build.js -w",
     "build": "node scripts/build.js",
     "build:test": "node scripts/test.js",

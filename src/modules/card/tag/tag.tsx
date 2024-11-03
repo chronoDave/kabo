@@ -21,18 +21,18 @@ const Tag: Component<TagProps> = initial => {
           id={props.id}
           class='tag'
           style={[
-            `--tag-bg: ${state.colour.background}`,
-            `--tag-text: ${state.colour.text}`
+            `--tag-bg: ${state.colour?.background}`,
+            `--tag-text: ${state.colour?.text}`
           ].join(';')}
         >
           <p
             {...contentEditable}
             onblur={event => {
               const title = (event.target as HTMLHeadingElement).innerText;
-              if (title !== state.category.title) setTagTitle(props.id)(title);
+              if (title !== state.title) setTagTitle(props.id)(title);
             }}
           >
-            {state.category.title}
+            {state.title}
           </p>
           {props.children}
         </div>

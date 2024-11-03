@@ -39,7 +39,7 @@ const CollapseTags: Component<CollapseTags> = initial => {
 
               if (button?.dataset.action === 'update' && category) {
                 if (button.dataset.attribute === 'colour') {
-                  input.colour(updateCategoryColour);
+                  input.colour(updateCategoryColour(category.id));
                   event.stopPropagation();
                 }
               }
