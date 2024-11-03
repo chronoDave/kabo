@@ -27,17 +27,11 @@ export default class Colour {
     });
   }
 
-  constructor(rgb: RGB) {
-    this._r = clamp(0, 255, rgb.r);
-    this._g = clamp(0, 255, rgb.g);
-    this._b = clamp(0, 255, rgb.b);
-  }
-
   /**
    * Relative luminance
    * @see https://en.wikipedia.org/wiki/Relative_luminance
    * */
-  luminance(): number {
+  get luminance(): number {
     const c = [this._r, this._g, this._b].map(x => {
       const v = x / 255;
 
@@ -48,17 +42,23 @@ export default class Colour {
     return c[0] * 0.2126 + c[1] * 0.7152 + c[2] * 0.0722;
   }
 
-  contrast(colour: Colour): number {
-    const a = this.luminance();
-    const b = colour.luminance();
-
-    return 1 - (Math.min(a, b) + 0.05) / (Math.max(a, b) + 0.05);
-  }
-
-  hex(): string {
+  get hex(): string {
     const raw = [this._r, this._g, this._b]
       .map(x => x.toString(16).padStart(2, '0'));
 
     return `#${raw.join('')}`;
+  }
+
+  constructor(rgb: RGB) {
+    this._r = clamp(0, 255, rgb.r);
+    this._g = clamp(0, 255, rgb.g);
+    this._b = clamp(0, 255, rgb.b);
+  }
+
+  contrast(colour: Colour): number {
+    const a = colour.luminance;
+    const b = this.luminance;
+
+    return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
   }
 }
