@@ -47,13 +47,22 @@ export const move = (id: string) =>
         console.warn(`Found detached card: ${id}`);
         delete draft.entity.card[id];
       } else {
-        const i = typeof to.card === 'string' ?
-          draft.entity.lane[to.lane ?? from.id].cards.indexOf(to.card) :
-          from.cards.indexOf(id) + (to.n ?? 0);
-        const j = clamp(0, draft.entity.lane[to.lane ?? from.id].cards.length, i);
+        const laneToCard = typeof to.card === 'string' ?
+          Object.values(draft.entity.lane).find(x => x.cards.includes(to.card as unknown as string)) : null;
+        const laneToLane = draft.entity.lane[to.lane ?? from.id];
+        const lane = laneToCard ?? laneToLane;
 
-        draft.entity.lane[from.id].cards.splice(i, 1);
-        draft.entity.lane[to.lane ?? from.id].cards.splice(j, 0, id);
+        const i = from.cards.indexOf(id); // Current index
+        const j = clamp(
+          0,
+          draft.entity.lane[lane.id].cards.length,
+          typeof to.card === 'string' ?
+            draft.entity.lane[lane.id].cards.indexOf(to.card) :
+            i + (to.n ?? 0)
+        ); // New index
+
+        draft.entity.lane[from.id].cards.splice(i, 1); // Remove current card
+        draft.entity.lane[lane.id].cards.splice(j, 0, id); // Add current card
       }
     };
 
