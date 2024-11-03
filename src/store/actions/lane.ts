@@ -1,66 +1,49 @@
-import type Store from '../../lib/store/store';
 import type { State } from '../state';
 import type { Lane } from '../entities';
-
-import { produce } from 'immer';
-import uid from '../../lib/uid/uid';
+import type { Draft} from 'immer';
 import clamp from '../../lib/math/clamp';
 
-export const create = (store: Store<State>) =>
-  (board: string) =>
-    (title: string): void => {
-      store.set(produce(draft => {
-        const id = uid();
-
-        draft.entity.lane[id] = { id, title, cards: [] };
-        draft.entity.board[board].lanes.push(id);
-      }));
-    };
-
-export const update = (store: Store<State>) =>
-  (id: string) =>
-    (lane: Partial<Omit<Lane, 'id'>>): void => {
-      store.set(produce(draft => {
-        if (typeof lane.title === 'string') {
-          draft.entity.lane[id].title = lane.title.trim();
-        }
-      }));
-    };
-
-export const remove = (store: Store<State>) =>
-  (id: string): void => {
-    store.set(produce(draft => {
-      delete draft.entity.lane[id];
-
-      Object.values(draft.entity.board)
-        .filter(board => board.lanes.includes(id))
-        .forEach(board => {
-          const i = draft.entity.board[board.id].lanes.indexOf(id);
-          draft.entity.board[board.id].lanes.splice(i, 1);
-        });
-    }));
+export const create = (lane: Lane) =>
+  (draft: Draft<State>) => {
+    draft.entity.lane[lane.id] = lane;
   };
 
-export const move = (store: Store<State>) =>
-  (id: { lane: string; board?: string }) =>
-    (to: number) => {
-      store.set(produce(draft => {
-        const from = typeof id.board === 'string' ?
-          draft.entity.board[id.board] :
-          Object.values(draft.entity.board).find(x => x.lanes.includes(id.lane));
-
-        if (!from) {
-          // If a lane does not have a board, it is orphaned and should be deleted
-          delete draft.entity.lane[id.lane];
-        } else {
-          const i = from.lanes.indexOf(id.lane);
-
-          draft.entity.board[from.id].lanes.splice(i, 1);
-          draft.entity.board[from.id].lanes.splice(
-            clamp(0, draft.entity.board[from.id].lanes.length, i + to),
-            0,
-            id.lane
-          );
-        }
-      }));
+export const setTitle = (id: string) =>
+  (title: string | null) =>
+    (draft: Draft<State>) => {
+      draft.entity.lane[id].title = title;
     };
+
+export const addCard = (id: string) =>
+  (card: string) =>
+    (draft: Draft<State>) => {
+      if (!draft.entity.lane[id].cards.includes(card)) {
+        draft.entity.lane[id].cards.push(card);
+      }
+    };
+
+export const move = (id: string) =>
+  (to: { lane?: string; board?: string; n?: number }) =>
+    (draft: Draft<State>) => {
+      const from = Object.values(draft.entity.board)
+        .find(x => x.lanes.includes(id));
+
+      if (!from) {
+        // If a lane does have a board, it is orphaned and should be deleted
+        console.warn(`Found detached lane: ${id}`);
+        delete draft.entity.lane[id];
+      } else {
+        const i = typeof to.lane === 'string' ?
+          draft.entity.board[to.board ?? from.id].lanes.indexOf(to.lane) :
+          from.lanes.indexOf(id) + (to.n ?? 0);
+        const j = clamp(0, draft.entity.board[to.board ?? from.id].lanes.length, i);
+
+        draft.entity.board[from.id].lanes.splice(i, 1);
+        draft.entity.board[to.board ?? from.id].lanes.splice(j, 0, id);
+      }
+    };
+
+export const remove = (id: string) =>
+  (draft: Draft<State>) => {
+    delete draft.entity.lane[id];
+  };

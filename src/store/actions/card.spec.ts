@@ -67,7 +67,7 @@ test('[card.setDescription] set card description', t => {
   t.end();
 });
 
-test('[card.addCategory]', t => {
+test('[card.addCategory] add card category', t => {
   const store = new Store(state);
   const card: Card = {
     id: uid(),
@@ -81,12 +81,12 @@ test('[card.addCategory]', t => {
   store.set(produce(addCategory(card.id)('category')));
 
   t.true(store.current.entity.card[card.id].categories.includes('category'), 'has category');
-  t.equal(store.current.entity.card[card.id].categories.length, 1, 'does not push duplicate categories');
+  t.equal(store.current.entity.card[card.id].categories.length, 1, 'does not push duplicate category');
 
   t.end();
 });
 
-test('[card.removeCategory]', t => {
+test('[card.removeCategory] remove card category', t => {
   const store = new Store(state);
   const card: Card = {
     id: uid(),
@@ -104,7 +104,7 @@ test('[card.removeCategory]', t => {
   t.end();
 });
 
-test('[card.move]', t => {
+test('[card.move] moves card within and between lanes', t => {
   const store = new Store(state);
   const card: Card = {
     id: uid(),
@@ -119,7 +119,7 @@ test('[card.move]', t => {
   t.end();
 });
 
-test('[card.remove]', t => {
+test('[card.remove] removes card', t => {
   const store = new Store(state);
   const card: Card = {
     id: uid(),

@@ -48,7 +48,7 @@ export const move = (id: string) =>
         delete draft.entity.card[id];
       } else {
         const i = typeof to.card === 'string' ?
-          draft.entity.lane[to.lane ?? id].cards.indexOf(to.card) :
+          draft.entity.lane[to.lane ?? from.id].cards.indexOf(to.card) :
           from.cards.indexOf(id) + (to.n ?? 0);
         const j = clamp(0, draft.entity.lane[to.lane ?? from.id].cards.length, i);
 
