@@ -3,7 +3,9 @@ import type { Category } from '../../../store/entities';
 import deepEqual from 'fast-deep-equal';
 
 import Colour from '../../../lib/colour/colour';
-import { selector } from '../../../store/store';
+import store, { selector } from '../../../store/store';
+import * as actions from '../../../store/actions';
+import { produce } from 'immer';
 
 export type State = {
   category: Category;
@@ -18,7 +20,7 @@ export default selector<string, State | null>(
     if (!state?.entity.category[id]) return null;
 
     const category = state.entity.category[id];
-    const colour = Colour.fromHex(category.colour);
+    const colour = Colour.fromHex(category.colour ?? '#fff');
     const black = Colour.fromHex('#000');
     const white = Colour.fromHex('#fff');
     const text = colour.contrast(black) > colour.contrast(white) ?
@@ -35,3 +37,8 @@ export default selector<string, State | null>(
   },
   ({ previous, current }) => !deepEqual(previous?.entity.category, current.entity.category)
 );
+
+export const setTagTitle = (tag: string) =>
+  (title: string) => {
+    store.set(produce(actions.category.setTitle(tag)(title)));
+  };

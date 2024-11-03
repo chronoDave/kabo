@@ -1,9 +1,8 @@
 import type { ForgoNewComponentCtor as Component } from 'forgo';
 
 import * as forgo from 'forgo';
-import { board } from '../../../store/actions';
 import Icon from '../../../components/icon/icon';
-import selector from './delete-board.state';
+import selector, { remove } from './delete-board.state';
 
 export type DeleteBoardProps = {};
 
@@ -17,7 +16,7 @@ const DeleteBoard: Component<DeleteBoardProps> = () => {
           type='button'
           disabled={typeof id !== 'string'}
           onclick={() => {
-            if (typeof id === 'string') board.delete(id);
+            if (typeof id === 'string') remove(id);
           }}
         >
           <span class='sr-only'>Remove active board</span>

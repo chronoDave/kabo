@@ -1,14 +1,20 @@
 import type { ForgoNewComponentCtor as Component } from 'forgo';
 
 import * as forgo from 'forgo';
-import selector from './card.state';
-import * as actions from '../../store/actions';
 import contentEditable from '../../lib/contentEditable/contentEditable';
 import Icon from '../../components/icon/icon';
-import Task from './task/task';
 import CollapseTags from './collapse-tags/collapse-tags';
 import CollapseButton from '../../components/collapse-button/collapse-button';
 import CollapseActions from './collapse-actions/collapse-actions';
+import selector, {
+  setTitle,
+  setDescription,
+  removeTask,
+  removeCategory,
+  createTask,
+  setTaskDone
+} from './card.state';
+import Task from './task/task';
 import Tag from './tag/tag';
 
 import './card.scss';
@@ -39,7 +45,7 @@ const Card: Component<CardProps> = initial => {
               {...contentEditable}
               onblur={event => {
                 const title = (event.target as HTMLHeadingElement).innerText;
-                if (card.title !== title) actions.card.update(props.id)({ title });
+                if (card.title !== title) setTitle(props.id)(title);
               }}
             >
               {card.title}
@@ -61,7 +67,7 @@ const Card: Component<CardProps> = initial => {
                 const tag = button?.closest<HTMLElement>('.tag');
 
                 if (button?.dataset.action === 'delete' && tag) {
-                  actions.card.removeCategory(card.id)(tag.id);
+                  removeCategory(card.id)(tag.id);
                   event.stopPropagation();
                 }
               }}
@@ -84,7 +90,7 @@ const Card: Component<CardProps> = initial => {
             {...contentEditable}
             onblur={event => {
               const description = (event.target as HTMLHeadingElement).innerText;
-              if (card.description !== description) actions.card.update(props.id)({ description });
+              if (card.description !== description) setDescription(props.id)(description);
             }}
           >
             {card.description}
@@ -96,19 +102,18 @@ const Card: Component<CardProps> = initial => {
               const task = button?.closest<HTMLElement>('.task');
 
               if (button?.dataset.action === 'create') {
+                createTask(card.id);
                 event.stopPropagation();
-                actions.task.create(card.id)('New task');
               }
 
               if (button?.dataset.action === 'update' && task) {
+                setTaskDone(task.id)(task.dataset.done !== 'true');
                 event.stopPropagation();
-
-                actions.task.update(task.id)({ done: task.dataset.done !== 'true' });
               }
 
               if (button?.dataset.action === 'delete' && task) {
+                removeTask(card.id)(task.id);
                 event.stopPropagation();
-                actions.task.delete(task.id);
               }
             }}
           >

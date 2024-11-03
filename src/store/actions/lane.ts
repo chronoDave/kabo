@@ -22,6 +22,13 @@ export const addCard = (id: string) =>
       }
     };
 
+export const removeCard = (id: string) =>
+  (card: string) =>
+    (draft: Draft<State>) => {
+      const i = draft.entity.lane[id].cards.indexOf(card);
+      draft.entity.lane[id].cards.splice(i, 1);
+    };
+
 export const move = (id: string) =>
   (to: { lane?: string; board?: string; n?: number }) =>
     (draft: Draft<State>) => {

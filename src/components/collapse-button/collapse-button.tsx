@@ -1,9 +1,7 @@
 import type { ForgoNewComponentCtor as Component } from 'forgo';
 
 import * as forgo from 'forgo';
-import * as actions from '../../store/actions';
-
-import selector from './collapse-button.state';
+import selector, { set } from './collapse-button.state';
 
 export type CollapseButtonProps = {
   id: string;
@@ -19,7 +17,7 @@ const CollapseButton: Component<CollapseButtonProps> = initial => {
           type='button'
           aria-controls={props.id}
           aria-expanded={expanded}
-          onclick={() => actions.active.collapse(expanded ? null : props.id)}
+          onclick={() => set(expanded ? null : props.id)}
         >
           {props.children}
         </button>

@@ -1,9 +1,7 @@
 import type { ForgoNewComponentCtor as Component } from 'forgo';
 
 import * as forgo from 'forgo';
-
-import { active as set } from '../../../store/actions';
-import selector from './select-board.state';
+import selector, { set } from './select-board.state';
 
 export type SelectBoardsProps = {
   id: string;
@@ -23,7 +21,7 @@ const SelectBoards: Component<SelectBoardsProps> = () => {
           <select
             id={id}
             disabled={boards.length === 0}
-            onchange={event => set.board((event.target as HTMLSelectElement).value)}
+            onchange={event => set((event.target as HTMLSelectElement).value)}
           >
             {boards.length === 0 ? <option default>No boards available</option> : null}
             {boards.map(board => (

@@ -12,3 +12,4 @@ const set = (key: keyof State['active']) =>
     };
 
 export const board = set('board');
+export const collapse = set('collapse');

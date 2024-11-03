@@ -22,6 +22,13 @@ export const addLane = (id: string) =>
       }
     };
 
+export const removeLane = (id: string) =>
+  (lane: string) =>
+    (draft: Draft<State>) => {
+      const i = draft.entity.board[id].lanes.indexOf(lane);
+      draft.entity.board[id].lanes.splice(i, 1);
+    };
+
 export const remove = (id: string) =>
   (draft: Draft<State>) => {
     delete draft.entity.board[id];

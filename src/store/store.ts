@@ -1,7 +1,7 @@
 import { decompressFromEncodedURIComponent } from 'lz-string';
 import Store from '../lib/store/store';
 import createSelector from '../lib/selector/selector';
-import { schema, state } from './state';
+import state, { schema } from './state';
 import Storage from '../lib/storage/storage';
 
 let param = new URLSearchParams(window.location.search).get('s');

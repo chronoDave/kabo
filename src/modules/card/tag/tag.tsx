@@ -1,9 +1,8 @@
 import type { ForgoNewComponentCtor as Component } from 'forgo';
 
 import * as forgo from 'forgo';
-import * as actions from '../../../store/actions';
 import contentEditable from '../../../lib/contentEditable/contentEditable';
-import selector from './tag.state';
+import selector, { setTagTitle } from './tag.state';
 
 import './tag.scss';
 
@@ -30,7 +29,7 @@ const Tag: Component<TagProps> = initial => {
             {...contentEditable}
             onblur={event => {
               const title = (event.target as HTMLHeadingElement).innerText;
-              if (title !== state.category.title) actions.category.update(props.id)({ title });
+              if (title !== state.category.title) setTagTitle(props.id)(title);
             }}
           >
             {state.category.title}

@@ -1,11 +1,19 @@
 import type { ForgoNewComponentCtor as Component } from 'forgo';
 
 import * as forgo from 'forgo';
+
 import Lane from '../lane/lane';
-import selector from './board.state';
-import * as actions from '../../store/actions';
 import contentEditable from '../../lib/contentEditable/contentEditable';
 import Icon from '../../components/icon/icon';
+
+import selector, {
+  createLane,
+  deleteLane,
+  moveCard,
+  moveCardUp,
+  moveCardDown,
+  setBoardTitle
+} from './board.state';
 
 import './board.scss';
 
@@ -27,35 +35,22 @@ const Board: Component<BoardProps> = initial => {
             const card = button?.closest<HTMLElement>('.card');
             const lane = button?.closest<HTMLElement>('.lane');
 
-            if (button?.dataset.action === 'create') {
-              actions.lane.create(board.id)('New lane');
-            }
-
-            if (button?.dataset.action === 'delete' && lane) {
-              actions.lane.delete(lane.id);
-            }
+            if (button?.dataset.action === 'create') createLane(board.id);
+            if (button?.dataset.action === 'delete' && lane) deleteLane(board.id)(lane.id);
 
             if (button?.dataset.action === 'move' && lane && card) {
-              if (button.dataset.direction === 'up') {
-                actions.card.move({ card: card.id, lane: lane.id })({ n: -1 });
-              }
-
-              if (button.dataset.direction === 'down') {
-                actions.card.move({ card: card.id, lane: lane.id })({ n: +1 });
-              }
+              if (button.dataset.direction === 'up') moveCardUp(card.id);
+              if (button.dataset.direction === 'down') moveCardDown(card.id);
+              if (button.dataset.direction === 'end') moveCard(card.id)({ lane: board.lanes[board.lanes.length - 1] });
 
               if (button.dataset.direction === 'left') {
                 const i = board.lanes.indexOf(lane.id);
-                if (i > 0) actions.card.move({ card: card.id, lane: lane.id })({ lane: board.lanes[i - 1] });
+                if (i > 0) moveCard(card.id)({ lane: board.lanes[i - 1] });
               }
 
               if (button.dataset.direction === 'right') {
                 const i = board.lanes.indexOf(lane.id);
-                if (i < board.lanes.length) actions.card.move({ card: card.id, lane: lane.id })({ lane: board.lanes[i + 1] });
-              }
-
-              if (button.dataset.direction === 'end') {
-                actions.card.move({ card: card.id, lane: lane.id })({ lane: board.lanes[board.lanes.length - 1] });
+                if (i < board.lanes.length) moveCard(card.id)({ lane: board.lanes[i + 1] });
               }
             }
           }}
@@ -93,7 +88,7 @@ const Board: Component<BoardProps> = initial => {
                 lane: (event.target as HTMLElement).closest('.lane')?.id
               };
 
-              if (typeof from.card === 'string') actions.card.move({ card: from.card, lane: from.lane })(to);
+              if (typeof from.card === 'string') moveCard(from.card)(to);
             }
           }}
         >
@@ -102,7 +97,7 @@ const Board: Component<BoardProps> = initial => {
               {...contentEditable}
               onblur={event => {
                 const title = (event.target as HTMLHeadingElement).innerText;
-                if (title !== board.title) actions.board.update(props.id)({ title });
+                if (title !== board.title) setBoardTitle(props.id)(title);
               }}
             >
               {board.title}

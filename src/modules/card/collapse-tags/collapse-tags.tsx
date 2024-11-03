@@ -1,11 +1,15 @@
 import type { ForgoNewComponentCtor as Component } from 'forgo';
 
 import * as forgo from 'forgo';
-import * as actions from '../../../store/actions';
 import * as input from '../../../lib/input/input';
 import Icon from '../../../components/icon/icon';
 import Tag from '../tag/tag';
-import selector from './collapse-tags.state';
+import selector, {
+  createCategory,
+  deleteCategory,
+  toggleCategory,
+  updateCategoryColour
+} from './collapse-tags.state';
 import Collapse from '../../../components/collapse/collapse';
 
 import './collapse-tags.scss';
@@ -29,24 +33,24 @@ const CollapseTags: Component<CollapseTags> = initial => {
               const category = (button ?? label)?.closest<HTMLElement>('li');
 
               if (label?.dataset.action === 'toggle' && category) {
-                actions.card.toggleCategory(props.card)(category.id);
+                toggleCategory(category.id)(props.card);
                 event.stopPropagation();
               }
 
               if (button?.dataset.action === 'update' && category) {
                 if (button.dataset.attribute === 'colour') {
-                  input.colour(colour => actions.category.update(category.id)({ colour }));
+                  input.colour(updateCategoryColour);
                   event.stopPropagation();
                 }
               }
 
               if (button?.dataset.action === 'create' && category) {
-                actions.category.create({ title: 'New category' });
+                createCategory();
                 event.stopPropagation();
               }
 
               if (button?.dataset.action === 'remove' && category) {
-                actions.category.delete(category.id);
+                deleteCategory(category.id);
                 event.stopPropagation();
               }
             }}

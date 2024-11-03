@@ -1,8 +1,7 @@
 import type { ForgoNewComponentCtor as Component } from 'forgo';
 
 import * as forgo from 'forgo';
-import * as actions from '../../../store/actions';
-import selector from './task.state';
+import selector, { setTaskTitle } from './task.state';
 import Icon from '../../../components/icon/icon';
 import contentEditable from '../../../lib/contentEditable/contentEditable';
 
@@ -34,7 +33,7 @@ const Task: Component<TaskProps> = initial => {
               {...contentEditable}
               onblur={event => {
                 const title = (event.target as HTMLHeadingElement).innerText;
-                if (title !== task.title) actions.task.update(props.id)({ title });
+                if (title !== task.title) setTaskTitle(props.id)(title);
               }}
             >
               {task.title}

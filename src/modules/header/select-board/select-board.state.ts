@@ -1,6 +1,8 @@
 import deepEqual from 'fast-deep-equal';
+import { produce } from 'immer';
 
-import { selector } from '../../../store/store';
+import store, { selector } from '../../../store/store';
+import * as actions from '../../../store/actions';
 
 export default selector(state => () => ({
   active: state?.active.board,
@@ -10,5 +12,9 @@ export default selector(state => () => ({
   }))
 }), ({ previous, current }) => {
   if (previous?.active !== current.active) return true;
-  return deepEqual(previous?.entity.board, current.entity.board);
+  return deepEqual(previous.entity.board, current.entity.board);
 });
+
+export const set = (board: string) => {
+  store.set(produce(actions.active.board(board)));
+};

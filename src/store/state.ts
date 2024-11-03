@@ -19,8 +19,7 @@ export const schema = r.Record({
   }),
   active: r.Record({
     board: r.String.optional(),
-    collapse: r.String.optional(),
-    menu: r.String.optional()
+    collapse: r.String.optional()
   })
 });
 
@@ -34,7 +33,7 @@ const id = {
   category: uid()
 };
 
-export const state: State = {
+const state: State = {
   entity: {
     category: {
       [id.category]: {
@@ -75,3 +74,5 @@ export const state: State = {
     board: id.board
   }
 };
+
+export default state;

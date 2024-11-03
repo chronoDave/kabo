@@ -36,6 +36,21 @@ export const removeCategory = (id: string) =>
       draft.entity.card[id].categories.splice(i, 1);
     };
 
+export const addTask = (id: string) =>
+  (task: string) =>
+    (draft: Draft<State>) => {
+      if (!draft.entity.card[id].tasks.includes(task)) {
+        draft.entity.card[id].tasks.push(task);
+      }
+    };
+
+export const removeTask = (id: string) =>
+  (task: string) =>
+    (draft: Draft<State>) => {
+      const i = draft.entity.card[id].tasks.indexOf(task);
+      draft.entity.card[id].tasks.splice(i, 1);
+    };
+
 export const move = (id: string) =>
   (to: { card?: string; lane?: string; n?: number }) =>
     (draft: Draft<State>) => {
