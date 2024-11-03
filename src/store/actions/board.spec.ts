@@ -63,7 +63,7 @@ test('[board.addLane] adds lane', t => {
   t.end();
 });
 
-test('[board.remove]', t => {
+test('[board.remove] removes board', t => {
   const store = new Store(state);
   const board: Board = {
     id: uid(),

@@ -28,7 +28,7 @@ test('[card.create] creates card', t => {
 
   store.set(produce(create(card)));
 
-  t.deepEqual(store.current.entity.board[card.id], card, 'creates card');
+  t.deepEqual(store.current.entity.card[card.id], card, 'creates card');
 
   t.end();
 });
