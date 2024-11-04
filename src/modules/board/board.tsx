@@ -104,12 +104,7 @@ const Board: Component<BoardProps> = initial => {
             >
               {board.title}
             </h2>
-            {typeof board.background === 'string' ? (
-              <button type='button' onclick={() => setBackground(props.id)(null)}>
-                <span class='sr-only'>Remove background image</span>
-                <Icon id='imageRemove' />
-              </button>
-            ) : (
+            <div class='actions'>
               <button
                 type='button'
                 onclick={() => {
@@ -119,7 +114,13 @@ const Board: Component<BoardProps> = initial => {
                 <span class='sr-only'>Add background image</span>
                 <Icon id='imagePlus' />
               </button>
-            )}
+              {typeof board.background === 'string' ? (
+                <button type='button' onclick={() => setBackground(props.id)(null)}>
+                  <span class='sr-only'>Remove background image</span>
+                  <Icon id='imageRemove' />
+                </button>
+              ) : null}
+            </div>
           </header>
           <ol>
             {board.lanes.map(lane => (
@@ -128,10 +129,12 @@ const Board: Component<BoardProps> = initial => {
               </li>
             ))}
             <li>
-              <button type='button' data-action='create'>
-                <Icon id='plus' />
-                Add lane
-              </button>
+              <div class='lane'>
+                <button type='button' data-action='create'>
+                  <Icon id='plus' />
+                  Add lane
+                </button>
+              </div>
             </li>
           </ol>
         </article>,

@@ -26,50 +26,52 @@ const CollapseTags: Component<CollapseTags> = initial => {
 
       return (
         <Collapse id={props.id} class='collapse-tags'>
-          <ul
-            onclick={event => {
-              const button = (event.target as HTMLElement | null)?.closest('button');
-              const label = (event.target as HTMLElement | null)?.closest('label');
-              const category = (button ?? label)?.closest<HTMLElement>('li');
+          {Object.keys(categories).length > 0 ? (
+            <ul
+              onclick={event => {
+                const button = (event.target as HTMLElement | null)?.closest('button');
+                const label = (event.target as HTMLElement | null)?.closest('label');
+                const category = (button ?? label)?.closest<HTMLElement>('li');
 
-              if (label?.dataset.action === 'toggle' && category) {
-                toggleCategory(category.id)(props.card);
-                event.stopPropagation();
-              }
-
-              if (button?.dataset.action === 'update' && category) {
-                if (button.dataset.attribute === 'colour') {
-                  void colour().then(updateCategoryColour(category.id));
+                if (label?.dataset.action === 'toggle' && category) {
+                  toggleCategory(category.id)(props.card);
                   event.stopPropagation();
                 }
-              }
 
-              if (button?.dataset.action === 'remove' && category) {
-                deleteCategory(category.id);
-                event.stopPropagation();
-              }
-            }}
-          >
-            {Object.entries(categories).map(([category, checked]) => (
-              <li id={category} key={category}>
-                <label data-action='toggle'>
-                  <span class='sr-only'>Toggle category</span>
-                  <input type='checkbox' checked={checked} />
-                </label>
-                <Tag id={category} />
-                <div class='actions'>
-                  <button type='button' data-action='update' data-attribute='colour'>
-                    <Icon id='eyeDropper' />
-                    <span class='sr-only'>Change colour</span>
-                  </button>
-                  <button type='button' data-action='remove'>
-                    <Icon id='xmark' />
-                    <span class='sr-only'>Remove category</span>
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
+                if (button?.dataset.action === 'update' && category) {
+                  if (button.dataset.attribute === 'colour') {
+                    void colour().then(updateCategoryColour(category.id));
+                    event.stopPropagation();
+                  }
+                }
+
+                if (button?.dataset.action === 'remove' && category) {
+                  deleteCategory(category.id);
+                  event.stopPropagation();
+                }
+              }}
+            >
+              {Object.entries(categories).map(([category, checked]) => (
+                <li id={category} key={category}>
+                  <label data-action='toggle'>
+                    <span class='sr-only'>Toggle category</span>
+                    <input type='checkbox' checked={checked} />
+                  </label>
+                  <Tag id={category} />
+                  <div class='actions'>
+                    <button type='button' data-action='update' data-attribute='colour'>
+                      <Icon id='eyeDropper' />
+                      <span class='sr-only'>Change colour</span>
+                    </button>
+                    <button type='button' data-action='remove'>
+                      <Icon id='xmark' />
+                      <span class='sr-only'>Remove category</span>
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : null}
           <button
             type='button'
             data-action='create'

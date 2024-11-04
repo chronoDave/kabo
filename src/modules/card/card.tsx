@@ -60,29 +60,31 @@ const Card: Component<CardProps> = initial => {
                 <span class='sr-only'>Open actions collapse</span>
               </CollapseButton>
             </div>
-            <ul
-              class='tags'
-              onclick={event => {
-                const button = (event.target as HTMLElement | null)?.closest('button');
-                const tag = button?.closest<HTMLElement>('.tag');
+            {card.categories.length > 0 ? (
+              <ul
+                class='tags'
+                onclick={event => {
+                  const button = (event.target as HTMLElement | null)?.closest('button');
+                  const tag = button?.closest<HTMLElement>('.tag');
 
-                if (button?.dataset.action === 'delete' && tag) {
-                  removeCategory(card.id)(tag.id);
-                  event.stopPropagation();
-                }
-              }}
-            >
-              {card.categories.map(category => (
-                <li key={category}>
-                  <Tag id={category}>
-                    <button type='button' data-action='delete'>
-                      <Icon id='xmark' />
-                      <span class='sr-only'>Remove tag</span>
-                    </button>
-                  </Tag>
-                </li>
-              ))}
-            </ul>
+                  if (button?.dataset.action === 'delete' && tag) {
+                    removeCategory(card.id)(tag.id);
+                    event.stopPropagation();
+                  }
+                }}
+              >
+                {card.categories.map(category => (
+                  <li key={category}>
+                    <Tag id={category}>
+                      <button type='button' data-action='delete'>
+                        <Icon id='xmark' />
+                        <span class='sr-only'>Remove tag</span>
+                      </button>
+                    </Tag>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
             <CollapseTags id={id.tags} card={card.id} />
             <CollapseActions id={id.actions} />
           </header>
@@ -117,13 +119,15 @@ const Card: Component<CardProps> = initial => {
               }
             }}
           >
-            <ol>
-              {card.tasks.map(task => (
-                <li key={task}>
-                  <Task id={task} />
-                </li>
-              ))}
-            </ol>
+            {card.tasks.length > 0 ? (
+              <ol>
+                {card.tasks.map(task => (
+                  <li key={task}>
+                    <Task id={task} />
+                  </li>
+                ))}
+              </ol>
+            ) : null}
             <button type='button' data-action='create'>
               <Icon id='plus' />
               <span>Add task</span>

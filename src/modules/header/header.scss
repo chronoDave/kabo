@@ -9,7 +9,7 @@ body > header {
   background-color: var(--primary);
   color: var(--primary-text);
   padding: 0.5rem;
-  box-shadow: shadow.box(2);
+  box-shadow: shadow.box(1);
   z-index: 10;
 
   .logo {

@@ -1,18 +1,18 @@
 @use 'shadow';
+@use 'mixin';
 
 .card {
+  @include mixin.card;
   background-color: var(--white);
   padding: 0.5rem;
-  box-shadow: shadow.box(2);
-  border-radius: 0.25rem;
 
   > header {
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
     gap: 0 0.5rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.25rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.5rem;
     border-bottom: 1px solid var(--white-alt);
 
     .actions {
@@ -32,7 +32,7 @@
     .collapse {
       grid-column: span 3;
       border-top: 1px solid var(--white-alt);
-      margin-top: 0.25rem;
+      margin-top: 0.5rem;
       padding-top: 0.5rem;
     }
   }
@@ -47,13 +47,12 @@
     border-top: 1px solid var(--white-alt);
     padding-top: 0.5rem;
 
-    li + li {
-      margin-top: 0.5rem;
-    }
+    ol {
+      margin-bottom: 0.5rem;
 
-    > button {
-      margin-top: 0.75rem;
-      margin-left: 0.25rem;
+      li + li {
+        margin-top: 0.5rem;
+      }
     }
   }
 }

@@ -1,4 +1,5 @@
 @use 'math';
+@use 'shadow';
 
 .board {
   display: flex;
@@ -7,15 +8,31 @@
   overflow: auto;
 
   > header {
+    background-color: var(--white-alt);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
     padding: 0.5rem;
+    box-shadow: shadow.box(1);
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.25rem;
+
+      button {
+        font-size: 1.25em;
+      }
+    }
   }
 
   > ol {
     display: flex;
-    gap: 1rem;
     flex-grow: 1;
     overflow: auto;
-    padding: 0.5rem;
+    margin-top: 0.25rem;
 
     > li {
       display: flex;
@@ -23,15 +40,7 @@
       overflow: auto;
       flex-grow: 1;
       min-width: min(calc(100vw - 1rem), math.pxToRem(320));
-
-      &:last-child {
-        border: 1px dashed var(--black-alt);
-        border-radius: 0.25rem;
-
-        button {
-          width: 100%;
-        }
-      }
+      padding: 0.5rem;
     }
   }
 
