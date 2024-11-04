@@ -10,6 +10,6 @@
 - Full **offline** support using [PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installing).
 - Operable using **keyboard**, **mouse** and **touch**.
 
-## License
+## Attribution
 
-Icons by [Font Awesome](https://fontawesome.com) ([CC BY 4.0]("https://creativecommons.org/licenses/by/4.0/")) and [Google]("https://github.com/google/material-design-icons/tree/master") ([Apache-2.0]("https://github.com/google/material-design-icons/blob/master/LICENSE"))
+[Icons](/src/components/icon/icons.ts) used in this project are obtained from [Font Awesome](https://fontawesome.com) ([CC BY 4.0]("https://creativecommons.org/licenses/by/4.0/")) and [Pictogrammers](https://pictogrammers.com/) ([Apache License 2.0 / MIT License](https://pictogrammers.com/docs/general/license/)).
