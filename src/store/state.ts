@@ -27,39 +27,18 @@ export type State = r.Static<typeof schema>;
 
 const id = {
   board: uid(),
-  lane: uid(),
-  card: uid(),
-  task: uid(),
-  category: uid()
+  lane: uid()
 };
 
 const state: State = {
   entity: {
-    category: {
-      [id.category]: {
-        id: id.category,
-        title: 'New category',
-        colour: '#fff'
-      }
-    },
-    task: {
-      [id.task]: {
-        id: id.task, title: 'New task'
-      }
-    },
-    card: {
-      [id.card]: {
-        id: id.card,
-        title: 'New card',
-        tasks: [id.task],
-        categories: [id.category]
-      }
-    },
+    category: {},
+    task: {},
+    card: {},
     lane: {
       [id.lane]: {
         id: id.lane,
-        title: 'New lane',
-        cards: [id.card]
+        cards: []
       }
     },
     board: {
