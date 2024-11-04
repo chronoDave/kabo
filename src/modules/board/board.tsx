@@ -5,6 +5,7 @@ import * as forgo from 'forgo';
 import Lane from '../lane/lane';
 import contentEditable from '../../lib/contentEditable/contentEditable';
 import Icon from '../../components/icon/icon';
+import selectImage from '../../lib/input/image';
 
 import selector, {
   createLane,
@@ -12,7 +13,8 @@ import selector, {
   moveCard,
   moveCardUp,
   moveCardDown,
-  setBoardTitle
+  setBackground,
+  setTitle
 } from './board.state';
 
 import './board.scss';
@@ -27,7 +29,7 @@ const Board: Component<BoardProps> = initial => {
       const board = selector.state(props.id);
 
       if (!board) return null;
-      return (
+      return [
         <article
           class='board'
           onclick={event => {
@@ -97,11 +99,27 @@ const Board: Component<BoardProps> = initial => {
               {...contentEditable}
               onblur={event => {
                 const title = (event.target as HTMLHeadingElement).innerText;
-                if (title !== board.title) setBoardTitle(props.id)(title);
+                if (title !== board.title) setTitle(props.id)(title);
               }}
             >
               {board.title}
             </h2>
+            {typeof board.background === 'string' ? (
+              <button type='button' onclick={() => setBackground(props.id)(null)}>
+                <span class='sr-only'>Remove background image</span>
+                <Icon id='imageRemove' />
+              </button>
+            ) : (
+              <button
+                type='button'
+                onclick={() => {
+                  void selectImage().then(setBackground(props.id));
+                }}
+              >
+                <span class='sr-only'>Add background image</span>
+                <Icon id='imagePlus' />
+              </button>
+            )}
           </header>
           <ol>
             {board.lanes.map(lane => (
@@ -116,8 +134,17 @@ const Board: Component<BoardProps> = initial => {
               </button>
             </li>
           </ol>
-        </article>
-      );
+        </article>,
+        <div class='bg'>
+          {typeof board.background === 'string' ? (
+            <img
+              src={board.background}
+              loading='lazy'
+              alt=''
+            />
+          ) : null}
+        </div>
+      ];
     }
   });
 

@@ -14,6 +14,12 @@ export const setTitle = (id: string) =>
       draft.entity.board[id].title = title;
     };
 
+export const setBackground = (id: string) =>
+  (background: string | null) =>
+    (draft: Draft<State>) => {
+      draft.entity.board[id].background = background;
+    };
+
 export const addLane = (id: string) =>
   (lane: string) =>
     (draft: Draft<State>) => {

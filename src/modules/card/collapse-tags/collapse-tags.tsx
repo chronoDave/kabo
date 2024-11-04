@@ -1,7 +1,7 @@
 import type { ForgoNewComponentCtor as Component } from 'forgo';
 
 import * as forgo from 'forgo';
-import * as input from '../../../lib/input/input';
+import colour from '../../../lib/input/colour';
 import Icon from '../../../components/icon/icon';
 import Tag from '../tag/tag';
 import selector, {
@@ -39,7 +39,7 @@ const CollapseTags: Component<CollapseTags> = initial => {
 
               if (button?.dataset.action === 'update' && category) {
                 if (button.dataset.attribute === 'colour') {
-                  input.colour(updateCategoryColour(category.id));
+                  void colour().then(updateCategoryColour(category.id));
                   event.stopPropagation();
                 }
               }

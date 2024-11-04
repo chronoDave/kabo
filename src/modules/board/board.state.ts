@@ -27,7 +27,7 @@ export const deleteLane = (board: string) =>
     }));
   };
 
-export const setBoardTitle = (board: string) =>
+export const setTitle = (board: string) =>
   (title: string) => {
     store.set(produce(actions.board.setTitle(board)(title)));
   };
@@ -44,3 +44,8 @@ export const moveCardUp = (card: string) => {
 export const moveCardDown = (card: string) => {
   store.set(produce(actions.card.move(card)({ n: 1 })));
 };
+
+export const setBackground = (board: string) =>
+  (background: string | null) => {
+    store.set(produce(actions.board.setBackground(board)(background)));
+  };

@@ -40,6 +40,7 @@ export type Lane = r.Static<typeof lane>;
 export const board = r.Record({
   id: r.String,
   title: r.String.Or(r.Null).optional(),
+  background: r.String.Or(r.Null).optional(),
   lanes: r.Array(r.String) // Foreign keys
 });
 
