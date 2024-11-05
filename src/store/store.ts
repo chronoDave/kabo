@@ -1,31 +1,23 @@
-import { decompressFromEncodedURIComponent } from 'lz-string';
 import Store from '../lib/store/store';
 import createSelector from '../lib/selector/selector';
 import state, { schema } from './state';
 import Storage from '../lib/storage/storage';
 
-let param = new URLSearchParams(window.location.search).get('s');
-if (param !== null) param = decompressFromEncodedURIComponent(param);
-
 const storage = new Storage('state', schema);
-const store = new Store(
-  storage.parse(param) ??
-  storage.read() ??
-  state, {
-    subscribers: [
-      ({ previous, current }) => {
-        if (typeof current.active.board === 'string') {
-          if (
-            previous?.active.board !== current.active.board ||
-            current.entity.board[current.active.board].title !== previous.entity.board[previous.active.board].title
-          ) document.title = `${current.entity.board[current.active.board].title} | Pebble`;
-        } else {
-          document.title = 'Pebble';
-        }
+const store = new Store(storage.read() ?? state, {
+  subscribers: [
+    ({ previous, current }) => {
+      if (typeof current.active.board === 'string') {
+        if (
+          previous?.active.board !== current.active.board ||
+          current.entity.board[current.active.board].title !== previous.entity.board[previous.active.board].title
+        ) document.title = `${current.entity.board[current.active.board].title} | Pebble`;
+      } else {
+        document.title = 'Pebble';
       }
-    ]
-  }
-)
+    }
+  ]
+})
   .on(state => storage.write(state.current))
   .on(console.log);
 
