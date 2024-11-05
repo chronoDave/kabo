@@ -14,12 +14,14 @@ export const setTitle = (lane: string) =>
     store.set(produce(actions.lane.setTitle(lane)(title)));
   };
 
-export const createCard = (lane: string) => {
+export const createCard = (lane: string, position: 'start' | 'end') => {
   const card: Card = { id: uid(), tasks: [], categories: [] };
 
   store.set(produce(draft => {
     actions.card.create(card)(draft);
-    actions.lane.addCard(lane)(card.id)(draft);
+
+    if (position === 'start') actions.lane.unshiftCard(lane)(card.id)(draft);
+    if (position === 'end') actions.lane.pushCard(lane)(card.id)(draft);
   }));
 };
 

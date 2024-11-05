@@ -43,7 +43,7 @@ const Lane: Component<LaneProps> = initial => {
             <div class='actions'>
               <button
                 type='button'
-                onclick={() => createCard(props.id)}
+                onclick={() => createCard(props.id, 'start')}
               >
                 <Icon id='plus' />
                 <span class='sr-only'>Add card</span>
@@ -68,7 +68,7 @@ const Lane: Component<LaneProps> = initial => {
               const card = button?.closest<HTMLElement>('.card');
 
               if (button?.dataset.action === 'create') {
-                createCard(props.id);
+                createCard(props.id, 'end');
                 event.stopPropagation();
               }
 

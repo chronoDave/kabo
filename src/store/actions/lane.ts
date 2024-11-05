@@ -14,7 +14,15 @@ export const setTitle = (id: string) =>
       draft.entity.lane[id].title = title;
     };
 
-export const addCard = (id: string) =>
+export const unshiftCard = (id: string) =>
+  (card: string) =>
+    (draft: Draft<State>) => {
+      if (!draft.entity.lane[id].cards.includes(card)) {
+        draft.entity.lane[id].cards.unshift(card);
+      }
+    };
+
+export const pushCard = (id: string) =>
   (card: string) =>
     (draft: Draft<State>) => {
       if (!draft.entity.lane[id].cards.includes(card)) {
