@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <link rel="canonical" href="https://chronodave.github.io/pebble/" />
-    <!-- Meta -->
+
     <title>Pebble</title>
     <meta name="author" content="chronoDave" />
     <meta name="description" content="Simple offline Kanban board" />
@@ -13,16 +13,54 @@
     <meta property="og:description" content="Simple offline Kanban board" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://chronodave.github.io/pebble/" />
-    <!-- Icons -->
+
     <link rel="icon" href="favicon.ico" sizes="32x32" />
     <link rel="icon" href="./icons/logo.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="./icons/logo_180x180.png" />
     <link rel="manifest" href="manifest.json" />
-    <!-- Resources -->
+
     <link rel="stylesheet" href="index.css">
     <script defer src="index.js"></script>
   </head>
   <body>
-    <div id="root"></div>
+    <noscript>
+      <style>
+        body {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: var(--white-alt);
+        }
+
+        noscript {
+          min-width: 0;
+          padding: 1rem;
+          max-width: 720px;
+          text-align: center;
+        }
+
+        .logo {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          font-size: 4rem;
+          font-family: monospace;
+          font-weight: 700;
+          margin-bottom: 2rem;
+        }
+
+        h1 {
+          margin-bottom: 0.5rem;
+        }
+      </style>
+      <aside class="logo">
+        <img src="./icons/logo.svg" alt="Pebble logo" width="96" height="96" />
+        Pebble
+      </aside>
+      <h1>❌ This page requires JavaScript.</h1>
+      <p>Please enable JavaScript and reload the page.</p>
+    </noscript>
   </body>
 </html>
