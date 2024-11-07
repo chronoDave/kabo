@@ -13,14 +13,19 @@ export default async (options?: ImageOptions) => {
     multiple: options?.multiple
   });
 
-  return new Promise<string | null>(resolve => {
+  return new Promise<string | null>((resolve, reject) => {
     if (!files) {
       resolve(null);
     } else {
       const reader = new FileReader();
+
       reader.addEventListener('load', () => {
         resolve(reader.result as string | null);
       }, false);
+
+      reader.addEventListener('error', err => {
+        reject(new Error(JSON.stringify(err)));
+      });
   
       reader.readAsDataURL(files[0]);
     }

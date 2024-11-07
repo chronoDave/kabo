@@ -2,10 +2,10 @@ import type { ForgoNewComponentCtor as Component } from 'forgo';
 
 import * as forgo from 'forgo';
 
-import Icon from '../../components/icon/icon';
+import Icon from '../../../components/icon/icon';
 import DeleteBoard from './delete-board/delete-board';
 import SelectBoard from './select-board/select-board';
-import store from '../../store/store';
+import store from '../../../store/store';
 import { create } from './header.state';
 
 import './header.scss';

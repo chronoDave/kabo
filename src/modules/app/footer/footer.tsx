@@ -1,7 +1,7 @@
 import type { ForgoNewComponentCtor as Component } from 'forgo';
 
 import * as forgo from 'forgo';
-import Icon from '../../components/icon/icon';
+import Icon from '../../../components/icon/icon';
 
 import './footer.scss';
 

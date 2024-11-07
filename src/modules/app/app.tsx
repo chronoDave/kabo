@@ -4,8 +4,8 @@ import * as forgo from 'forgo';
 
 import selector from './app.state';
 import Board from '../board/board';
-import Header from '../header/header';
-import Footer from '../footer/footer';
+import Header from './header/header';
+import Footer from './footer/footer';
 
 import './app.scss';
 
