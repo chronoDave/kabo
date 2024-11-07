@@ -12,4 +12,4 @@
 
 ## Attribution
 
-[Icons](/src/components/icon/icons.ts) used in this project are obtained from [Font Awesome](https://fontawesome.com) ([CC BY 4.0]("https://creativecommons.org/licenses/by/4.0/")) and [Pictogrammers](https://pictogrammers.com/) ([Apache License 2.0 / MIT License](https://pictogrammers.com/docs/general/license/)).
+[Icons](/src/components/icon/icons.ts) used in this project are obtained from [Font Awesome](https://fontawesome.com) ([CC BY 4.0](https://fontawesome.com/license/free)) and [Pictogrammers](https://pictogrammers.com/) ([Apache License 2.0 / MIT License](https://pictogrammers.com/docs/general/license/)).
